@@ -12,17 +12,18 @@ html {
 
 
 
-
-#youtube-video {
-  width: 800px;
-  height: 400px;
-  position: relative; top: 0; left: 20%;
-}
 .ui-widget-content{
   border: none;
 }
+/* youtube */
+#youtube-list{
+  color:white;
+  list-style-type: none;
+}
 
-
+#youtube-list li {
+  margin-bottom: 10px;
+}
 /* widget */
 #widget{
   width: 500px;

@@ -13,7 +13,8 @@ export default {
     return {currentDate: "", currentHour:"",currentDay:""}
   },
   created: function(){
-    setInterval(() => this.realTimeClock(),1*1000);
+    this.realTimeClock();
+    setInterval(() => this.realTimeClock(),1*5000);
   },
   methods: {
     realTimeClock: function(){
@@ -33,6 +34,9 @@ export default {
       }
       if (dayflag !== true) {
         this.dayClock(t);
+      }
+      if (t_array[4] < 10) {
+        t_array[4]= "0"+t_array[4];
       }
       this.currentDate = t_array[0]+"년 "+t_array[1]+"월 "+t_array[2]+"일";
       this.currentHour = t_array[3]+":"+t_array[4]+""+ap;

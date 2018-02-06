@@ -3,19 +3,12 @@ $(function(){
 
 
 // --------------- 유튜브
-$("#youtube-video").draggable();
-
-$("#resize_mouse").on("click",function(){
-  $("#youtube-video").empty();
-  if ($("#youtube-video").attr("class").search(/resizable/) > 0) {
-    console.log("I'm n")
-    $("#youtube-video").resizable("destroy");
-  }
-
-  $("#youtube-video").resizable();
-})
+$("#youtube").draggable();
+$("#widget").draggable().css("border","none");
+$("#youtube-list").draggable();
 
 
+/*
 ytwidth=800,ytheight=400
 $("#size_up_voice").on("click",function(){
   $("#youtube-video").empty();
@@ -47,6 +40,8 @@ $("#only_music").on("click",function(){
   })
 //  $("#controlBar_P1").css("display","block")
 })
+*/
+/*
 // 검색
 $("#search_keword").on("blur",function(){
 
@@ -60,9 +55,9 @@ $("#search_keword").on("blur",function(){
       type: 'get',
       dataType: 'json',
       success:function(data){
-        $("#youtube-search").empty();
+        $("#youtube-list").empty();
         $("#youtube-video").empty();
-        $("#youtube-search").html('<ul id="slide-banner"></ul>')
+        $("#youtube-list").html('<ul id="slide-banner"></ul>')
         console.log(data.items);
         console.log(data.items[0].snippet.title);
         for (var i = 0; i < data.pageInfo.resultsPerPage; i++) {
@@ -90,7 +85,7 @@ $("#search_keword").on("blur",function(){
 })
 
 // 동영상 정보 가져오기
-$(document).on("click","#youtube-search img",function(){
+$(document).on("click","#youtube-list img",function(){
   var video_id = $(this).attr("value");
   var video_div = '<div id="P1" class="player" data-property="{';
   var div_option =["videoURL:'http://youtu.be/",video_id+"'", "," , "containment:'#youtube-video'",  ","  ,"stopMovieOnBlur:false", "," ,"startAt:0", "," ,"opacity:1"]
@@ -99,11 +94,10 @@ $(document).on("click","#youtube-search img",function(){
   }
   video_div+='}"></div>'
   console.log(video_div);
-  $("#youtube-search").empty();
+  $("#youtube-list").empty();
   $("#youtube-video").html(video_div);
   $("#P1").YTPlayer();
 })
-
 var ss_flag="off"
 $("#stop_start").on("click",function(){
   if (ss_flag == "off") {
@@ -121,21 +115,10 @@ $("#stop").on("click",function(){
   $(".ytp-play-button ytp-button").click();
 })
 
+*/
 
-  $("#widget").draggable().css("border","none");
 
-var svgChange = function(){
-  console.log('good');
-  let a = document.getElementById('weather_object');
-  console.log(a);
-  let svgDoc = a.contentDocument;
-  console.log(svgDoc);
-  /*
-  let svgItem = svgDoc.getElementsByTagName('svg');
-  svgItem[0].setAttribute("fill", "white");
-  */
-}
-console.log("fetched home.js");
+
 }) // end -------------------------
 
 //------------------------- 캘린더
