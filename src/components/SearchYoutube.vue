@@ -14,7 +14,7 @@
 
 <script>
 import eventBus from './EventBus.vue'
-
+import Api from '../Api.js';
 export default {
   name:"SearchYoutube",
   data: function(){
@@ -31,7 +31,7 @@ export default {
       $("#search_keword").on("blur",function(){
         console.log("called search_keword");
         var keword = $("#search_keword").val();
-        var api_url="https://www.googleapis.com/youtube/v3/search?part=snippet&q="+keword+"&maxResults=5&type=video&order=viewCount&key=AIzaSyDbGX5NSwM_KgBNJA7_GMWiavb9Bfmml3o"
+        var api_url="https://www.googleapis.com/youtube/v3/search?part=snippet&q="+keword+"&maxResults=5&type=video&order=viewCount&"+Api.youtube
         // video중 조회수가 제일 높은 것 상위 5개의 list를 가져옴
         console.log(api_url);
 

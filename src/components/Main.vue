@@ -16,7 +16,6 @@
     <button @click="play" type="button" name="button">시작</button>
     <button @click="change" type="button" name="button">바꾸기</button>
     <button @click="displayToggle" type="button" name="button">최소화</button>
-    <button @click="clear" type="button" name="button">클리어</button>
   </div>
 </div>
 
