@@ -24,6 +24,11 @@ html {
 #youtube-list li {
   margin-bottom: 10px;
 }
+
+#playlist {
+  color:white;
+  list-style-type: none;
+}
 /* widget */
 #widget{
   width: 500px;

@@ -13,4 +13,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-Api.js
+ApiKey.js

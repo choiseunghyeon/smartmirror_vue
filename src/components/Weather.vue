@@ -22,7 +22,7 @@
 
 <script>
 import eventBus from './EventBus.vue'
-
+import ApiKey from '../ApiKey.js'
 export default {
   name: "Weather",
   data: function(){
@@ -38,8 +38,8 @@ export default {
     weatherGet: function(){
       let that = this; // function(){} 기존 js펑션을 쓰면 안에서 쓰이는 this는 전혀 다른 값을 가리킴. 따라서 그밖에서 this를 저장해줘야함
       $.ajax({
-      // 시간별   url: 'http://apis.skplanetx.com/weather/current/hourly?version=1&lat=&lon=&city=%EC%84%9C%EC%9A%B8&county=%EA%B0%95%EB%82%A8%EA%B5%AC&village=%EB%8F%84%EA%B3%A1%EB%8F%99&appKey=d49b336f-e8f5-3af1-b5f0-b165dc65a309',
-        url:'http://apis.skplanetx.com/weather/summary?version=1&lat=37.503260&lon=126.788507&appKey=d49b336f-e8f5-3af1-b5f0-b165dc65a309',
+      // 시간별   url: 'http://apis.skplanetx.com/weather/current/hourly?version=1&lat=&lon=&city=%EC%84%9C%EC%9A%B8&county=%EA%B0%95%EB%82%A8%EA%B5%AC&village=%EB%8F%84%EA%B3%A1%EB%8F%99&',
+        url:'http://apis.skplanetx.com/weather/summary?version=1&lat=37.503260&lon=126.788507&appKey=d49b336f-e8f5-3af1-b5f0-b165dc65a309'+ApiKey.weather,
         type: 'get',
         dataType:"json",
         success:function(data){
