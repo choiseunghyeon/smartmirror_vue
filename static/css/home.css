@@ -9,7 +9,9 @@ html {
   width: 100%;
   height: 100%;
 }
-
+ul {
+  list-style-type: none;
+}
 
 
 .ui-widget-content{
@@ -18,16 +20,28 @@ html {
 /* youtube */
 #youtube-list{
   color:white;
-  list-style-type: none;
+}
+#channellist {
+  color: black;
+  margin: 0px 15px 0px 15px;
 }
 
 #youtube-list li {
   margin-bottom: 10px;
 }
-
+.card-ui {
+  border: 1px solid rgba(1,1,1,0.8);
+  font-size: 2.3rem;
+  background-color: rgba(255,255,255,1);
+  box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 10px 24px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+}
+.card-ui img{
+  width: 100%;
+  height: 100%;
+}
 #playlist {
   color:white;
-  list-style-type: none;
 }
 /* widget */
 #widget{

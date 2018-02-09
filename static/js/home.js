@@ -6,7 +6,7 @@ $(function(){
 $("#youtube").draggable();
 $("#widget").draggable().css("border","none");
 $("#youtube-list").draggable();
-
+$("#channellist").draggable();
 
 /*
 ytwidth=800,ytheight=400

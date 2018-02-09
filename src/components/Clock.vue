@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import eventBus from './EventBus.vue'
+import Constant from '../Constant.js';
 export default {
   name: "Clock",
   data: function(){
-    return {currentDate: "", currentHour:"",currentDay:""}
+    return {currentDate: "", currentHour:"",currentDay:"",dayFlag:false}
   },
   created: function(){
     this.realTimeClock();
@@ -18,7 +18,6 @@ export default {
   },
   methods: {
     realTimeClock: function(){
-      let dayflag = false;
       let t=new Date();
       let ap; // AM PM
       let result;
@@ -30,10 +29,11 @@ export default {
         ap="PM";
       } else{
         ap="AM";
-        dayflag = false;
+        this.dayFlag = false;
       }
-      if (dayflag !== true) {
+      if (this.dayFlag !== true) {
         this.dayClock(t);
+        this.dayFlag=true;
       }
       if (t_array[4] < 10) {
         t_array[4]= "0"+t_array[4];
@@ -49,7 +49,7 @@ export default {
       } else {
         this.currentDay = {today:week[dayNum],tomorrow:week[dayNum+1]};
       }
-      eventBus.$emit('getDay',this.currentDay);
+      this.$store.dispatch(Constant.SET_DAY,this.currentDay);
     }
   } // the end of methods
 }

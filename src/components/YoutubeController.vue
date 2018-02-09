@@ -2,12 +2,16 @@
 <div class="">
 
   <div id="youtube">
-    <youtube v-if="currentVideoId !== '' " :class="{youtube_active:isActive.youtube}" :video-id="currentVideoId" @ready="ready" @ended="ended" :player-vars="{autoplay:1}"></youtube>
+    <youtube v-if="currentVideoId !== '' " :class="{youtube_active:isActive.youtube}"
+      :video-id="currentVideoId" @ready="ready" @ended="ended" :player-vars="{autoplay:1}"
+      :playerWidth="youtubeSize.width" :playerHeight="youtubeSize.height">
+    </youtube>
     <button @click="pause" type="button" name="button">멈춤</button>
     <button @click="stop" type="button" name="button">스탑</button>
     <button @click="play" type="button" name="button">시작</button>
     <button @click="change" type="button" name="button">바꾸기</button>
     <button @click="displayToggle" type="button" name="button">최소화</button>
+    <button @click="sizeUp" type="button" name="button">크게</button>
     <button @click="test" type="button" name="button">test</button>
   </div>
 </div>
@@ -21,13 +25,10 @@ import {mapState} from 'vuex';
 
 export default {
   name:"YoutubeController",
-  created: function(){
-    eventBus.$on('changeVideo', this.change);
-    //this.getPlayList();
-  },
   data: function(){
     return {
-        isActive:{youtube: false, search: false},
+        isActive:{youtube: false, search: false,},
+        youtubeSize:{width:"640", height:"390"},
     }
   },
   computed: mapState(['currentVideoId','videoList']),
@@ -37,15 +38,14 @@ export default {
     },
     ended: function(){
       console.log('끝');
-      this.videoList.num+=1;
-      this.change(this.videoList.idArray[this.videoList.num]);
+      this.change()
     },
     addList: function(videoId){
       console.log('list 추가완료');
       this.youtubeListItems.myList.push(videoId);
     },
     change: function(videoId){
-      this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:videoId});
+      this.$store.dispatch(Constant.PLAY_VIDEO_LIST);
     },
     pause: function(){
       this.player.pauseVideo()
@@ -55,6 +55,13 @@ export default {
     },
     play: function(){
       this.player.playVideo()
+    },
+    sizeUp: function(){
+      let width = parseInt(this.youtubeSize.width)
+      let height = parseInt(this.youtubeSize.height);
+
+      this.youtubeSize.width=''+(width+100);
+      this.youtubeSize.height=''+(height+100);
     },
     displayToggle: function(){
       this.isActive.youtube = !this.isActive.youtube;

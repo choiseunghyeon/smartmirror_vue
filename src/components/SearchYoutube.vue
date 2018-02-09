@@ -10,25 +10,31 @@
         </figure>
       </li>
     </ul>
-    <div id="channellist">
-      <ul v-if="channelLists.length > 0">
-        <li v-for="(list,index) in channelLists" @click.stop="getPlayList(index)">
-          <figure>
-            <img :src="list.snippet.thumbnails.medium.url"><figcaption>{{list.snippet.channelTitle}}</figcaption>
-          </figure>
-        </li>
-      </ul>
+
+    <div id="channellist" :class="{channellist_active:isActive.channellists}">
+        <div v-for="(list,index) in channelLists" @click.stop="getPlayList(index)" class="col-md-3">
+            <figure :class="'card-ui'+' card-in ' +{card_click:true}">
+              <img :src="list.snippet.thumbnails.medium.url">
+              <figcaption>{{list.snippet.channelTitle}}</figcaption>
+            </figure>
+          <!--<button @click.stop="deleteChannel(index)" type="button" name="button">삭제</button>-->
+        </div>
     </div>
-    <div id="playlist">
+
+    <div id="playlist" class="col-md-4">
       <ul>
-        <li v-for="(list,index) in selectedPlayLists" @click="getListItems(list.id)">
+        <li v-for="(list,index) in selectedPlayLists">
           <p>{{(index+1)+'번째 리스트'}}</p>
           <p>{{list.snippet.title}}</p>
-          <img :src="list.snippet.thumbnails.medium.url" alt="">
+          <div v-for="(data,i) in listImages[index]">
+            <img :src="data.image.url" @click="setVideoList(listImages[index],i)">
+
+          </div>
         </li>
       </ul>
     </div>
-  </div>
+  <!--<button @click="channelListToggle" type="button" name="button">쇼미 채널</button>-->
+  </div> <!-- the end -->
 </template>
 
 <script>
@@ -39,7 +45,7 @@ import {mapState} from 'vuex';
 export default {
   name:"SearchYoutube",
   data: function(){
-    return {selectedPlayLists:''}
+    return {selectedPlayLists:'',listImages:[],isActive:{channellists:false},animation:{clickCard:false}}
   },
   mounted: function(){
     this.init();
@@ -84,9 +90,14 @@ export default {
       else this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:data.id.videoId});
       this.removeSearchedList();
     },
+    deleteChannel: function(index){
+      this.$store.dispatch(Constant.DELETE_CHANNEL,index);
+    },
     getPlayList: function(index){
       let channelId=this.channelLists[index].snippet.channelId
+      this.animation.clickCard=true;
       let that = this;
+      this.listImages=[];
       $.ajax({
         url:'https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId='+channelId+'&'+ApiKey.youtube,
         type: 'get',
@@ -94,32 +105,83 @@ export default {
         success:function(data){
           console.log(data);
           that.selectedPlayLists=data.items;
-        }
+          for (var i = 0; i < that.selectedPlayLists.length; i++) {
+            that.getListItems(that.selectedPlayLists[i].id,i);
+          }
+
+        } // the end of success
       }) // the end of ajax
 
     },
-    getListItems: function(id){ // 플레이 리스트중 선택된 것의 동영상 정보들을 가져옴
+    getListItems: function(id,index){ // PlayList의 영상 5개를 긁어옴
       console.log("get items!!", id);
       let playlistId = id;
       let that = this;
+      let payload;
       $.ajax({
         url:'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId='+playlistId+'&'+ApiKey.youtube,
         type: 'get',
         dataType:"json",
         success:function(data){
-          console.log(data);
           console.log(data.items);
+          /*
+          console.log(data);
           console.log(data.items[0].snippet.resourceId.videoId);
-          that.$store.dispatch(Constant.VIDEO_LIST,data.items.map(x=>x.snippet.resourceId.videoId));
+          */
+          payload = data.items.map((x) => { return {id:x.snippet.resourceId.videoId,image:x.snippet.thumbnails.medium} }),
+
+          that.listImages.push(payload);
         }
       }) // the end of ajax
+      console.log(payload);
+      return payload;
+    },
+    setVideoList: function(data,num){ // 선택된 영상을 실행하고 선택된 영상이 있는 플레이 리스트의 영상을 자동실행으로 setting함
+      let selectedNum = num;
+      console.log(data);
+      let payload = {
+        idArray:data.map(x=>x.id),
+        num:selectedNum,
+      };
+      this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
+      this.listImages=[];
+      this.selectedPlayLists='';
     },
     removeSearchedList: function(){
       this.$store.dispatch(Constant.SEARCHED_LIST,"");
+    },
+    channelListToggle: function(){
+      this.isActive.channellists = !this.isActive.channellists;
     }
   }
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+.channellist_active {display:none;}
+.search_active {display: none;}
+.card-in{
+  animation: card-in 0.5s;
+}
+.card_click {
+  animation: card_click 0.5s;
+}
+.card-out {
+  animation: card-out 0.5s;
+}
+@keyframes card_click {
+  0% {transform: scale(0.3); opacity:0.4; }
+  70% {transform: scale(1.3); opacity:0.7;}
+  100% {transform: scale(0); opacity:1;}
+}
+@keyframes card-in {
+  0% {opacity:0.1; }
+  70% {opacity:0.7;}
+  100% {opacity:1;}
+}
+@keyframes card-out {
+  0% {transform: scale(1);opacity:0.8; }
+  70% {transform: scale(0.6);opacity:0.7;}
+  100% {transform: scale(0);opacity:0;}
+}
 </style>

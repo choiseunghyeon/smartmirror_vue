@@ -21,15 +21,15 @@
 </template>
 
 <script>
-import eventBus from './EventBus.vue'
 import ApiKey from '../ApiKey.js'
+import {mapState} from 'vuex';
 export default {
   name: "Weather",
   data: function(){
-    return {stat:"" ,weatherData:[], dayObject:{today:'',tomorrow:''}};
+    return {stat:"" ,weatherData:[]};
   },
+  computed: mapState(['dayObject']),
   created: function(){
-    eventBus.$on('getDay', this.setDay);
     //this.weatherGet();
     //setInterval(this.weatherGet,3600000); // 1000ms = 1 second 1시간마다 한번씩 날씨 정보 로딩
     this.testWeather();
@@ -201,10 +201,6 @@ export default {
         this.weatherData.push(dayData);
       } // the end of for
     },
-    setDay: function(data){
-      this.dayObject.today = data.today;
-      this.dayObject.tomorrow = data.tomorrow;
-    }
   }
 }
 </script>
