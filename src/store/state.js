@@ -4,4 +4,5 @@ export default {
   searchedLists:[],
   channelLists:[],
   dayObject:{today:'',tomorrow:''},
+  isActive: {channellists:true,hamburger:false},
 }

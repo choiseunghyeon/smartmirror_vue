@@ -7,7 +7,7 @@ $("#youtube").draggable();
 $("#widget").draggable().css("border","none");
 $("#youtube-list").draggable();
 $("#channellist").draggable();
-
+$("#mirror_controller").draggable();
 /*
 ytwidth=800,ytheight=400
 $("#size_up_voice").on("click",function(){

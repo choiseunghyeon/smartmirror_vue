@@ -7,4 +7,6 @@ export default {
   DELETE_CHANNEL: "deleteChannel",
   SET_DAY: "setDay",
   SYNC_CHANNEL: "syncChannel",
+  TOGGLE_CHANNEL_ACTIVE: 'toggleChannelActive',
+  TOGGLE_HAMBURGER_ACTIVE: "toggleHamburgerActive",
 }

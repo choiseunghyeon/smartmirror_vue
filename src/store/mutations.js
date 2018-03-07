@@ -36,5 +36,11 @@ export default {
   [Constant.SET_DAY] : (state, payload) => {
     console.log("SET DAY called");
     state.dayObject=payload;
+  },
+  [Constant.TOGGLE_CHANNEL_ACTIVE] : (state, payload) => {
+    state.isActive.channellists = !state.isActive.channellists;
+  },
+  [Constant.TOGGLE_HAMBURGER_ACTIVE] : (state,payload) => {
+    state.isActive.hamburger = !state.isActive.hamburger;
   }
 }

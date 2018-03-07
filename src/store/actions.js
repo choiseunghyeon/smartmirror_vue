@@ -26,6 +26,11 @@ export default {
   [Constant.SET_DAY]: (store,payload) => {
     store.commit(Constant.SET_DAY, payload);
   },
-
+  [Constant.TOGGLE_CHANNEL_ACTIVE] : (store) => {
+    store.commit(Constant.TOGGLE_CHANNEL_ACTIVE);
+  },
+  [Constant.TOGGLE_HAMBURGER_ACTIVE] : (store) => {
+    store.commit(Constant.TOGGLE_HAMBURGER_ACTIVE);
+  }
 
 }

@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="row">
-    <input id="search_keword" type="text" name="" value="">
+    <!--<input id="search_keword" type="text" name="" value="">-->
     <ul id="youtube-list" class="col-md-4">
       <li v-for="(data,i) in searchedLists" @click.stop="changeYoutube(i)">
         <span>Number {{i+1}}</span>
@@ -16,8 +16,8 @@
             <figure :class="'card-ui'+' card-in ' +{card_click:true}">
               <img :src="list.snippet.thumbnails.medium.url">
               <figcaption>{{list.snippet.channelTitle}}</figcaption>
+              <button id="channel_delete" @click.stop="deleteChannel(index)" type="button" name="button">&#10006;</button>
             </figure>
-          <!--<button @click.stop="deleteChannel(index)" type="button" name="button">삭제</button>-->
         </div>
     </div>
 
@@ -45,12 +45,12 @@ import {mapState} from 'vuex';
 export default {
   name:"SearchYoutube",
   data: function(){
-    return {selectedPlayLists:'',listImages:[],isActive:{channellists:false},animation:{clickCard:false}}
+    return {selectedPlayLists:'',listImages:[],animation:{clickCard:false}}
   },
   mounted: function(){
     this.init();
   },
-  computed: mapState(['searchedLists','channelLists']),
+  computed: mapState(['searchedLists','channelLists','isActive']),
   methods: {
     init: function(){
       let that = this;
@@ -150,9 +150,6 @@ export default {
     removeSearchedList: function(){
       this.$store.dispatch(Constant.SEARCHED_LIST,"");
     },
-    channelListToggle: function(){
-      this.isActive.channellists = !this.isActive.channellists;
-    }
   }
 }
 </script>

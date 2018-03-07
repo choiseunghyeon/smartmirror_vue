@@ -17,6 +17,7 @@ ul {
 .ui-widget-content{
   border: none;
 }
+
 /* youtube */
 #youtube-list{
   color:white;
@@ -42,6 +43,16 @@ ul {
 }
 #playlist {
   color:white;
+}
+
+/* Youtube - Channel*/
+#channel_delete{
+  position: absolute;
+  top:1px;
+  right:16px;
+  border:none;
+  background-color: rgba(255,255,255,0);
+  font-size: 30px;
 }
 /* widget */
 #widget{
@@ -76,14 +87,15 @@ ul {
   font-family: 'Share Tech Mono', monospace;
   color: #fff;
   color: #f7f7f7;
-  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
   text-align: center;
 }
 #clock .date {
   letter-spacing: 0.3em;
-  font-size: 20px;
+  font-size: 26px;
+  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
 }
 #clock .time {
   letter-spacing: 0.4em;
-  font-size: 55px;
+  font-size: 60px;
+  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
 }
