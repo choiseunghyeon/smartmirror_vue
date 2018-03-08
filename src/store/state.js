@@ -4,5 +4,6 @@ export default {
   searchedLists:[],
   channelLists:[],
   dayObject:{today:'',tomorrow:''},
-  isActive: {channellists:true,hamburger:false},
+  isActive: {channellists:true,hamburger:false, youtube:false, widget:false},
+  modal: {searchedYoutubeList:false},
 }

@@ -7,6 +7,9 @@ export default {
   DELETE_CHANNEL: "deleteChannel",
   SET_DAY: "setDay",
   SYNC_CHANNEL: "syncChannel",
-  TOGGLE_CHANNEL_ACTIVE: 'toggleChannelActive',
+  TOGGLE_CHANNEL_ACTIVE: "toggleChannelActive",
   TOGGLE_HAMBURGER_ACTIVE: "toggleHamburgerActive",
+  TOGGLE_YOUTUBE_ACTIVE: "toggleYoutubeActive",
+  TOGGLE_WIDGET_ACTIVE: "toggleWidgetActive",
+  MODAL_SEARCHED_YOUTUBE_LIST: "modalSearchedYoutubeList",
 }

@@ -37,10 +37,21 @@ export default {
     console.log("SET DAY called");
     state.dayObject=payload;
   },
-  [Constant.TOGGLE_CHANNEL_ACTIVE] : (state, payload) => {
+
+  // about isActive of state
+  [Constant.TOGGLE_CHANNEL_ACTIVE] : (state) => {
     state.isActive.channellists = !state.isActive.channellists;
   },
-  [Constant.TOGGLE_HAMBURGER_ACTIVE] : (state,payload) => {
+  [Constant.TOGGLE_HAMBURGER_ACTIVE] : (state) => {
     state.isActive.hamburger = !state.isActive.hamburger;
+  },
+  [Constant.TOGGLE_YOUTUBE_ACTIVE] : (state) => {
+    state.isActive.youtube = !state.isActive.youtube;
+  },
+  [Constant.TOGGLE_WIDGET_ACTIVE] : (state) => {
+    state.isActive.widget = !state.isActive.widget;
+  },
+  [Constant.MODAL_SEARCHED_YOUTUBE_LIST] : (state) => {
+    state.modal.searchedYoutubeList = !state.modal.searchedYoutubeList; 
   }
 }

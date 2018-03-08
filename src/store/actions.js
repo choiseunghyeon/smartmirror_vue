@@ -31,6 +31,15 @@ export default {
   },
   [Constant.TOGGLE_HAMBURGER_ACTIVE] : (store) => {
     store.commit(Constant.TOGGLE_HAMBURGER_ACTIVE);
+  },
+  [Constant.TOGGLE_YOUTUBE_ACTIVE] : (store) => {
+    store.commit(Constant.TOGGLE_YOUTUBE_ACTIVE);
+  },
+  [Constant.TOGGLE_WIDGET_ACTIVE] : (store) => {
+    store.commit(Constant.TOGGLE_WIDGET_ACTIVE);
+  },
+  [Constant.MODAL_SEARCHED_YOUTUBE_LIST] : (store) => {
+    store.commit(Constant.MODAL_SEARCHED_YOUTUBE_LIST);
   }
 
 }

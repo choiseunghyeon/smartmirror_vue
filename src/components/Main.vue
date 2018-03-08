@@ -9,10 +9,12 @@
     <ul id="control_list" :class="{isListActive: !isActive.hamburger}">
       <li><input id="search_keword" type="text" name="" value=""></li><!-- SearchYoutube에 있는 거를 일단 가져옴 기능상 문제는 없음 다만 유지보수 때 문제가 생길 수 있으니 수정 요망 -->
       <li @click="channelListToggle">구독중인 채널 보기</li>
-
+      <li @click="youtubeToggle">유튜브</li>
+      <li @click="widgetToggle">위젯</li>
+      <li @click="showModal">modal</li>
     </ul>
   </div>
-  <div id="widget" class="col-md-6">
+  <div id="widget" :class="{isWidgetActive:isActive.widget,'col-md-6':true}">
     <div class="row">
       <weather></weather>
     </div>
@@ -51,6 +53,15 @@ export default {
     },
     channelListToggle: function(){
       this.$store.dispatch(Constant.TOGGLE_CHANNEL_ACTIVE);
+    },
+    youtubeToggle: function(){
+      this.$store.dispatch(Constant.TOGGLE_YOUTUBE_ACTIVE);
+    },
+    widgetToggle: function(){
+      this.$store.dispatch(Constant.TOGGLE_WIDGET_ACTIVE);
+    },
+    showModal: function(){
+      this.$store.dispatch(Constant.SHOW_MODAL_TEST);
     }
   }
 }
@@ -83,6 +94,9 @@ export default {
   transition: all 0.3s ease-in-out;
 }
 .isListActive {
+  display: none;
+}
+.isWidgetActive {
   display: none;
 }
 #control_list {

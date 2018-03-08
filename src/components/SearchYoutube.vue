@@ -1,16 +1,6 @@
 <template lang="html">
-  <div class="row">
+  <div class="col-md-12">
     <!--<input id="search_keword" type="text" name="" value="">-->
-    <ul id="youtube-list" class="col-md-4">
-      <li v-for="(data,i) in searchedLists" @click.stop="changeYoutube(i)">
-        <span>Number {{i+1}}</span>
-        <span v-if="data.id.channelId">{{data.snippet.title+"채널"}}</span>
-        <figure>
-          <img :src="data.snippet.thumbnails.medium.url" value="data.id.videoId"><figcaption>{{data.snippet.title}}</figcaption>
-        </figure>
-      </li>
-    </ul>
-
     <div id="channellist" :class="{channellist_active:isActive.channellists}">
         <div v-for="(list,index) in channelLists" @click.stop="getPlayList(index)" class="col-md-3">
             <figure :class="'card-ui'+' card-in ' +{card_click:true}">
@@ -21,13 +11,38 @@
         </div>
     </div>
 
-    <div id="playlist" class="col-md-4">
+    <transition name="modal">
+      <div v-if="modal.searchedYoutubeList" class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-container">
+            <div class="row">
+              <button class="modal-default-button" @click="closeYoutubeListModal">
+                OK
+              </button>
+            </div>
+            <ul id="youtube-list" class="row">
+              <li v-for="(data,i) in searchedLists" @click.stop="changeYoutube(i)" class="col-md-4">
+                <!-- <span>Number {{i+1}}</span>
+                <span v-if="data.id.channelId">{{data.snippet.title+"채널"}}</span>-->
+                <figure>
+                  <img :src="data.snippet.thumbnails.medium.url" value="data.id.videoId"><figcaption>{{data.snippet.title}}</figcaption>
+                </figure>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </transition>
+
+
+    <div id="playlist" class="row">
       <ul>
-        <li v-for="(list,index) in selectedPlayLists">
-          <p>{{(index+1)+'번째 리스트'}}</p>
+        <li v-for="(list,index) in selectedPlayLists" class="row">
+          <!-- <p>{{(index+1)+'번째 리스트'}}</p>-->
           <p>{{list.snippet.title}}</p>
-          <div v-for="(data,i) in listImages[index]">
-            <img :src="data.image.url" @click="setVideoList(listImages[index],i)">
+          <div v-for="(data,i) in listImages[index]" class="col-md-3">
+            <img :src="data.image.url" @click="setVideoList(listImages[index],i)" style="width:240px;">
 
           </div>
         </li>
@@ -50,7 +65,7 @@ export default {
   mounted: function(){
     this.init();
   },
-  computed: mapState(['searchedLists','channelLists','isActive']),
+  computed: mapState(['searchedLists','channelLists','isActive','modal']),
   methods: {
     init: function(){
       let that = this;
@@ -60,7 +75,7 @@ export default {
         console.log("called search_keword");
         var keword = $("#search_keword").val();
         let order = {'최신순':'date','조회수':'viewCount'};
-        var api_url="https://www.googleapis.com/youtube/v3/search?part=snippet&q="+keword+"&maxResults=5&order="+order.조회수+"&"+ApiKey.youtube
+        var api_url="https://www.googleapis.com/youtube/v3/search?part=snippet&q="+keword+"&maxResults=6&order="+order.조회수+"&"+ApiKey.youtube
         // video중 조회수가 제일 높은 것 상위 5개의 list를 가져옴
         console.log(api_url);
 
@@ -74,7 +89,7 @@ export default {
               console.log(data.items);
               console.log(data.items[0].snippet.title);
               that.$store.dispatch(Constant.SEARCHED_LIST,data.items);
-
+              that.$store.dispatch(Constant.MODAL_SEARCHED_YOUTUBE_LIST);
             }
         })
 
@@ -89,6 +104,8 @@ export default {
       }
       else this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:data.id.videoId});
       this.removeSearchedList();
+
+      this.closeYoutubeListModal();
     },
     deleteChannel: function(index){
       this.$store.dispatch(Constant.DELETE_CHANNEL,index);
@@ -150,6 +167,9 @@ export default {
     removeSearchedList: function(){
       this.$store.dispatch(Constant.SEARCHED_LIST,"");
     },
+    closeYoutubeListModal: function(){
+      this.$store.dispatch(Constant.MODAL_SEARCHED_YOUTUBE_LIST);
+    }
   }
 }
 </script>

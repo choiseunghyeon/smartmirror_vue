@@ -1,5 +1,5 @@
 <template lang="html">
-<div class="">
+<div class="col-md-12">
 
   <div id="youtube">
     <youtube v-if="currentVideoId !== '' " :class="{youtube_active:isActive.youtube}"
@@ -27,11 +27,10 @@ export default {
   name:"YoutubeController",
   data: function(){
     return {
-        isActive:{youtube: false, search: false,},
         youtubeSize:{width:"640", height:"390"},
     }
   },
-  computed: mapState(['currentVideoId','videoList']),
+  computed: mapState(['currentVideoId','videoList','isActive']),
   methods: {
     ready: function(player){
       this.player=player;
@@ -64,10 +63,7 @@ export default {
       this.youtubeSize.height=''+(height+100);
     },
     displayToggle: function(){
-      this.isActive.youtube = !this.isActive.youtube;
-    },
-    searchToggle: function(){
-      this.isActive.search = !this.isActive.search;
+      this.$store.dispatch(Constant.TOGGLE_YOUTUBE_ACTIVE);
     },
     test: function(){
       console.log("state --- "+this.player.getPlayerState());
@@ -81,5 +77,4 @@ export default {
 
 <style lang="css" scoped>
   .youtube_active {display: none;}
-  .search_active {display: none;}
 </style>
