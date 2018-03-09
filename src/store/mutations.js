@@ -19,10 +19,9 @@ export default {
   [Constant.SEARCHED_LIST] : (state,payload) => {
     console.log("SEARCHED_LIST called");
     console.log("payload: ",payload);
-    let pToken = payload.hasOwnProperty("prevPageToken") ? payload.prevPageToken : 'NULL';
     let nToken = payload.hasOwnProperty("nextPageToken") ? payload.nextPageToken : 'NULL';
 
-    state.searchedLists.push({items:payload.items,prevToken:pToken,nextToken:nToken});
+    state.searchedLists.push({items:payload.items,nextToken:nToken});
   },
   [Constant.REMOVE_SEARCHED_LIST] : (state) => {
     state.searchedLists=[];

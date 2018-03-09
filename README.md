@@ -102,6 +102,6 @@ modal에는 검색시 나오는 결과물이 들어가고 추후 캐러셀 또�
    nexpage or prevPage ui는 캐러셀로 할 예정
  - 일부 디자인 변경
  - 검색된 유튜브 리스트의 데이터 구조를 carousel을 통해 데이터 가져오기 및 슬라이드에 용이하게 변경
-   ex) [{item:[...],prevToken:'',nextToken:''},{item:[...],prevToken:'',nextToken:''}]
+   ex) [{item:[...],nextToken:''},{item:[...],nextToken:''}]
+    prevToken은 이미 요청된 데이터는 지우지 않을 것이기 때문에 prevToken을 이용해서 새로 요청할 필요가 없다고 판단 지움
    searchedLists state를 지울 수 있는 함수 추가
-   
