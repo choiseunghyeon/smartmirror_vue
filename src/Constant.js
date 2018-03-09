@@ -5,6 +5,7 @@ export default {
   SEARCHED_LIST: "searchedList",
   ADD_CHANNEL: "addChannel",
   DELETE_CHANNEL: "deleteChannel",
+  REMOVE_SEARCHED_LIST: "removeSearchedList",
   SET_DAY: "setDay",
   SYNC_CHANNEL: "syncChannel",
   TOGGLE_CHANNEL_ACTIVE: "toggleChannelActive",

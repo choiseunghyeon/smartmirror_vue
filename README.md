@@ -94,3 +94,14 @@ https://developers.google.com/youtube/v3/docs/playlistItems/list?hl=ko // youtub
 * 위 내용을 적용하려 했으나 간단하게 modal을 띄움으로 써 스마트폰으로 조작하기 쉽게 하려고 함
 modal에는 검색시 나오는 결과물이 들어가고 추후 캐러셀 또는 slider로 넘길 때마다 추가적인 데이터를 가져오려 함
 구독 중인 채널 클릭시 나오는 플레이리스트들 또한 modal에서 보여줄 예정
+
+18.03.09
+유튜브 관련 기능을 강화하기로 결정
+ - 현재 ui에는 모달에서 6개의 유튜브 검색결과를 보여준다(조회수가 높은 순서대로)
+   여기서 다음 6개의 결과를 추가적으로 계속 가져오도록 만들 계획(nextPageToken을 이용가능(youtube api))
+   nexpage or prevPage ui는 캐러셀로 할 예정
+ - 일부 디자인 변경
+ - 검색된 유튜브 리스트의 데이터 구조를 carousel을 통해 데이터 가져오기 및 슬라이드에 용이하게 변경
+   ex) [{item:[...],prevToken:'',nextToken:''},{item:[...],prevToken:'',nextToken:''}]
+   searchedLists state를 지울 수 있는 함수 추가
+   

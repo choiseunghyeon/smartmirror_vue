@@ -20,10 +20,11 @@
                 OK
               </button>
             </div>
+
             <ul id="youtube-list" class="row">
-              <li v-for="(data,i) in searchedLists" @click.stop="changeYoutube(i)" class="col-md-4">
-                <!-- <span>Number {{i+1}}</span>
-                <span v-if="data.id.channelId">{{data.snippet.title+"채널"}}</span>-->
+              <li v-for="(data,i) in searchedLists[0].items" @click.stop="changeYoutube(data)" class="col-md-4">
+                 <span>Number {{i+1}}</span>
+                <span v-if="data.id.channelId">{{data.snippet.title+"채널"}}</span>
                 <figure>
                   <img :src="data.snippet.thumbnails.medium.url" value="data.id.videoId"><figcaption>{{data.snippet.title}}</figcaption>
                 </figure>
@@ -42,7 +43,7 @@
           <!-- <p>{{(index+1)+'번째 리스트'}}</p>-->
           <p>{{list.snippet.title}}</p>
           <div v-for="(data,i) in listImages[index]" class="col-md-3">
-            <img :src="data.image.url" @click="setVideoList(listImages[index],i)" style="width:240px;">
+            <img :src="data.image.url" @click="setVideoList(listImages[index],i)" style="width:260px;">
 
           </div>
         </li>
@@ -77,7 +78,7 @@ export default {
         let order = {'최신순':'date','조회수':'viewCount'};
         var api_url="https://www.googleapis.com/youtube/v3/search?part=snippet&q="+keword+"&maxResults=6&order="+order.조회수+"&"+ApiKey.youtube
         // video중 조회수가 제일 높은 것 상위 5개의 list를 가져옴
-        console.log(api_url);
+        console.log("api_url: ",api_url);
 
         $.ajax({
             url: api_url,
@@ -88,7 +89,7 @@ export default {
               console.log(data);
               console.log(data.items);
               console.log(data.items[0].snippet.title);
-              that.$store.dispatch(Constant.SEARCHED_LIST,data.items);
+              that.$store.dispatch(Constant.SEARCHED_LIST,data);
               that.$store.dispatch(Constant.MODAL_SEARCHED_YOUTUBE_LIST);
             }
         })
@@ -96,13 +97,11 @@ export default {
       })
       // 검색 끝
     },
-    changeYoutube: function(index){
-      let data = this.searchedLists[index];
+    changeYoutube: function(data){
       console.log("change",data);
-      if (data.id.hasOwnProperty('channelId')) {
-        this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet});
-      }
-      else this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:data.id.videoId});
+      data.id.hasOwnProperty("channelId")
+        ? this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet})
+        : this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:data.id.videoId});
       this.removeSearchedList();
 
       this.closeYoutubeListModal();
@@ -165,7 +164,7 @@ export default {
       this.selectedPlayLists='';
     },
     removeSearchedList: function(){
-      this.$store.dispatch(Constant.SEARCHED_LIST,"");
+      this.$store.dispatch(Constant.REMOVE_SEARCHED_LIST);
     },
     closeYoutubeListModal: function(){
       this.$store.dispatch(Constant.MODAL_SEARCHED_YOUTUBE_LIST);

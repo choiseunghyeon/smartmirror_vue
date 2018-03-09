@@ -14,6 +14,9 @@ export default {
   [Constant.SEARCHED_LIST] : (store,payload) => {
     store.commit(Constant.SEARCHED_LIST,payload)
   },
+  [Constant.REMOVE_SEARCHED_LIST] : (store) => {
+    store.commit(Constant.REMOVE_SEARCHED_LIST);
+  },
   [Constant.ADD_CHANNEL] : (store,payload) => {
     store.commit(Constant.ADD_CHANNEL, payload)
   },

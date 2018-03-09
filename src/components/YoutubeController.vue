@@ -6,6 +6,7 @@
       :video-id="currentVideoId" @ready="ready" @ended="ended" :player-vars="{autoplay:1}"
       :playerWidth="youtubeSize.width" :playerHeight="youtubeSize.height">
     </youtube>
+    <!--
     <button @click="pause" type="button" name="button">멈춤</button>
     <button @click="stop" type="button" name="button">스탑</button>
     <button @click="play" type="button" name="button">시작</button>
@@ -13,6 +14,7 @@
     <button @click="displayToggle" type="button" name="button">최소화</button>
     <button @click="sizeUp" type="button" name="button">크게</button>
     <button @click="test" type="button" name="button">test</button>
+  -->
   </div>
 </div>
 </template>
@@ -46,6 +48,7 @@ export default {
     change: function(videoId){
       this.$store.dispatch(Constant.PLAY_VIDEO_LIST);
     },
+    /* 핸드폰 조작시 유튜브 영상으로 직접 컨트롤 할 수 있기 때문에 우선 주석처리
     pause: function(){
       this.player.pauseVideo()
     },
@@ -62,6 +65,7 @@ export default {
       this.youtubeSize.width=''+(width+100);
       this.youtubeSize.height=''+(height+100);
     },
+    */
     displayToggle: function(){
       this.$store.dispatch(Constant.TOGGLE_YOUTUBE_ACTIVE);
     },

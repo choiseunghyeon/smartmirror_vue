@@ -11,9 +11,14 @@ html {
 }
 ul {
   list-style-type: none;
+  padding: 0px;
 }
 
-
+.VueCarousel-navigation-button{
+  position: relative !important;
+  font-size:40px;
+  color: white !important;
+}
 .ui-widget-content{
   border: none;
 }

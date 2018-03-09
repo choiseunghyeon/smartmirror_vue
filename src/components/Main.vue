@@ -8,10 +8,10 @@
     </div>
     <ul id="control_list" :class="{isListActive: !isActive.hamburger}">
       <li><input id="search_keword" type="text" name="" value=""></li><!-- SearchYoutube에 있는 거를 일단 가져옴 기능상 문제는 없음 다만 유지보수 때 문제가 생길 수 있으니 수정 요망 -->
-      <li @click="channelListToggle">구독중인 채널 보기</li>
-      <li @click="youtubeToggle">유튜브</li>
-      <li @click="widgetToggle">위젯</li>
-      <li @click="showModal">modal</li>
+      <li @click="channelListToggle"><span>구독중인 채널 보기</span></li>
+      <li @click="youtubeToggle"><span>유튜브</span></li>
+      <li @click="widgetToggle"><span>위젯</span></li>
+      <li @click="showModal"><span>modal</span></li>
     </ul>
   </div>
   <div id="widget" :class="{isWidgetActive:isActive.widget,'col-md-6':true}">
@@ -35,6 +35,8 @@ import SearchYoutube from './SearchYoutube';
 import YoutubeController from './YoutubeController';
 import Constant from '../Constant.js';
 import {mapState} from 'vuex';
+
+
 export default {
   name: 'Main',
   components: {Clock,Weather,SearchYoutube,YoutubeController},
@@ -88,10 +90,11 @@ export default {
   height: 5px;
   background-color: #ecf0f1;
   display: block;
-  margin: 8px auto;
+  margin: 8px;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
+  text-align: left;
 }
 .isListActive {
   display: none;
@@ -99,16 +102,14 @@ export default {
 .isWidgetActive {
   display: none;
 }
-#control_list {
-  margin-left: 70px;
-}
+
 #control_list li{
-  margin: 20px auto;
+  margin: 25px auto;
   color: white;
-  font-size: 20px;
+  font-size: 25px;
+  text-align: left;
 }
 #control_list input{
-  margin-left: 78px;
   background-color: inherit;
 }
 </style>

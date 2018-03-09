@@ -18,7 +18,14 @@ export default {
   },
   [Constant.SEARCHED_LIST] : (state,payload) => {
     console.log("SEARCHED_LIST called");
-    state.searchedLists=payload;
+    console.log("payload: ",payload);
+    let pToken = payload.hasOwnProperty("prevPageToken") ? payload.prevPageToken : 'NULL';
+    let nToken = payload.hasOwnProperty("nextPageToken") ? payload.nextPageToken : 'NULL';
+
+    state.searchedLists.push({items:payload.items,prevToken:pToken,nextToken:nToken});
+  },
+  [Constant.REMOVE_SEARCHED_LIST] : (state) => {
+    state.searchedLists=[];
   },
   [Constant.ADD_CHANNEL] : (state,payload) => {
     console.log("ADD_CHANNEL called");
@@ -52,6 +59,9 @@ export default {
     state.isActive.widget = !state.isActive.widget;
   },
   [Constant.MODAL_SEARCHED_YOUTUBE_LIST] : (state) => {
-    state.modal.searchedYoutubeList = !state.modal.searchedYoutubeList; 
+    state.modal.searchedYoutubeList = !state.modal.searchedYoutubeList;
+    if (state.modal.searchedYoutubeList == false ) {
+      state.searchedLists=[];
+    }
   }
 }
