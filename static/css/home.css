@@ -51,6 +51,7 @@ ul {
   padding: 10px;
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
+  overflow-y: auto;
 }
 
 

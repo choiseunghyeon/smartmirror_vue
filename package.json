@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "lodash": "^4.17.5",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue-youtube-embed": "^2.1.3",

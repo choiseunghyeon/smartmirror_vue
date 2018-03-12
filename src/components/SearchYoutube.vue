@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <!--<input id="search_keword" type="text" name="" value="">-->
     <div id="channellist" :class="{channellist_active:isActive.channellists}">
-        <div v-for="(list,index) in channelLists" @click.stop="getPlayList(index)" class="col-md-3">
+        <div v-for="(list,index) in channelLists" @click.stop="showPlayList(index)" class="col-md-3">
             <figure :class="'card-ui'+' card-in ' +{card_click:true}">
               <img :src="list.snippet.thumbnails.medium.url">
               <figcaption>{{list.snippet.channelTitle}}</figcaption>
@@ -11,44 +11,12 @@
         </div>
     </div>
 
-    <transition name="modal">
-      <div v-if="modal.searchedYoutubeList" class="modal-mask">
-        <div class="modal-wrapper">
-          <div class="modal-container">
-            <div class="row">
-              <button class="modal-default-button" @click="closeYoutubeListModal">
-                OK
-              </button>
-            </div>
 
-            <ul id="youtube-list" class="row">
-              <li v-for="(data,i) in searchedLists[0].items" @click.stop="changeYoutube(data)" class="col-md-4">
-                 <span>Number {{i+1}}</span>
-                <span v-if="data.id.channelId">{{data.snippet.title+"채널"}}</span>
-                <figure>
-                  <img :src="data.snippet.thumbnails.medium.url" value="data.id.videoId"><figcaption>{{data.snippet.title}}</figcaption>
-                </figure>
-              </li>
-            </ul>
-
-          </div>
-        </div>
-      </div>
-    </transition>
+    <searched-list v-if="modalFlag == 'SearchedList'" @changeYoutube="changeYoutube"></searched-list>
+    <play-list v-if="modalFlag == 'PlayList'" ></play-list>
 
 
-    <div id="playlist" class="row">
-      <ul>
-        <li v-for="(list,index) in selectedPlayLists" class="row">
-          <!-- <p>{{(index+1)+'번째 리스트'}}</p>-->
-          <p>{{list.snippet.title}}</p>
-          <div v-for="(data,i) in listImages[index]" class="col-md-3">
-            <img :src="data.image.url" @click="setVideoList(listImages[index],i)" style="width:260px;">
 
-          </div>
-        </li>
-      </ul>
-    </div>
   <!--<button @click="channelListToggle" type="button" name="button">쇼미 채널</button>-->
   </div> <!-- the end -->
 </template>
@@ -56,17 +24,17 @@
 <script>
 import Constant from '../Constant.js';
 import ApiKey from '../ApiKey.js';
+import SearchedList from './SearchedList';
+import PlayList from './PlayList';
 import {mapState} from 'vuex';
 
 export default {
   name:"SearchYoutube",
-  data: function(){
-    return {selectedPlayLists:'',listImages:[],animation:{clickCard:false}}
-  },
+  components: {SearchedList,PlayList},
   mounted: function(){
     this.init();
   },
-  computed: mapState(['searchedLists','channelLists','isActive','modal']),
+  computed:  mapState(['channelLists','isActive','modalFlag']),
   methods: {
     init: function(){
       let that = this;
@@ -74,9 +42,9 @@ export default {
       //검색
       $("#search_keword").on("blur",function(){
         console.log("called search_keword");
-        var keword = $("#search_keword").val();
+        let keword = $("#search_keword").val();
         let order = {'최신순':'date','조회수':'viewCount'};
-        var api_url="https://www.googleapis.com/youtube/v3/search?part=snippet&q="+keword+"&maxResults=6&order="+order.조회수+"&"+ApiKey.youtube
+        var api_url="https://www.googleapis.com/youtube/v3/search?part=snippet&q="+keword+"&maxResults=9&order="+order.조회수+"&"+ApiKey.youtube
         // video중 조회수가 제일 높은 것 상위 5개의 list를 가져옴
         console.log("api_url: ",api_url);
 
@@ -86,11 +54,12 @@ export default {
             dataType: 'json',
             success:function(data){
 
+              //that.$store.dispatch(Constant.REMOVE_SEARCHED_LIST);
               console.log(data);
               console.log(data.items);
               console.log(data.items[0].snippet.title);
               that.$store.dispatch(Constant.SEARCHED_LIST,data);
-              that.$store.dispatch(Constant.MODAL_SEARCHED_YOUTUBE_LIST);
+              that.$store.dispatch(Constant.MODAL_FLAG,"SearchedList");
             }
         })
 
@@ -99,8 +68,7 @@ export default {
     },
     changeYoutube: function(data){
       console.log("change",data);
-      data.id.hasOwnProperty("channelId")
-        ? this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet})
+      data.id.hasOwnProperty("channelId") ? this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet})
         : this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:data.id.videoId});
       this.removeSearchedList();
 
@@ -109,66 +77,17 @@ export default {
     deleteChannel: function(index){
       this.$store.dispatch(Constant.DELETE_CHANNEL,index);
     },
-    getPlayList: function(index){
+    showPlayList: function(index){
       let channelId=this.channelLists[index].snippet.channelId
-      this.animation.clickCard=true;
-      let that = this;
-      this.listImages=[];
-      $.ajax({
-        url:'https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId='+channelId+'&'+ApiKey.youtube,
-        type: 'get',
-        dataType:"json",
-        success:function(data){
-          console.log(data);
-          that.selectedPlayLists=data.items;
-          for (var i = 0; i < that.selectedPlayLists.length; i++) {
-            that.getListItems(that.selectedPlayLists[i].id,i);
-          }
-
-        } // the end of success
-      }) // the end of ajax
-
-    },
-    getListItems: function(id,index){ // PlayList의 영상 5개를 긁어옴
-      console.log("get items!!", id);
-      let playlistId = id;
-      let that = this;
-      let payload;
-      $.ajax({
-        url:'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId='+playlistId+'&'+ApiKey.youtube,
-        type: 'get',
-        dataType:"json",
-        success:function(data){
-          console.log(data.items);
-          /*
-          console.log(data);
-          console.log(data.items[0].snippet.resourceId.videoId);
-          */
-          payload = data.items.map((x) => { return {id:x.snippet.resourceId.videoId,image:x.snippet.thumbnails.medium} }),
-
-          that.listImages.push(payload);
-        }
-      }) // the end of ajax
-      console.log(payload);
-      return payload;
-    },
-    setVideoList: function(data,num){ // 선택된 영상을 실행하고 선택된 영상이 있는 플레이 리스트의 영상을 자동실행으로 setting함
-      let selectedNum = num;
-      console.log(data);
-      let payload = {
-        idArray:data.map(x=>x.id),
-        num:selectedNum,
-      };
-      this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
-      this.listImages=[];
-      this.selectedPlayLists='';
+      this.$store.dispatch(Constant.SET_CHANNELID,channelId);
+      this.$store.dispatch(Constant.MODAL_FLAG,"PlayList");
     },
     removeSearchedList: function(){
       this.$store.dispatch(Constant.REMOVE_SEARCHED_LIST);
     },
     closeYoutubeListModal: function(){
-      this.$store.dispatch(Constant.MODAL_SEARCHED_YOUTUBE_LIST);
-    }
+      this.$store.dispatch(Constant.MODAL_FLAG,'');
+    },
   }
 }
 </script>

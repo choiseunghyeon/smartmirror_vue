@@ -41,8 +41,11 @@ export default {
   [Constant.TOGGLE_WIDGET_ACTIVE] : (store) => {
     store.commit(Constant.TOGGLE_WIDGET_ACTIVE);
   },
-  [Constant.MODAL_SEARCHED_YOUTUBE_LIST] : (store) => {
-    store.commit(Constant.MODAL_SEARCHED_YOUTUBE_LIST);
-  }
-
+  [Constant.MODAL_FLAG] : (store,payload) => {
+    console.log("FLAG CALLED",payload);
+    store.commit(Constant.MODAL_FLAG,payload);
+  },
+  [Constant.SET_CHANNELID] : (store,payload) => {
+    store.commit(Constant.SET_CHANNELID,payload);
+  },
 }

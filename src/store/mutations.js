@@ -57,10 +57,12 @@ export default {
   [Constant.TOGGLE_WIDGET_ACTIVE] : (state) => {
     state.isActive.widget = !state.isActive.widget;
   },
-  [Constant.MODAL_SEARCHED_YOUTUBE_LIST] : (state) => {
-    state.modal.searchedYoutubeList = !state.modal.searchedYoutubeList;
-    if (state.modal.searchedYoutubeList == false ) {
-      state.searchedLists=[];
-    }
+  [Constant.MODAL_FLAG] : (state,payload) => {
+    console.log("MODAL_FLAG called");
+    state.modalFlag = payload;
+  },
+  [Constant.SET_CHANNELID] : (state, payload) => {
+    state.selectedChannel = payload;
   }
+
 }

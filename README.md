@@ -105,3 +105,15 @@ modal에는 검색시 나오는 결과물이 들어가고 추후 캐러셀 또�
    ex) [{item:[...],nextToken:''},{item:[...],nextToken:''}]
     prevToken은 이미 요청된 데이터는 지우지 않을 것이기 때문에 prevToken을 이용해서 새로 요청할 필요가 없다고 판단 지움
    searchedLists state를 지울 수 있는 함수 추가
+
+18.03.12
+컴포넌트의 크기가 커지고 있어서 이를 더 세분화 시켜서 나눌 계획이다.
+따라서 SearchYoutube.vue와 PlayList.vue를 추가하여 나눌 계획
+MODAL_SEARCHED_YOUTUBE_LIST -> MODAL_ACTIVE로 변경
+그리고 TOGGLE방식에서 state.text =!state.text에서 state.text = true or false로 변경함 더욱 직관적으로 쓰기 위함
+SearchYoutube.vue를 매니징 컴포넌트로 변경함 이 밑에 컴포넌트를 두어 검색되는 유튜브 리스트와 플레이 리스트를 분리함
+ - 유튜브 추가 데이터 요청의 조건을 스크롤이 맨 밑에일 경우로 변경
+   데이터가 updated 될 때마다 scroll의 크기를 구하고 이 scroll이 bottom을 찍었을 때 추가적으로 데이터 요청
+
+수정 예정 사항
+ 지금은 각 playlist가 가지고 있는 youtube 영상 또한 출력해 주었으나 다향한 palyList를 보여주고(스크롤을 통해 추가적인 데이터 요청 가능) 이후 선택하여 해당 playlist의 youtubelist를 가져올 수 있도록 이 youtubelist또한 스크롤을 통해 추가 데이터 요청 가능
