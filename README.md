@@ -1,30 +1,20 @@
-# smartmirror_vue
-
-> A Vue.js project
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 
--- vue init webpack smartmirro_vue
--- npm install
--- npm install --save vuex
 about Youtube
+- https://www.googleapis.com/youtube/v3/videos?part=statistics&id=GZqZyrFfXw0&key=+"api.key"
+// 조회수 및 좋아요 수 등의 정보를 얻을 수 있음
+
+- https://www.googleapis.com/youtube/v3/search?part=snippet&q=윤루트&maxResults=9&order=viewCount&key=+"api.key"
+// 검색 기능
+
+- https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=UCmJ4DkPFPzjR2TkJ7lXSQWw&maxResults=6&key=+"api.key"
+// 채널 정보를 넣으면 해당 채널의 플레이 리스트(재생 목록)을 출력해줌
+
+- https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLVXsWLG72QDaeAKIbvC1zKdxkueUWEhWr&key=+"api.key"
+// 재생 목록의 한 id를 넣으면 해당 목록이 가지고 있는 영상들을 출력해줌
+
+//https://developers.google.com/youtube/v3/docs/videos/list?hl=ko#try-it
+
 npm i -S vue-youtube-embed
 https://github.com/kaorun343/vue-youtube-embed
 
@@ -116,4 +106,11 @@ SearchYoutube.vue를 매니징 컴포넌트로 변경함 이 밑에 컴포넌트
    데이터가 updated 될 때마다 scroll의 크기를 구하고 이 scroll이 bottom을 찍었을 때 추가적으로 데이터 요청
 
 수정 예정 사항
- 지금은 각 playlist가 가지고 있는 youtube 영상 또한 출력해 주었으나 다향한 palyList를 보여주고(스크롤을 통해 추가적인 데이터 요청 가능) 이후 선택하여 해당 playlist의 youtubelist를 가져올 수 있도록 이 youtubelist또한 스크롤을 통해 추가 데이터 요청 가능
+ 지금은 각 playlist가 가지고 있는 youtube 영상 또한 출력해 주었으나 다양한 palyList를 보여주고(스크롤을 통해 추가적인 데이터 요청 가능) 이후 선택하여 해당 playlist의 youtubelist를 가져올 수 있도록 이 youtubelist또한 스크롤을 통해 추가 데이터 요청 가능
+
+18.03.13
+
+PlayList(재생 목록)만 출력하는 페이지 구성 하지만 존재하지 않는 playlist또한 넘어오는 일이 생김 이를 필터링할 함수 구현 했으나 데이터 타입을 변경해줘야함
+
+수정 예정 사항
+  validatePlayList 함수 수정

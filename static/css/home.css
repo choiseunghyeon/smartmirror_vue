@@ -125,7 +125,9 @@ ul {
   color:white;
 }
 #playlist li {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  width: 400px;
+  height: 300px;
 }
 #playlist li div{
   margin-bottom: 15px;
