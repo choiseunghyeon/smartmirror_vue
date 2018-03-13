@@ -98,9 +98,10 @@ export default {
         type: 'get',
         dataType:"json",
         success:function(data){
-          console.log(data);
-          that.selectedPlayLists.push({items:data.items, nextToken:data.nextPageToken});
-          /*
+          let validatedObject = that.validatePlayList(data);
+          console.log("validatedObject",validatedObject);
+          that.selectedPlayLists.push({items:validatedObject.items, nextToken:validatedObject.nextPageToken});
+        /*
           for (var i = 0; i < that.selectedPlayLists.length; i++) {
             that.getListItems(that.selectedPlayLists[i].id,i);
           }
@@ -113,15 +114,13 @@ export default {
     },
     validatePlayList: function(data){
       console.log(data);
-      let arr = data.items .filter((x) => {
+      let arr = data.items.filter((x) => {
         let url = x.snippet.thumbnails.medium.url
-        console.log(url);
         let validatedValue = url.search('no_thumbnail');
-        console.log(validatedValue);
         return validatedValue == -1 ? true : false;
       }); // the end of filter
       console.log("arr: ",arr);
-      return {obj:arr};
+      return {items:arr,nextPageToken:data.nextPageToken};
     },
     getListItems: function(id,index){ // PlayList의 영상 5개를 긁어옴
       console.log("get items!!", id);

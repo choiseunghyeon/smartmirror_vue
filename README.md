@@ -110,7 +110,7 @@ SearchYoutube.vue를 매니징 컴포넌트로 변경함 이 밑에 컴포넌트
 
 18.03.13
 
-PlayList(재생 목록)만 출력하는 페이지 구성 하지만 존재하지 않는 playlist또한 넘어오는 일이 생김 이를 필터링할 함수 구현 했으나 데이터 타입을 변경해줘야함
+PlayList가 가지고 있는 items 갯수 구하기 1개만 있는 playlist를 눌렀을 때 허무할 수 있으니..
 
 수정 예정 사항
-  validatePlayList 함수 수정
+  재생목록 하나가 가지고 있는 items 값 구해서 넣어주기, 디자인 꾸미기 재생목록 눌렀을 때 items list 띄워주기 
