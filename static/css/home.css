@@ -132,6 +132,17 @@ ul {
 #playlist li div{
   margin-bottom: 15px;
 }
+#listItem {
+  color:white;
+}
+#listItem li {
+  margin-bottom: 10px;
+  width: 400px;
+  height: 300px;
+}
+#listItem li div{
+  margin-bottom: 15px;
+}
 /* Youtube - Channel*/
 #channel_delete{
   position: absolute;

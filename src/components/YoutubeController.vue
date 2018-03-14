@@ -37,7 +37,7 @@ export default {
     ready: function(player){
       this.player=player;
     },
-    ended: function(){
+    ended: function(){ // 끝나면 저장 되어 있는 다음 비디오 실행
       console.log('끝');
       this.change()
     },
