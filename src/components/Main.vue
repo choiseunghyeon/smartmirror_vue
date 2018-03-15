@@ -1,5 +1,7 @@
 <template>
 <div class="row">
+  <span class="oi oi-list" style="width:32px; height:32px; color: white;"></span>
+  <span class="oi oi-list" title="oi-list" aria-hidden="true"></span>
   <div id="mirror_controller" class="col-md-6">
     <div id="hamburger" :class="{isHamActive: isActive.hamburger}" @click="hamburgerToggle">
       <div class="bar"></div>
@@ -7,11 +9,16 @@
       <div class="bar"></div>
     </div>
     <ul id="control_list" :class="{isListActive: !isActive.hamburger}">
-      <li><input id="search_keword" type="text" name="" value=""></li><!-- SearchYoutube에 있는 거를 일단 가져옴 기능상 문제는 없음 다만 유지보수 때 문제가 생길 수 있으니 수정 요망 -->
+      <li>
+        <input id="search_keword" type="text" name="" v-model="keword">
+        <button class="modal-default-button" @click="youtubeSearch">
+          검색
+        </button>
+      </li><!-- SearchYoutube에 있는 거를 일단 가져옴 기능상 문제는 없음 다만 유지보수 때 문제가 생길 수 있으니 수정 요망 -->
       <li @click="channelListToggle"><span>구독중인 채널 보기</span></li>
       <li @click="youtubeToggle"><span>유튜브</span></li>
       <li @click="widgetToggle"><span>위젯</span></li>
-      <li @click="showModal"><span>modal</span></li>
+      <li @click="test"><span>test</span></li>
     </ul>
   </div>
   <div id="widget" :class="{isWidgetActive:isActive.widget,'col-md-6':true}">
@@ -44,6 +51,9 @@ export default {
   created: function(){
     this.sync();
   },
+  data: function(){
+    return { keword:''};
+  },
   methods: {
     sync: function(){
       // 채널 정보 localStorage에 저장되어 있는 데이터를 vue에 동기화
@@ -62,8 +72,12 @@ export default {
     widgetToggle: function(){
       this.$store.dispatch(Constant.TOGGLE_WIDGET_ACTIVE);
     },
-    showModal: function(){
-      this.$store.dispatch(Constant.SHOW_MODAL_TEST);
+    test: function(){
+      this.$store.dispatch(Constant.GET_LIST_COUNT,{playlistId:"PLVXsWLG72QDaeAKIbvC1zKdxkueUWEhWr"});
+    },
+    youtubeSearch(){
+      console.log("this is keword",this.keword);
+      this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keword:this.keword});
     }
   }
 }

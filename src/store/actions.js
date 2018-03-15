@@ -1,4 +1,6 @@
 import Constant from '../constant';
+import AxiosAPI from '../api/AxiosAPI.js';
+import ForAction from '../api/ForAction.js';
 
 export default {
   [Constant.VIDEO_CHANGE] : (store,payload) => {
@@ -11,11 +13,25 @@ export default {
   [Constant.PLAY_VIDEO_LIST] : (store) => {
     store.commit(Constant.PLAY_VIDEO_LIST)
   },
-  [Constant.SEARCHED_LIST] : (store,payload) => {
-    store.commit(Constant.SEARCHED_LIST,payload)
+  [Constant.ADD_SEARCHED_LIST] : (store,payload) => {
+
+    store.commit(Constant.ADD_SEARCHED_LIST,payload);
+  },
+  [Constant.ADD_PLAY_LIST] : (store,payload) => {
+    console.log("ADD_PLAY_LIST Called");
+    store.commit(Constant.ADD_PLAY_LIST,payload);
+  },
+  [Constant.ADD_PLAY_LIST_ITEMS] : (store,payload) => {
+    store.commit(Constant.ADD_PLAY_LIST_ITEMS,payload);
   },
   [Constant.REMOVE_SEARCHED_LIST] : (store) => {
     store.commit(Constant.REMOVE_SEARCHED_LIST);
+  },
+  [Constant.REMOVE_PLAY_LIST] : (store) => {
+    store.commit(Constant.REMOVE_PLAY_LIST);
+  },
+  [Constant.REMOVE_PLAY_LIST_ITEMS] : (store) => {
+    store.commit(Constant.REMOVE_PLAY_LIST_ITEMS);
   },
   [Constant.ADD_CHANNEL] : (store,payload) => {
     store.commit(Constant.ADD_CHANNEL, payload)
@@ -48,4 +64,87 @@ export default {
   [Constant.SET_CHANNELID] : (store,payload) => {
     store.commit(Constant.SET_CHANNELID,payload);
   },
+
+  // about Axios
+  [Constant.GET_LIST_COUNT] : (store,payload) => {
+    AxiosAPI.countPlayListItems(payload)
+    .then((response) => {
+      console.log("axiose res: ",response);
+    })
+    .catch((ex) => {
+      console.log("ERROR!!!!", ex);
+    })
+  },
+  [Constant.YOUTUBE_SEARCH] : (store,payload) => {
+    AxiosAPI.youtubeSearch(payload)
+    .then((response) => {
+      console.log(response);
+      console.log(response.data.items);
+      console.log(response.data.items[0].snippet.title);
+      let payload = ForAction.itemsTokenObject(response.data) // items와 token을 object로 만들어서 반환
+      store.dispatch(Constant.ADD_SEARCHED_LIST,payload);
+      store.dispatch(Constant.MODAL_FLAG,"SearchedList");
+    })
+  },
+  [Constant.GET_PLAY_LISTS] : (store,payload) => {
+    async function forSync(payload){
+      try {
+        const response = await AxiosAPI.playLists(payload)
+        console.log("RESPONSE: ",response);
+        let filteredObject = ForAction.filteredPlayListObject(response.data);
+
+        for (let i = 0; i < filteredObject.items.length; i++) {
+          let response = await AxiosAPI.countPlayListItems(filteredObject.items[i].id)
+          filteredObject.items[i].totalPage = response.data.pageInfo.totalResults
+
+        }
+        console.log("filteredPlayListObject",filteredObject);
+        await store.dispatch(Constant.ADD_PLAY_LIST,{items:filteredObject.items, nextToken:filteredObject.nextPageToken});
+
+      } catch (e) {
+        console.error(error);
+      }
+    }
+    forSync(payload);
+    /*
+    AxiosAPI.playLists(payload)
+    .then((response) => {
+      console.log("RESPONSE: ",response);
+      let filteredObject = ForAction.filteredPlayListObject(response.data);
+
+      for (let i = 0; i < filteredObject.items.length; i++) {
+        AxiosAPI.countPlayListItems(filteredObject.items[i].id)
+        .then((response) => {
+          console.log(filteredObject.items[i].totalPage = response.data.pageInfo.totalResults);
+        })
+        .catch((ex) => {
+          console.log("ERROR!!!!", ex);
+        })
+      }
+      console.log("filteredPlayListObject",filteredObject);
+
+      })
+    .then(() => {
+      console.log("then then!!");
+      store.dispatch(Constant.ADD_PLAY_LIST,{items:filteredObject.items, nextToken:filteredObject.nextPageToken});
+
+    })
+    .catch((ex) => {
+      console.log("ERROR!!!!", ex);
+    })
+    */
+  },
+  [Constant.GET_PLAY_LIST_ITEMS] : (store,payload) => {
+    AxiosAPI.playListItems(payload)
+    .then((response) => {
+      console.log("listitmes: ",response.data);
+      /*
+      console.log(data);
+      console.log(data.items[0].snippet.resourceId.videoId);
+      payload = data.items.map((x) => { return {id:x.snippet.resourceId.videoId,image:x.snippet.thumbnails.medium} });
+      */
+      let checkedData = ForAction.checkRemovedVideo(response.data);
+      store.dispatch(Constant.ADD_PLAY_LIST_ITEMS,checkedData);
+    })
+  }
 }

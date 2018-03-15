@@ -32,18 +32,17 @@ export default {
   name:"SearchYoutube",
   components: {SearchedList,PlayList},
   mounted: function(){
-    this.init();
+    //this.init();
   },
   computed:  mapState(['channelLists','isActive','modalFlag']),
   methods: {
-    init: function(){
+    /*init: function(){
       let that = this;
       console.log('dd');
       //검색
       $("#search_keword").on("blur",function(){
         console.log("called search_keword");
         let keword = $("#search_keword").val();
-        let order = {'최신순':'date','조회수':'viewCount'};
         var api_url="https://www.googleapis.com/youtube/v3/search?part=snippet&q="+keword+"&maxResults=9&order="+order.조회수+"&"+ApiKey.youtube
         // video중 조회수가 제일 높은 것 상위 5개의 list를 가져옴
         console.log("api_url: ",api_url);
@@ -58,14 +57,14 @@ export default {
               console.log(data);
               console.log(data.items);
               console.log(data.items[0].snippet.title);
-              that.$store.dispatch(Constant.SEARCHED_LIST,data);
+              that.$store.dispatch(Constant.ADD_SEARCHED_LIST,data);
               that.$store.dispatch(Constant.MODAL_FLAG,"SearchedList");
             }
         })
 
       })
       // 검색 끝
-    },
+    },*/
     changeYoutube: function(data){
       console.log("change",data);
       data.id.hasOwnProperty("channelId") ? this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet})

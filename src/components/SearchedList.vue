@@ -60,6 +60,10 @@ export default {
       e.target.scrollTop == this.scrollHeight ? this.moreYoutubeVideo(this.searchedLists[this.searchedLists.length-1].nextToken) : console.log(e.target.scrollTop);
     },
     moreYoutubeVideo: function(token){
+      console.log("moreYoutubeVideo Token: ",token);
+      let keword = $("#search_keword").val();
+      this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keword:keword,nextPageToken:token});
+      /*
       let that = this;
       console.log("Token: ",token);
         let keword = $("#search_keword").val();
@@ -78,10 +82,10 @@ export default {
               console.log(data);
               console.log(data.items);
               console.log(data.items[0].snippet.title);
-              that.$store.dispatch(Constant.SEARCHED_LIST,data);
+              that.$store.dispatch(Constant.ADD_SEARCHED_LIST,data);
             }
         })
-
+      */
 
     },
     closeYoutubeListModal: function(){

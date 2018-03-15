@@ -1,5 +1,6 @@
-
-
+ConfigUrl.js: api의 공통적인 URL을 기반으로 api에 필요한 추가 url을 더함
+AxiosAPI.js: axios함수 한군데 모음
+ForAction: data 구조 변경 ex -> array to object 기타 action에서 쓰는 함수들
 about Youtube
 - https://www.googleapis.com/youtube/v3/videos?part=statistics&id=GZqZyrFfXw0&key=+"api.key"
 // 조회수 및 좋아요 수 등의 정보를 얻을 수 있음
@@ -17,6 +18,7 @@ about Youtube
 
 npm i -S vue-youtube-embed
 https://github.com/kaorun343/vue-youtube-embed
+npm install --save axios
 
 https://developers.google.com/youtube/v3/docs/playlistItems/list?hl=ko // youtube api document
 기능
@@ -123,3 +125,10 @@ PlayList가 가지고 있는 items 갯수 구하기 1개만 있는 playlist를 �
 
 수정 예정 사항
   재생목록이 가지고 있는 영상 갯수 알아내기, ajax를 axios로 다 바꾸기
+
+18.03.15
+  ajax를 axios로 변경 완료 및 코드 모듈화와 간소화
+ * 코드 실행이 비동기로 인해 A실행 이후 B실행이 일어나야 하는 구간에서 A가 끝나지 않았을 때 B가 실행되어 정확한 B에 정확한 값이 들어가지 않는 문제 발생 async/await을 이용해 동기화 방식으로 문제를 해결할 계획
+
+ 수정 예정 사항
+ svg 색깔 변경하기, 디자인 변경 

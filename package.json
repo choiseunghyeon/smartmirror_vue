@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "lodash": "^4.17.5",
     "vue": "^2.5.15",
     "vue-router": "^3.0.1",

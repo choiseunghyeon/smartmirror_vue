@@ -16,15 +16,25 @@ export default {
       state.currentVideoId=state.videoList.idArray[state.videoList.num]
     }
   },
-  [Constant.SEARCHED_LIST] : (state,payload) => {
-    console.log("SEARCHED_LIST called");
-    console.log("payload: ",payload);
-    let nToken = payload.hasOwnProperty("nextPageToken") ? payload.nextPageToken : 'NULL';
+  [Constant.ADD_SEARCHED_LIST] : (state,payload) => {
+    console.log("ADD_SEARCHED_LIST called");
 
-    state.searchedLists.push({items:payload.items,nextToken:nToken});
+    state.searchedLists.push(payload);
+  },
+  [Constant.ADD_PLAY_LIST] : (state, payload) => {
+    state.selectedPlayLists.push(payload)
+  },
+  [Constant.ADD_PLAY_LIST_ITEMS] : (state,payload) => {
+    state.playListItems.push(payload);
   },
   [Constant.REMOVE_SEARCHED_LIST] : (state) => {
     state.searchedLists=[];
+  },
+  [Constant.REMOVE_PLAY_LIST] : (state) => {
+    state.selectedPlayLists=[];
+  },
+  [Constant.REMOVE_PLAY_LIST_ITEMS] : (state) => {
+    state.playListItems=[];
   },
   [Constant.ADD_CHANNEL] : (state,payload) => {
     console.log("ADD_CHANNEL called");
