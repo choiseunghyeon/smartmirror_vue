@@ -1,13 +1,16 @@
 <template lang="html">
   <div class="col-md-12">
     <!--<input id="search_keword" type="text" name="" value="">-->
-    <div id="channellist" :class="{channellist_active:isActive.channellists}">
+    <div id="channellist">
         <div v-for="(list,index) in channelLists" @click.stop="showPlayList(index)" class="col-md-3">
-            <figure :class="'card-ui'+' card-in ' +{card_click:true}">
+          <transition name="elastic" >
+
+            <figure class="card-ui" v-if="isActive.channellists">
               <img :src="list.snippet.thumbnails.medium.url">
               <figcaption>{{list.snippet.channelTitle}}</figcaption>
               <button id="channel_delete" @click.stop="deleteChannel(index)" type="button" name="button">&#10006;</button>
             </figure>
+          </transition>
         </div>
     </div>
 
@@ -28,43 +31,12 @@ import SearchedList from './SearchedList';
 import PlayList from './PlayList';
 import {mapState} from 'vuex';
 
+
 export default {
   name:"SearchYoutube",
   components: {SearchedList,PlayList},
-  mounted: function(){
-    //this.init();
-  },
-  computed:  mapState(['channelLists','isActive','modalFlag']),
+  computed: mapState(['channelLists','isActive','modalFlag']),
   methods: {
-    /*init: function(){
-      let that = this;
-      console.log('dd');
-      //검색
-      $("#search_keword").on("blur",function(){
-        console.log("called search_keword");
-        let keword = $("#search_keword").val();
-        var api_url="https://www.googleapis.com/youtube/v3/search?part=snippet&q="+keword+"&maxResults=9&order="+order.조회수+"&"+ApiKey.youtube
-        // video중 조회수가 제일 높은 것 상위 5개의 list를 가져옴
-        console.log("api_url: ",api_url);
-
-        $.ajax({
-            url: api_url,
-            type: 'get',
-            dataType: 'json',
-            success:function(data){
-
-              //that.$store.dispatch(Constant.REMOVE_SEARCHED_LIST);
-              console.log(data);
-              console.log(data.items);
-              console.log(data.items[0].snippet.title);
-              that.$store.dispatch(Constant.ADD_SEARCHED_LIST,data);
-              that.$store.dispatch(Constant.MODAL_FLAG,"SearchedList");
-            }
-        })
-
-      })
-      // 검색 끝
-    },*/
     changeYoutube: function(data){
       console.log("change",data);
       data.id.hasOwnProperty("channelId") ? this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet})
@@ -92,30 +64,33 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.channellist_active {display:none;}
+.card-ui {
+  border: 1px solid rgba(1,1,1,0.8);
+  font-size: 2.3rem;
+  background-color: rgba(255,255,255,1);
+  box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 10px 24px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.card-ui img{
+  width: 100%;
+  min-width: 50%;
+  height: 100%;
+  min-height: 50%;
+}
+
 .search_active {display: none;}
-.card-in{
-  animation: card-in 0.5s;
+
+.elastic-enter-active {
+  animation: elastic-in 0.4s;
 }
-.card_click {
-  animation: card_click 0.5s;
+.elastic-leave-active {
+  animation: elastic-in 0.3s reverse;
 }
-.card-out {
-  animation: card-out 0.5s;
-}
-@keyframes card_click {
-  0% {transform: scale(0.3); opacity:0.4; }
-  70% {transform: scale(1.3); opacity:0.7;}
-  100% {transform: scale(0); opacity:1;}
-}
-@keyframes card-in {
-  0% {opacity:0.1; }
-  70% {opacity:0.7;}
-  100% {opacity:1;}
-}
-@keyframes card-out {
-  0% {transform: scale(1);opacity:0.8; }
-  70% {transform: scale(0.6);opacity:0.7;}
-  100% {transform: scale(0);opacity:0;}
+@keyframes elastic-in {
+  0% { transform: scale(0); opacity: 0;}
+  70% { transform: scale(1.2); opacity: 0.5;}
+  100% { transform: scale(1); opacity: 1;}
 }
 </style>

@@ -11,9 +11,9 @@
     <ul id="control_list" :class="{isListActive: !isActive.hamburger}">
       <li>
         <input id="search_keword" type="text" name="" v-model="keword">
-        <button class="modal-default-button" @click="youtubeSearch">
+        <span @click="youtubeSearch">
           검색
-        </button>
+        </span>
       </li><!-- SearchYoutube에 있는 거를 일단 가져옴 기능상 문제는 없음 다만 유지보수 때 문제가 생길 수 있으니 수정 요망 -->
       <li @click="channelListToggle"><span>구독중인 채널 보기</span></li>
       <li @click="youtubeToggle"><span>유튜브</span></li>

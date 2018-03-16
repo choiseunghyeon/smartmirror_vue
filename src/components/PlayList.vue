@@ -12,8 +12,12 @@
             </button>
 
           </div>
-          <!-- the begining of palyList -->
-          <div :class="{active_none:isActive.playList}">
+
+          <!-- the begining of palyList
+          <transition name="slide">
+          </transition>
+        -->
+          <div v-if="isActive.playList">
             <ul id="playlist" class="row">
               <div v-for="list in selectedPlayLists ">
                 <li v-for="(data,index) in list.items" class="col-md-4" @click="getListItems(data.id)">
@@ -31,8 +35,11 @@
           </div>
           <!-- the end of playList -->
 
-          <!-- the begining of listItem -->
-          <div :class="{active_none:isActive.listItem}">
+          <!-- the begining of listItem
+          <transition name="slide">
+          </transition>
+        -->
+          <div v-if="isActive.listItem">
             <ul id="listItem" class="row">
               <div v-for="list in playListItems ">
                 <li v-for="(data,index) in list.items" class="col-md-4">
@@ -62,7 +69,7 @@ import ApiKey from '../ApiKey.js';
 export default {
   name: "PlayList",
   data: function(){
-    return {scrollHeight:0,selectedListId:'',isActive:{playList:false,listItem:true}}
+    return {scrollHeight:0,selectedListId:'',isActive:{playList:true,listItem:false}}
   },
   created: function(){
     this.getPlayList(this.selectedChannel);
@@ -90,14 +97,12 @@ export default {
       if(token == "NULL") return;
       this.$store.dispatch(Constant.GET_PLAY_LISTS,{channelId:channelId,nextPageToken:token});
     },
-    getItemsNumber: function(playListId){
-      // part=id로 해서 해당 playlist id를 요청후 totalResults로 하면 될듯
-      //"https://www.googleapis.com/youtube/v3/playlistItems?part=id&playlistId=PLVXsWLG72QDaeAKIbvC1zKdxkueUWEhWr"+api.key
-    },
+
     handleScroll: function(e){
+      console.log("scroll!!: ",e.target.scrollTop);
       if (e.target.scrollTop == this.scrollHeight) {
         console.log("I'm in the if state");
-        this.isActive.playList == false ? // playList가 켜져 있는 것을 의미
+        this.isActive.playList == true ? // playList가 켜져 있는 것을 의미
          this.morePlayList(this.selectedChannel,this.selectedPlayLists[this.selectedPlayLists.length-1].nextToken)
         : this.moreListItems(this.selectedListId, this.playListItems[this.playListItems.length-1].nextToken); //
       }
@@ -113,6 +118,7 @@ export default {
       this.toggleList();
     },
     moreListItems: function(playlistId,token){ // 스크롤이 바닥을 찍으면 PlayList의 영상 9개를 추가적으로 가져옴
+      console.log("moreListItems called");
       if(token == "NULL") return;
       this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:playlistId,nextPageToken:token});
     },
@@ -155,7 +161,15 @@ export default {
 </script>
 <style lang="css" scoped>
 
-.active_none {
-  display: none;
+
+.slide-enter-active {
+  transition: all .3s ease;
+}
+.slide-leave-active {
+  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-enter, .slide-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

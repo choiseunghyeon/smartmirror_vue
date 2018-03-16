@@ -107,11 +107,7 @@ ul {
 .show_number {
   font-size: 1.8rem;
 }
-.number_image {
-  width: 32px;
-  height: 32px;
 
-}
 #youtube-list{
   color:white;
   width: 100%;
@@ -131,19 +127,7 @@ ul {
   margin-bottom: 5px;
 }
 
-.card-ui {
-  border: 1px solid rgba(1,1,1,0.8);
-  font-size: 2.3rem;
-  background-color: rgba(255,255,255,1);
-  box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 10px 24px 0 rgba(0, 0, 0, 0.19);
-  text-align: center;
-}
-.card-ui img{
-  width: 100%;
-  min-width: 50%;
-  height: 100%;
-  min-height: 50%;
-}
+
 #playlist {
   color:white;
 }
