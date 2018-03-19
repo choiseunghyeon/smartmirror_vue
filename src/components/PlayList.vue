@@ -14,10 +14,13 @@
           </div>
 
           <!-- the begining of palyList
-          <transition name="slide">
-          </transition>
         -->
-          <div v-if="isActive.playList">
+        <transition name="slide" mode="out-in"
+        @before-enter="elasticBeforeEnter"
+          @after-enter="elasticAfterEnter"
+          @before-leave="elasticBeforeLeave"
+          @after-leave="elasticAfterLeave">
+          <div v-if="isActive.playList" key="playList">
             <ul id="playlist" class="row">
               <div v-for="list in selectedPlayLists ">
                 <li v-for="(data,index) in list.items" class="col-md-4" @click="getListItems(data.id)">
@@ -36,10 +39,8 @@
           <!-- the end of playList -->
 
           <!-- the begining of listItem
-          <transition name="slide">
-          </transition>
         -->
-          <div v-if="isActive.listItem">
+          <div v-if="isActive.listItem" key="listItem">
             <ul id="listItem" class="row">
               <div v-for="list in playListItems ">
                 <li v-for="(data,index) in list.items" class="col-md-4">
@@ -52,6 +53,7 @@
               </div>
             </ul>
           </div>
+        </transition>
         <!-- the end of listItem -->
 
         </div>
@@ -65,7 +67,6 @@
 import Constant from '../Constant.js';
 import {mapState} from 'vuex';
 import ApiKey from '../ApiKey.js';
-
 export default {
   name: "PlayList",
   data: function(){
@@ -75,17 +76,38 @@ export default {
     this.getPlayList(this.selectedChannel);
   },
   mounted: function(){
-    console.log("data mounted");
     let modalContainer = document.getElementsByClassName('modal-container')[0];
     this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight ;
+    console.log("data mounted Height: ",this.scrollHeight);
   },
   updated: function(){ // 데이터가 변경되면 scroll의 길이를 구함
-    console.log("upgrade complete");
+/*
+*/
     let modalContainer = document.getElementsByClassName('modal-container')[0];
     this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
+    console.log("upgrade complete height: ",this.scrollHeight);
   },
+
   computed: mapState(['selectedChannel','selectedPlayLists','playListItems']),
   methods: {
+
+    elasticBeforeEnter: function(){
+      console.log("* BeforeEnter!");
+    },
+    elasticAfterEnter: function(){
+
+      let modalContainer = document.getElementsByClassName('modal-container')[0];
+      this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
+      console.log("* AfterEnter! height: ",this.scrollHeight);
+
+    },
+    elasticBeforeLeave: function(){
+      console.log("* BeforeLeave!");
+    },
+    elasticAfterLeave: function(){
+      console.log("@ AfterLeave");
+    },
+
     getPlayList: function(value){
       let channelId=value;
       //this.animation.clickCard=true;
@@ -97,7 +119,6 @@ export default {
       if(token == "NULL") return;
       this.$store.dispatch(Constant.GET_PLAY_LISTS,{channelId:channelId,nextPageToken:token});
     },
-
     handleScroll: function(e){
       console.log("scroll!!: ",e.target.scrollTop);
       if (e.target.scrollTop == this.scrollHeight) {
@@ -107,14 +128,11 @@ export default {
         : this.moreListItems(this.selectedListId, this.playListItems[this.playListItems.length-1].nextToken); //
       }
     },
-
-
     getListItems: function(id){ // PlayList의 영상 9개를 긁어옴
       console.log("get items!!", id);
       this.selectedListId = id;
       this.$store.dispatch(Constant.REMOVE_PLAY_LIST_ITEMS);
       this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:id});
-
       this.toggleList();
     },
     moreListItems: function(playlistId,token){ // 스크롤이 바닥을 찍으면 PlayList의 영상 9개를 추가적으로 가져옴
@@ -129,7 +147,6 @@ export default {
         oneArray = oneArray.concat(items.map(x=>x.snippet.resourceId.videoId));
       }
       console.log("oneArray: ",oneArray);
-
       let selectedNum = oneArray.findIndex((x) => { // 선택된 id의  index 찾기
         return x == id;
       });
@@ -140,7 +157,6 @@ export default {
         num:selectedNum,
       };
       this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
-
       this.closeYoutubeListModal();
       this.channelListToggle();
     },
@@ -160,8 +176,6 @@ export default {
 }
 </script>
 <style lang="css" scoped>
-
-
 .slide-enter-active {
   transition: all .3s ease;
 }

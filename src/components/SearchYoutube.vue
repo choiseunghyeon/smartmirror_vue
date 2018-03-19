@@ -1,18 +1,19 @@
 <template lang="html">
   <div class="col-md-12">
     <!--<input id="search_keword" type="text" name="" value="">-->
-    <div id="channellist">
-        <div v-for="(list,index) in channelLists" @click.stop="showPlayList(index)" class="col-md-3">
-          <transition name="elastic" >
-
-            <figure class="card-ui" v-if="isActive.channellists">
+    <transition name="elastic">
+    <div id="channellist" v-if="isActive.channellists">
+        <transition-group name="list" tag="div">
+        <div v-for="(list,index) in channelLists" @click.stop="showPlayList(index)" class="col-md-3" :key="index">
+            <figure class="card-ui" >
               <img :src="list.snippet.thumbnails.medium.url">
               <figcaption>{{list.snippet.channelTitle}}</figcaption>
               <button id="channel_delete" @click.stop="deleteChannel(index)" type="button" name="button">&#10006;</button>
             </figure>
-          </transition>
         </div>
+      </transition-group>
     </div>
+  </transition>
 
 
     <searched-list v-if="modalFlag == 'SearchedList'" @changeYoutube="changeYoutube"></searched-list>
@@ -30,7 +31,7 @@ import ApiKey from '../ApiKey.js';
 import SearchedList from './SearchedList';
 import PlayList from './PlayList';
 import {mapState} from 'vuex';
-
+import _ from "lodash";
 
 export default {
   name:"SearchYoutube",
@@ -70,7 +71,7 @@ export default {
   background-color: rgba(255,255,255,1);
   box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 10px 24px 0 rgba(0, 0, 0, 0.19);
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .card-ui img{
@@ -92,5 +93,13 @@ export default {
   0% { transform: scale(0); opacity: 0;}
   70% { transform: scale(1.2); opacity: 0.5;}
   100% { transform: scale(1); opacity: 1;}
+}
+
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>

@@ -134,6 +134,17 @@ PlayList가 가지고 있는 items 갯수 구하기 1개만 있는 playlist를 �
  svg 색깔 변경하기, 디자인 변경
   - svg 색깔 변경 완료
   - 구독중인 채널 보기 in-out 트랜지션 변경 완료
-  
+
   추가 예정 사항
-    채널 추가 및 삭제 모달에서 TOGGLE
+    애니메이션을 채널 추가 및 삭제 모달에 추가
+    more 함수들이 잘 실행 되지만 scrollHeight의 값은 다름.. 콘솔에서 확인해보면 맞긴함 확인해야함..
+
+18.03.16
+ Modal TOGGLE을 통해 재생목록과 선택된 재생목록 아이템들의 리스트를 오가는 트랜지션을 구현했다. 다만 문제는 트랜지션 과정중에 updated이 적용되어 정확한 scrollHeight가 구해지지 않음.
+
+
+18.03.19
+트랜지션이 완전히 이루어진 after-enter class에서 scrollHeight를 한번더 구하게 하였다. 이렇게 하여
+트랜지션이 일어난 후에 scroll Height를 구하고 데이터 요청후에 updated된 상황에서도 scroll Height를 구한다.
+
+구독중인 채널에 대한 transition 구현 추가 및 삭제 기능 단 삭제는 오류가 있음.
