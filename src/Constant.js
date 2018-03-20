@@ -24,8 +24,11 @@ export default {
   YOUTUBE_SEARCH: "youtubeSearch",
   GET_PLAY_LISTS: "getPlayLists",
   GET_PLAY_LIST_ITEMS: "getPlayListItems",
-  
+
   //about Channel
   ADD_PLAY_LIST: "addPlayList",
   ADD_PLAY_LIST_ITEMS: "addPlayListItems",
+
+  // about Loading bar
+  SET_LOADING_STATE: "setLoadingState",
 }

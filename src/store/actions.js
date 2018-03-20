@@ -89,6 +89,7 @@ export default {
   [Constant.GET_PLAY_LISTS] : (store,payload) => {
     async function forSync(payload){
       try {
+        store.commit(Constant.SET_LOADING_STATE,true);
         const response = await AxiosAPI.playLists(payload)
         console.log("RESPONSE: ",response);
         let filteredObject = ForAction.filteredPlayListObject(response.data);
@@ -99,6 +100,8 @@ export default {
 
         }
         console.log("filteredPlayListObject",filteredObject);
+
+        await store.commit(Constant.SET_LOADING_STATE,false);
         await store.dispatch(Constant.ADD_PLAY_LIST,{items:filteredObject.items, nextToken:filteredObject.nextPageToken});
 
       } catch (e) {
@@ -106,33 +109,7 @@ export default {
       }
     }
     forSync(payload);
-    /*
-    AxiosAPI.playLists(payload)
-    .then((response) => {
-      console.log("RESPONSE: ",response);
-      let filteredObject = ForAction.filteredPlayListObject(response.data);
 
-      for (let i = 0; i < filteredObject.items.length; i++) {
-        AxiosAPI.countPlayListItems(filteredObject.items[i].id)
-        .then((response) => {
-          console.log(filteredObject.items[i].totalPage = response.data.pageInfo.totalResults);
-        })
-        .catch((ex) => {
-          console.log("ERROR!!!!", ex);
-        })
-      }
-      console.log("filteredPlayListObject",filteredObject);
-
-      })
-    .then(() => {
-      console.log("then then!!");
-      store.dispatch(Constant.ADD_PLAY_LIST,{items:filteredObject.items, nextToken:filteredObject.nextPageToken});
-
-    })
-    .catch((ex) => {
-      console.log("ERROR!!!!", ex);
-    })
-    */
   },
   [Constant.GET_PLAY_LIST_ITEMS] : (store,payload) => {
     AxiosAPI.playListItems(payload)
@@ -146,5 +123,9 @@ export default {
       let checkedData = ForAction.checkRemovedVideo(response.data);
       store.dispatch(Constant.ADD_PLAY_LIST_ITEMS,checkedData);
     })
-  }
+  },
+
+  [Constant.SET_LOADING_STATE] : (store, payload) => {
+    store.commit(Constant.SET_LOADING_STATE,payload);
+  },
 }

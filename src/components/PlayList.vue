@@ -3,27 +3,24 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container" @scroll="handleScroll">
-          <div class="row">
+          <div :class="'row ' + modal_top_value" >
             <button class="modal-default-button" @click="closeYoutubeListModal">
               OK
             </button>
             <button class="modal-default-button" @click="toggleList">
-              TOGGLE
+              {{toggle.message}}
             </button>
-
+            <loading v-if="isActive.loading" ></loading>
           </div>
 
           <!-- the begining of palyList
         -->
         <transition name="slide" mode="out-in"
-        @before-enter="elasticBeforeEnter"
-          @after-enter="elasticAfterEnter"
-          @before-leave="elasticBeforeLeave"
-          @after-leave="elasticAfterLeave">
-          <div v-if="isActive.playList" key="playList">
+          @after-enter="slideAfterEnter">
+          <div v-if="isLocalActive.playList" key="playList">
             <ul id="playlist" class="row">
               <div v-for="list in selectedPlayLists ">
-                <li v-for="(data,index) in list.items" class="col-md-4" @click="getListItems(data.id)">
+                <li v-for="(data,index) in list.items" class="col-md-4" @click="getListItems(data.id,data.snippet.title)">
                    <figure>
                      <div class="number_box">
                        <span class="show_number">{{data.totalPage}}</span>
@@ -40,7 +37,7 @@
 
           <!-- the begining of listItem
         -->
-          <div v-if="isActive.listItem" key="listItem">
+          <div v-if="isLocalActive.listItem" key="listItem">
             <ul id="listItem" class="row">
               <div v-for="list in playListItems ">
                 <li v-for="(data,index) in list.items" class="col-md-4">
@@ -65,13 +62,19 @@
 
 <script>
 import Constant from '../Constant.js';
+import Loading from './Loading'
 import {mapState} from 'vuex';
 import ApiKey from '../ApiKey.js';
+
 export default {
   name: "PlayList",
   data: function(){
-    return {scrollHeight:0,selectedListId:'',isActive:{playList:true,listItem:false}}
+    return {scrollHeight:0,selectedListId:''
+    ,isLocalActive:{playList:true,listItem:false}
+    ,toggle:{message:"MOVE - X",title:""}
+    ,modal_top_value:""}
   },
+  components: {Loading },
   created: function(){
     this.getPlayList(this.selectedChannel);
   },
@@ -81,32 +84,24 @@ export default {
     console.log("data mounted Height: ",this.scrollHeight);
   },
   updated: function(){ // 데이터가 변경되면 scroll의 길이를 구함
-/*
-*/
+
     let modalContainer = document.getElementsByClassName('modal-container')[0];
     this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
     console.log("upgrade complete height: ",this.scrollHeight);
   },
 
-  computed: mapState(['selectedChannel','selectedPlayLists','playListItems']),
+  computed: mapState(['selectedChannel','selectedPlayLists','playListItems','isActive']),
   methods: {
 
-    elasticBeforeEnter: function(){
-      console.log("* BeforeEnter!");
-    },
-    elasticAfterEnter: function(){
+
+    slideAfterEnter: function(){
 
       let modalContainer = document.getElementsByClassName('modal-container')[0];
       this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
       console.log("* AfterEnter! height: ",this.scrollHeight);
 
     },
-    elasticBeforeLeave: function(){
-      console.log("* BeforeLeave!");
-    },
-    elasticAfterLeave: function(){
-      console.log("@ AfterLeave");
-    },
+
 
     getPlayList: function(value){
       let channelId=value;
@@ -121,18 +116,20 @@ export default {
     },
     handleScroll: function(e){
       console.log("scroll!!: ",e.target.scrollTop);
+      e.target.scrollTop !== 0 ? this.modal_top_value="modal_top" : this.modal_top_value="";
       if (e.target.scrollTop == this.scrollHeight) {
         console.log("I'm in the if state");
-        this.isActive.playList == true ? // playList가 켜져 있는 것을 의미
+        this.isLocalActive.playList == true ? // playList가 켜져 있는 것을 의미
          this.morePlayList(this.selectedChannel,this.selectedPlayLists[this.selectedPlayLists.length-1].nextToken)
         : this.moreListItems(this.selectedListId, this.playListItems[this.playListItems.length-1].nextToken); //
       }
     },
-    getListItems: function(id){ // PlayList의 영상 9개를 긁어옴
+    getListItems: function(id,title){ // PlayList의 영상 9개를 긁어옴
       console.log("get items!!", id);
       this.selectedListId = id;
       this.$store.dispatch(Constant.REMOVE_PLAY_LIST_ITEMS);
       this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:id});
+      this.toggle.title = title;
       this.toggleList();
     },
     moreListItems: function(playlistId,token){ // 스크롤이 바닥을 찍으면 PlayList의 영상 9개를 추가적으로 가져옴
@@ -166,8 +163,11 @@ export default {
       this.$store.dispatch(Constant.REMOVE_PLAY_LIST_ITEMS);
     },
     toggleList: function(){
-      this.isActive.playList = !this.isActive.playList;
-      this.isActive.listItem = !this.isActive.listItem;
+      this.isLocalActive.playList = !this.isLocalActive.playList;
+      this.isLocalActive.listItem = !this.isLocalActive.listItem;
+
+      this.isLocalActive.listItem == true ? this.toggle.message = "MOVE - PLAY LISTS"
+      : this.toggle.message = "MOVE - "+this.toggle.title;
     },
     channelListToggle: function(){
       this.$store.dispatch(Constant.TOGGLE_CHANNEL_ACTIVE);
@@ -185,5 +185,17 @@ export default {
 .slide-enter, .slide-leave-to {
   transform: translateX(10px);
   opacity: 0;
+}
+.modal_top {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 60px;
+  border: 1px solid white;
+  z-index: 1111;
+}
+#listItem {
+  margin: 0 !important; /* row class에서 margin left & right를 -15px을 하는데 이 과정에서 좌우 스크롤이 생김 */
 }
 </style>
