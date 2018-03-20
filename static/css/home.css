@@ -14,11 +14,10 @@ ul {
   padding: 0px;
 }
 
-.VueCarousel-navigation-button{
-  position: relative !important;
-  font-size:40px;
-  color: white !important;
+.row { /* default margin이 left & right -15px이여서 쓸데없이 좌우 스크롤이 생겨서 고치는 코드 */
+  margin: 0px !important;
 }
+
 .ui-widget-content{
   border: none;
 }

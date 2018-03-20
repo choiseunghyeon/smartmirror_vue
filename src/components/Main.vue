@@ -126,4 +126,5 @@ export default {
 #control_list input{
   background-color: inherit;
 }
+
 </style>

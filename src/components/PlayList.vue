@@ -188,14 +188,8 @@ export default {
 }
 .modal_top {
   position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 60px;
-  border: 1px solid white;
+
   z-index: 1111;
 }
-#listItem {
-  margin: 0 !important; /* row class에서 margin left & right를 -15px을 하는데 이 과정에서 좌우 스크롤이 생김 */
-}
+
 </style>
