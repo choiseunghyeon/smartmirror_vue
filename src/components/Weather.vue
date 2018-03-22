@@ -32,14 +32,15 @@ export default {
   created: function(){
     //this.weatherGet();
     //setInterval(this.weatherGet,3600000); // 1000ms = 1 second 1시간마다 한번씩 날씨 정보 로딩
-    this.testWeather();
+    this.weatherGet();
   },
   methods: {
     weatherGet: function(){
       let that = this; // function(){} 기존 js펑션을 쓰면 안에서 쓰이는 this는 전혀 다른 값을 가리킴. 따라서 그밖에서 this를 저장해줘야함
+      let api_url = 'http://apis.skplanetx.com/weather/summary?version=1&lat=37.503260&lon=126.788507&'+ApiKey.weather;
       $.ajax({
       // 시간별   url: 'http://apis.skplanetx.com/weather/current/hourly?version=1&lat=&lon=&city=%EC%84%9C%EC%9A%B8&county=%EA%B0%95%EB%82%A8%EA%B5%AC&village=%EB%8F%84%EA%B3%A1%EB%8F%99&',
-        url:'http://apis.skplanetx.com/weather/summary?version=1&lat=37.503260&lon=126.788507&appKey=d49b336f-e8f5-3af1-b5f0-b165dc65a309'+ApiKey.weather,
+        url:api_url,
         type: 'get',
         dataType:"json",
         success:function(data){
@@ -47,7 +48,7 @@ export default {
           console.log(data)
           var time = new Date();
           time = time.getHours()
-          let weather = data.weather.summary;
+          let weather = data.weather.summary[0];
 
           //var temperature = [parseInt(data.weather.hourly[0].temperature.tc),parseInt(data.weather.hourly[0].temperature.tmax),parseInt(data.weather.hourly[0].temperature.tmin)]
           var days = [weather.today,weather.tomorrow];
@@ -89,6 +90,7 @@ export default {
       }) // the end of ajax
 
     },
+    /*
     testWeather: function(){
       let data = {
     "result": {
@@ -201,6 +203,7 @@ export default {
         this.weatherData.push(dayData);
       } // the end of for
     },
+    */
   }
 }
 </script>

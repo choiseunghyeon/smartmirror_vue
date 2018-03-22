@@ -56,12 +56,13 @@ ul {
 
 
 .modal-default-button {
+  height: 70px;
   float: left;
   background-color: rgba(255,255,255,0);
   border: none;
   color: white;
   font-size: 30px;
-  margin: 0 0 10px 20px;
+  margin: 0 0 0 20px;
 }
 
 /*

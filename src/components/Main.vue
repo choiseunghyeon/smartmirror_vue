@@ -18,7 +18,7 @@
       <li @click="channelListToggle"><span>구독중인 채널 보기</span></li>
       <li @click="youtubeToggle"><span>유튜브</span></li>
       <li @click="widgetToggle"><span>위젯</span></li>
-      <li @click="test"><span>test</span></li>
+      <!--<li @click="test"><span>test</span></li>-->
     </ul>
   </div>
   <div id="widget" :class="{isWidgetActive:isActive.widget,'col-md-6':true}">
@@ -72,13 +72,16 @@ export default {
     widgetToggle: function(){
       this.$store.dispatch(Constant.TOGGLE_WIDGET_ACTIVE);
     },
-    test: function(){
-      this.$store.dispatch(Constant.GET_LIST_COUNT,{playlistId:"PLVXsWLG72QDaeAKIbvC1zKdxkueUWEhWr"});
-    },
+
     youtubeSearch(){
       console.log("this is keword",this.keword);
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keword:this.keword});
-    }
+    },
+    /*
+    test: function(){
+      this.$store.dispatch(Constant.GET_LIST_COUNT,{playlistId:"PLVXsWLG72QDaeAKIbvC1zKdxkueUWEhWr"});
+    },
+    */
   }
 }
 </script>

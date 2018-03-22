@@ -3,7 +3,7 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container" @scroll="handleScroll">
-          <div :class="'row ' + modal_top_value" >
+          <div :class="'row ' + modal_top_value">
             <button class="modal-default-button" @click="closeYoutubeListModal">
               OK
             </button>

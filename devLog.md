@@ -1,6 +1,29 @@
-ConfigUrl.js: api의 공통적인 URL을 기반으로 api에 필요한 추가 url을 더함
-AxiosAPI.js: axios함수 한군데 모음
-ForAction: data 구조 변경 ex -> array to object 기타 action에서 쓰는 함수들
+
+
+- components
+  - Clock.vue: 년, 월, 일, 요일, 시간(AM, PM기준) 표시. 5초마다 setInterval. 독립적으로 실행
+  - Weather.Vue:  오늘, 내일의 최고 온도 및 최저 온도를 표시 날씨의 상태는 간단한 이미지로 표시. 독립적으로 실행
+  - Main.vue: Clock, Weather, SearchYoutube, YoutubeController를 관리하고 레이아웃을 담당한 컴포넌트
+  - SearchYoutube.vue : 채널정보를 가지고 있음. SearchedList, PlayList 컴포넌트를 하위 컴포넌트로 가지며 관리함.
+  - SearchedList.vue: SearchYoutube를 상위 컴포넌트로 가지며 검색된 유튜브 영상들을 표현해줌
+  - PlayList.vue: SearchYoutube를 상위 컴포넌트로 가지며 채널 클릭시 채널이 가진 재생목록을 보여주며 한 재생목록 클릭시 재생목록이 가진 영상들을 보여줌
+  - YoutubeController: PlayList에서 선택된 영상일 경우 그 영상이 포함된 재생목록을 리스트로 가짐 또한 선택된 영상을 틀어주는 역할
+
+-store
+  actions.js index.js mutation.js state.js를 가짐 각 모듈 파일들에 역할을 분리하여 사용하도록 노력함
+  actions.js: 비동기 함수(axios)를 통한 데이터 요청 및 mutation에 상태 변이 요청
+  mutations.js: 요청된 값에 따라 state(상태) 변이
+  state.js: 공통적으로 쓰이는 상태들을 가지고 있음
+  index.js: 위의 모듈들을 한데 모아 선언
+
+- api
+  AxiosAPI.js: axios함수 한군데 모음
+  ForAction: data 구조 변경 ex -> array to object 기타 action에서 쓰는 함수들
+
+- etc
+  ConfigUrl.js: api의 공통적인 URL을 기반으로 api에 필요한 추가 url을 더함
+  Constant.js: actions, mutation.js에서 쓰이는 변수의 이름을 선언
+
 about Youtube
 - https://www.googleapis.com/youtube/v3/videos?part=statistics&id=GZqZyrFfXw0&key=+"api.key"
 // 조회수 및 좋아요 수 등의 정보를 얻을 수 있음
@@ -158,3 +181,7 @@ Page Loading 추가
 - 계획
   상단 맨위의 바에다가 page loading을 추가함 하지만 스크롤을 내리면 상단 바가 안보여 page loading중인지 확인 불가능
   따라서 스크롤이 내려가면 상단 바를 fixed하며 같이 내려가도록 할 계획 이로 인해 모달을 끄고 리스트 아이템 또는 플레이리스트로 이동 또한 편리하게 할 계획
+
+18.03.22
+  03.20일 계획한 부분 수정 완료
+  Weather.vue 에서 test용 json을 가지고 표현 했지만 실제 서버에서 요청하여 돌려받은 json을 쓰도록 변경

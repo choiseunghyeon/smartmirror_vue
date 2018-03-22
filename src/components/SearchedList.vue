@@ -63,29 +63,6 @@ export default {
       console.log("moreYoutubeVideo Token: ",token);
       let keword = $("#search_keword").val();
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keword:keword,nextPageToken:token});
-      /*
-      let that = this;
-      console.log("Token: ",token);
-        let keword = $("#search_keword").val();
-        let order = {'최신순':'date','조회수':'viewCount'};
-        let api_url="https://www.googleapis.com/youtube/v3/search?part=snippet&q="+keword+"&maxResults=9&pageToken="+token+"&order="+order.조회수+"&"+ApiKey.youtube
-        // video중 조회수가 제일 높은 것 상위 5개의 list를 가져옴
-        console.log("more_api_url: ",api_url);
-
-        $.ajax({
-            url: api_url,
-            type: 'get',
-            dataType: 'json',
-            success:function(data){
-
-              //that.$store.dispatch(Constant.REMOVE_SEARCHED_LIST);
-              console.log(data);
-              console.log(data.items);
-              console.log(data.items[0].snippet.title);
-              that.$store.dispatch(Constant.ADD_SEARCHED_LIST,data);
-            }
-        })
-      */
 
     },
     closeYoutubeListModal: function(){
