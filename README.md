@@ -1,4 +1,4 @@
-기능 설명 H1
+# 기능 설명 - KOR
 
 - 기본 기능
   마우스를 통해 위젯, 햄버거 메뉴, 채널 목록, 유튜브의 위치 조절 가능
@@ -32,3 +32,41 @@
 
 서버 설정 없음
 데이터베이스 설정 없음
+
+# Funcitons Explanation - ENG
+
+- Introduction
+  You can controll Widget, Hamburger Menu, Channel List and Youtube with your mouse
+
+- Weather
+  it shows today and tomorrow weather summary such as min temperature and max temperature
+  and you will know weather outside with image
+
+- Clock
+  it shows Year, month, day and Time
+
+- Youtube
+  - Search Function
+    a. youtube list that you searched
+    b. if list's scroll hit the bottom then it will show additional youtube list
+    c. if you click a video of youtube list then the video will display
+    d. if there is a channel of streamer in list, you can add channel by click
+
+  - Channel Addition or Remove
+    a. when you search Channel you want to add, the Channel and related video display in list
+       just click the Channel
+    b. you can remove Channel by clicking x sign in the top of box
+
+  - Play List that Channel have
+    a. Play List will display when you click one of Channels
+    b. if Play List scroll hit the bottom then it will show additional Play List
+    c. MOVE - (if you don't choose Play List then It shows you a X sign) it moves on what you choose
+
+  - Video List that Play List have
+    a. video list that Play List have will display on screen
+    b. if you choose one of viedo list then the video play on screen and will show you a next video in video list
+    c. MOVE - PLAY LISTS( move to PLAY LISTS)
+    d. if Video List scroll hit the bottom then it will show additional Video List
+
+No server setting
+No database
