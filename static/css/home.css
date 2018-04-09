@@ -204,3 +204,12 @@ ul {
   font-size: 60px;
   text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
 }
+#dust {
+  margin-top: 5px;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.3em;
+  color: #f7f7f7;
+  text-align: center;
+  font-size: 32px;
+  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+}

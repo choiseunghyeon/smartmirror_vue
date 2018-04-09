@@ -8,6 +8,7 @@
   - SearchedList.vue: SearchYoutube를 상위 컴포넌트로 가지며 검색된 유튜브 영상들을 표현해줌
   - PlayList.vue: SearchYoutube를 상위 컴포넌트로 가지며 채널 클릭시 채널이 가진 재생목록을 보여주며 한 재생목록 클릭시 재생목록이 가진 영상들을 보여줌
   - YoutubeController: PlayList에서 선택된 영상일 경우 그 영상이 포함된 재생목록을 리스트로 가짐 또한 선택된 영상을 틀어주는 역할
+  - FineDust: 미세먼지 관련 api호출 및 설정
 
 -store
   actions.js index.js mutation.js state.js를 가짐 각 모듈 파일들에 역할을 분리하여 사용하도록 노력함
@@ -185,3 +186,7 @@ Page Loading 추가
 18.03.22
   03.20일 계획한 부분 수정 완료
   Weather.vue 에서 test용 json을 가지고 표현 했지만 실제 서버에서 요청하여 돌려받은 json을 쓰도록 변경
+
+18.04.09
+  FineDust component추가 및 기능 구현 
+  Weather에서 쓰는 api가 변경되어 url변경이 이루어져야함

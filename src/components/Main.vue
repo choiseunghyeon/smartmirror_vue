@@ -26,6 +26,9 @@
       <weather></weather>
     </div>
     <div class="row">
+      <fine-dust></fine-dust>
+    </div>
+    <div class="row">
       <clock></clock>
     </div>
   </div>
@@ -38,6 +41,7 @@
 <script>
 import Clock from './Clock';
 import Weather from './Weather';
+import FineDust from './FineDust';
 import SearchYoutube from './SearchYoutube';
 import YoutubeController from './YoutubeController';
 import Constant from '../Constant.js';
@@ -46,7 +50,7 @@ import {mapState} from 'vuex';
 
 export default {
   name: 'Main',
-  components: {Clock,Weather,SearchYoutube,YoutubeController},
+  components: {Clock,Weather,FineDust,SearchYoutube,YoutubeController},
   computed: mapState(['isActive']),
   created: function(){
     this.sync();

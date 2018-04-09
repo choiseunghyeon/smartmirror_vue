@@ -45,9 +45,9 @@ export default {
       let week = ['일','월','화','수','목','금','토'];
       let dayNum = t.getDay();
       if (dayNum+1 == 7 ) {
-        this.currentDay = {today:week[dayNum],tomorrow:week[0]};
+        this.currentDay = {today:week[dayNum]+'요일',tomorrow:week[0]+'요일'};
       } else {
-        this.currentDay = {today:week[dayNum],tomorrow:week[dayNum+1]};
+        this.currentDay = {today:week[dayNum]+'요일',tomorrow:week[dayNum+1]+'요일'};
       }
       this.$store.dispatch(Constant.SET_DAY,this.currentDay);
     }
