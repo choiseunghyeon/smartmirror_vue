@@ -37,7 +37,7 @@ export default {
   methods: {
     weatherGet: function(){
       let that = this; // function(){} 기존 js펑션을 쓰면 안에서 쓰이는 this는 전혀 다른 값을 가리킴. 따라서 그밖에서 this를 저장해줘야함
-      let api_url = 'https://api2.sktelecom.com/weather/summary?version=2&lat=37.503260&lon=126.788507&'+ApiKey.weather;
+      let api_url = 'https://api2.sktelecom.com/weather/summary?version=2&lat=37.503260&lon=126.788507&stnid='+ApiKey.weather;
       $.ajax({
       // 시간별   url: 'http://apis.skplanetx.com/weather/current/hourly?version=1&lat=&lon=&city=%EC%84%9C%EC%9A%B8&county=%EA%B0%95%EB%82%A8%EA%B5%AC&village=%EB%8F%84%EA%B3%A1%EB%8F%99&',
         url:api_url,

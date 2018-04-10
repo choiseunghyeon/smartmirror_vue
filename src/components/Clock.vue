@@ -54,3 +54,29 @@ export default {
   } // the end of methods
 }
 </script>
+<style scoped>
+/* Clock */
+#clock div {
+  margin: 0;
+  padding: 0;
+}
+
+#clock {
+  margin-top: 20px;
+  font-family: 'Share Tech Mono', monospace;
+  color: #fff;
+  color: #f7f7f7;
+  text-align: center;
+}
+#clock .date {
+  letter-spacing: 0.3em;
+  font-size: 26px;
+  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+}
+#clock .time {
+  letter-spacing: 0.4em;
+  font-size: 60px;
+  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+}
+
+</style>
