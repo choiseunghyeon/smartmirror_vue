@@ -21,6 +21,8 @@
 
   d. youtube(removal): it will remove youtube video perfectly
 
+  e. widget: when you click it, widget(weather, fineDust, Clock) will disappear
+  
 - Weather
 
   it shows today and tomorrow weather summary such as min temperature and max temperature

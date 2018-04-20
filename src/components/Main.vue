@@ -24,7 +24,6 @@
         <span>유튜브(최소화) <toggle-button id="changed-font" @change="youtubeToggle" :sync="true" :value="buttonFlag.minimization"
                :labels="{checked: 'ON', unchecked: 'OFF'}"
                :width="80" :height="33"/>
-               현재 실행중이 영상
         </span>
 
       </li>
