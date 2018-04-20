@@ -1,8 +1,25 @@
 # Funcitons Explanation - ENG
 
+- Let's get started
+
+      // you have to install node and npm at first
+      $ npm install // hit this commend in the smartmirror folder
+      $ mkdir /src/ApiKey.js // almost functions need API KEY. check API SETTING
+      $ npm run dev // hit http://localhost:8080/ in browser
+
 - Introduction
 
   You can controll Widget, Hamburger Menu, Channel List and Youtube with your mouse
+
+- Hamburger Menu
+
+  a. searching youtube
+
+  b. displaying channels that you added
+
+  c. youtube(minimization): when you click it, youtube video will disappear but sound keep playing
+
+  d. youtube(removal): it will remove youtube video perfectly
 
 - Weather
 

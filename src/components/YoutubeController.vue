@@ -29,7 +29,7 @@ export default {
   name:"YoutubeController",
   data: function(){
     return {
-        youtubeSize:{width:"640", height:"390"},
+        youtubeSize:{width:"840", height:"490"},
     }
   },
   computed: mapState(['currentVideoId','videoList','isActive']),

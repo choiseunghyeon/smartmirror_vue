@@ -74,7 +74,7 @@ export default {
   [Constant.SET_CHANNELID] : (state, payload) => {
     state.selectedChannel = payload;
   },
-  
+
   [Constant.SET_LOADING_STATE] : (state, payload) => {
     state.isActive.loading = payload;
   },

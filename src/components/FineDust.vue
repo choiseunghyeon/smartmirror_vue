@@ -1,5 +1,5 @@
 <template lang="html">
-  <div id="dust" class="col-md-12">
+  <div id="dust" class="col-md-12 bright-shadow">
     미세먼지: {{dust.state}}
   </div>
 </template>
@@ -50,6 +50,6 @@ export default {
   color: #f7f7f7;
   text-align: center;
   font-size: 32px;
-  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+
 }
 </style>

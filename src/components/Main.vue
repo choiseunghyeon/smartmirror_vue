@@ -1,7 +1,5 @@
 <template>
 <div class="row">
-  <span class="oi oi-list" style="width:32px; height:32px; color: white;"></span>
-  <span class="oi oi-list" title="oi-list" aria-hidden="true"></span>
   <div id="mirror_controller" class="col-md-6">
     <div id="hamburger" :class="{isHamActive: isActive.hamburger}" @click="hamburgerToggle">
       <div class="bar"></div>
@@ -15,9 +13,30 @@
           검색
         </span>
       </li><!-- SearchYoutube에 있는 거를 일단 가져옴 기능상 문제는 없음 다만 유지보수 때 문제가 생길 수 있으니 수정 요망 -->
-      <li @click="channelListToggle"><span>구독중인 채널 보기</span></li>
-      <li @click="youtubeToggle"><span>유튜브</span></li>
-      <li @click="widgetToggle"><span>위젯</span></li>
+      <li @click="channelListToggle">
+        <span>구독중인 채널 보기 <toggle-button id="changed-font" @change="channelListToggle" :sync="true" :value="buttonFlag.channel"
+               :labels="{checked: 'ON', unchecked: 'OFF'}"
+               :width="80" :height="33"/>
+        </span>
+      </li>
+
+      <li @click="youtubeToggle">
+        <span>유튜브(최소화) <toggle-button id="changed-font" @change="youtubeToggle" :sync="true" :value="buttonFlag.minimization"
+               :labels="{checked: 'ON', unchecked: 'OFF'}"
+               :width="80" :height="33"/>
+               현재 실행중이 영상
+        </span>
+
+      </li>
+      <li @click="removeYoutube">
+        <span>유튜브(제거)</span>
+      </li>
+      <li @click="widgetToggle"
+      ><span>위젯 <toggle-button id="changed-font" @change="widgetToggle" :sync="true" :value="buttonFlag.widget"
+             :labels="{checked: 'ON', unchecked: 'OFF'}"
+             :width="80" :height="33"/>
+      </span>
+      </li>
       <!--<li @click="test"><span>test</span></li>-->
     </ul>
   </div>
@@ -33,7 +52,9 @@
     </div>
   </div>
   <search-youtube></search-youtube>
-  <youtube-controller></youtube-controller>
+  <div class="col-md-8">
+    <youtube-controller></youtube-controller>
+  </div>
 </div>
 
 </template>
@@ -56,7 +77,7 @@ export default {
     this.sync();
   },
   data: function(){
-    return { keword:''};
+    return { keword:'',buttonFlag:{channel:false,minimization:false,removal:false,widget:false}};
   },
   methods: {
     sync: function(){
@@ -69,14 +90,19 @@ export default {
     },
     channelListToggle: function(){
       this.$store.dispatch(Constant.TOGGLE_CHANNEL_ACTIVE);
+      this.buttonFlag.channel = !this.buttonFlag.channel;
     },
     youtubeToggle: function(){
       this.$store.dispatch(Constant.TOGGLE_YOUTUBE_ACTIVE);
+      this.buttonFlag.minimization = !this.buttonFlag.minimization;
+    },
+    removeYoutube: function(){
+      this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:''});
     },
     widgetToggle: function(){
       this.$store.dispatch(Constant.TOGGLE_WIDGET_ACTIVE);
+      this.buttonFlag.widget = !this.buttonFlag.widget;
     },
-
     youtubeSearch(){
       console.log("this is keword",this.keword);
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keword:this.keword});
@@ -107,8 +133,8 @@ export default {
   transform: translateY(-13px);
 }
 .bar{
-  width: 50px;
-  height: 5px;
+  width: 60px;
+  height: 8px;
   background-color: #ecf0f1;
   display: block;
   margin: 8px;
@@ -127,11 +153,18 @@ export default {
 #control_list li{
   margin: 25px auto;
   color: white;
-  font-size: 25px;
+  font-size: 30px;
   text-align: left;
 }
 #control_list input{
   background-color: inherit;
 }
+#mirror_controller {
+  margin: 20px 0px 0px 10px;
+  height: 400px;
+}
 
+.vue-js-switch#changed-font { /* changing font-size of toggle-button  */
+  font-size: 16px;
+}
 </style>

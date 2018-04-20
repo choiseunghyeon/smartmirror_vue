@@ -1,7 +1,7 @@
 <template lang="html">
   <div id="clock" class="col-md-12">
-    <div class="date">{{currentDate+" "+currentDay.today}}</div>
-    <div class="time">{{currentHour}}</div>
+    <div class="date bright-shadow">{{currentDate+" "+currentDay.today}}</div>
+    <div class="time bright-shadow">{{currentHour}}</div>
   </div>
 </template>
 
@@ -71,12 +71,10 @@ export default {
 #clock .date {
   letter-spacing: 0.3em;
   font-size: 26px;
-  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
 }
 #clock .time {
   letter-spacing: 0.4em;
   font-size: 60px;
-  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
 }
 
 </style>

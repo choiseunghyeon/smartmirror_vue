@@ -1,6 +1,6 @@
 #{ margin: 0;}
 body {
-  background: rgba(1,1,1,0.8);
+  background: rgba(1,1,1,1);
   background-size: 100%;
   width: 100%;
   height: 100%;
@@ -21,7 +21,9 @@ ul {
 .ui-widget-content{
   border: none;
 }
-
+.bright-shadow{
+  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0)
+}
 
 /* modal */
 .modal-mask {
@@ -61,7 +63,7 @@ ul {
   background-color: rgba(255,255,255,0);
   border: none;
   color: white;
-  font-size: 30px;
+  font-size: 40px;
   margin: 0 0 0 20px;
 }
 
@@ -94,7 +96,7 @@ ul {
   flex-direction: column;
   position: absolute;
   top: 0; border: 0;
-  right: 40px;
+  right: 45px;
   width: 160px;
   height: 180px;
   text-align: center;
@@ -120,8 +122,7 @@ ul {
 
 #youtube-list li {
   margin-bottom: 10px;
-  width: 400px;
-  height: 300px;
+  height: 290px;
 }
 #youtube-list li img {
   margin-bottom: 5px;
@@ -133,8 +134,7 @@ ul {
 }
 #playlist li {
   margin-bottom: 10px;
-  width: 400px;
-  height: 300px;
+  height: 290px;
 }
 #playlist li div{
   margin-bottom: 15px;
@@ -144,8 +144,7 @@ ul {
 }
 #listItem li {
   margin-bottom: 10px;
-  width: 400px;
-  height: 300px;
+  height: 290px;
 }
 #listItem li div{
   margin-bottom: 15px;
@@ -161,22 +160,9 @@ ul {
 }
 /* widget */
 #widget{
+  margin-top: 30px;
   width: 500px;
-  height: 350px;
+  height: 400px;
   border: 1px solid white;
-}
-/* Weather */
-#weatherRow i{
-  color: #f7f7f7;
-  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
-
-}
-#weatherRow p {
-  font-size: 20px;
-  margin-top: 12px;
-  color: #f7f7f7;
-}
-#today-weather {
-  float: left;
-  border-right: 1px solid rgba(255,255,255,0.3);
+  float: right;
 }

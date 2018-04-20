@@ -45,6 +45,7 @@ export default {
   [Constant.SET_DAY]: (store,payload) => {
     store.commit(Constant.SET_DAY, payload);
   },
+
   [Constant.TOGGLE_CHANNEL_ACTIVE] : (store) => {
     store.commit(Constant.TOGGLE_CHANNEL_ACTIVE);
   },
@@ -57,6 +58,7 @@ export default {
   [Constant.TOGGLE_WIDGET_ACTIVE] : (store) => {
     store.commit(Constant.TOGGLE_WIDGET_ACTIVE);
   },
+  
   [Constant.MODAL_FLAG] : (store,payload) => {
     console.log("FLAG CALLED",payload);
     store.commit(Constant.MODAL_FLAG,payload);

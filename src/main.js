@@ -5,7 +5,9 @@ import App from './App'
 import router from './router'
 import store from './store';
 import VueYouTubeEmbed from 'vue-youtube-embed';
+import ToggleButton from 'vue-js-toggle-button';
 
+Vue.use(ToggleButton)
 Vue.use(VueYouTubeEmbed)
 Vue.use(VueYouTubeEmbed, { global: true })
 Vue.config.productionTip = false

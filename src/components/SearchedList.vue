@@ -3,15 +3,14 @@
       <div class="modal-mask">
         <div class="modal-wrapper">
           <div class="modal-container" @scroll="handleScroll">
-            <div class="row">
+            <div :class="'row ' + modal_top_value">
               <button class="modal-default-button" @click="closeYoutubeListModal">
                 OK
               </button>
             </div>
               <ul id="youtube-list" class="row">
                 <div v-for="searchedList in searchedLists">
-                  <li v-for="(data,i) in searchedList.items" @click.stop="changeEvent(data)" class="col-md-4">
-                     <span>Number {{i+1}}</span>
+                  <li v-for="(data) in searchedList.items" @click.stop="changeEvent(data)" class="col-md-4">
                     <span v-if="data.id.channelId">{{data.snippet.title+"채널"}}</span>
                     <figure>
                       <img :src="data.snippet.thumbnails.medium.url" value="data.id.videoId"><figcaption>{{data.snippet.title}}</figcaption>
@@ -48,7 +47,7 @@ export default {
     this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
   },
   data: function(){
-    return {scrollHeight:0}
+    return {scrollHeight:0, modal_top_value:""}
   },
   props: ['selectedPlayLists','listImages'],
   methods: {
@@ -57,6 +56,7 @@ export default {
     },
 
     handleScroll: function(e){
+      e.target.scrollTop !== 0 ? this.modal_top_value="modal_top" : this.modal_top_value="";
       e.target.scrollTop == this.scrollHeight ? this.moreYoutubeVideo(this.searchedLists[this.searchedLists.length-1].nextToken) : console.log(e.target.scrollTop);
     },
     moreYoutubeVideo: function(token){
@@ -72,3 +72,10 @@ export default {
   }
 }
 </script>
+<style scoped media="screen">
+  .modal_top {
+    position: fixed;
+
+    z-index: 1111;
+  }
+</style>
