@@ -7,7 +7,7 @@ export default {
     let request = {
       part:'snippet',
       channelId: payload.channelId,
-      maxResults: 9,
+      maxResults: 6,
       key: ApiKey.youtube,
     };
     // 추가적인 요청이면 token을 넣어서 다음 데이터 요청
@@ -21,7 +21,7 @@ export default {
     let request = {
       part:'snippet',
       playlistId: payload.playlistId,
-      maxResults: 9,
+      maxResults: 6,
       key: ApiKey.youtube,
     };
     // 추가적인 요청이면 token을 넣어서 다음 데이터 요청
@@ -45,7 +45,7 @@ export default {
     let request = {
       part:'snippet',
       q: payload.keword,
-      maxResults: 9,
+      maxResults: 6,
       order: order.조회수,
       key: ApiKey.youtube,
     };

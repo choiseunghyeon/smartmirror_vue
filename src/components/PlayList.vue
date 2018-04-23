@@ -17,8 +17,8 @@
         -->
         <transition name="slide" mode="out-in"
           @after-enter="slideAfterEnter">
-          <div v-if="isLocalActive.playList" key="playList">
-            <ul id="playlist" class="row">
+          <div id="playlist" class="white-scale-100" v-if="isLocalActive.playList" key="playList">
+            <ul class="row">
               <div v-for="list in selectedPlayLists ">
                 <li v-for="(data,index) in list.items" class="col-md-4" @click="getListItems(data.id,data.snippet.title)">
                    <figure>
@@ -37,8 +37,8 @@
 
           <!-- the begining of listItem
         -->
-          <div v-if="isLocalActive.listItem" key="listItem">
-            <ul id="listItem" class="row">
+          <div id="listItem" class="white-scale-100" v-if="isLocalActive.listItem" key="listItem">
+            <ul class="row">
               <div v-for="list in playListItems ">
                 <li v-for="(data,index) in list.items" class="col-md-4">
 

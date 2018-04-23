@@ -8,7 +8,7 @@
                 OK
               </button>
             </div>
-              <ul id="youtube-list" class="row">
+              <ul id="youtube-list" class="row white-scale-100">
                 <div v-for="searchedList in searchedLists">
                   <li v-for="(data) in searchedList.items" @click.stop="changeEvent(data)" class="col-md-4">
                     <span v-if="data.id.channelId">{{data.snippet.title+"채널"}}</span>
