@@ -96,7 +96,7 @@ ul {
   flex-direction: column;
   position: absolute;
   top: 0; border: 0;
-  right: 45px;
+  right: 47px;
   width: 160px;
   height: 180px;
   text-align: center;
@@ -118,7 +118,7 @@ ul {
 .white-scale-100{
   color:white;
   width: 100%;
-  height: 100%;
+  height: 120%;
 }
 .white-scale-100 li{
   margin-bottom: 10px;
@@ -127,47 +127,7 @@ ul {
 .white-scale-100 li img{
   margin-bottom: 5px;
 }
-/*
-#youtube-list{
-  color:white;
-  width: 100%;
-  height: 100%;
-}
-#youtube-list li {
-  margin-bottom: 10px;
-  height: 290px;
-}
-#youtube-list li img {
-  margin-bottom: 5px;
-}
 
-
-#playlist {
-  color:white;
-  width: 100%;
-  height: 100%;
-}
-#playlist li {
-  margin-bottom: 10px;
-  height: 290px;
-}
-#listItem {
-  color:white;
-  width: 100%;
-  height: 100%;
-}
-#listItem li {
-  margin-bottom: 10px;
-  height: 290px;
-}
-*/
-#playlist li div{
-  margin-bottom: 15px;
-}
-
-#listItem li div{
-  margin-bottom: 15px;
-}
 /* Youtube - Channel*/
 #channel_delete{
   position: absolute;

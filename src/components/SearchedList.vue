@@ -8,11 +8,15 @@
                 OK
               </button>
             </div>
-              <ul id="youtube-list" class="row white-scale-100">
+              <ul class="row white-scale-100">
                 <div v-for="searchedList in searchedLists">
                   <li v-for="(data) in searchedList.items" @click.stop="changeEvent(data)" class="col-md-4">
                     <span v-if="data.id.channelId">{{data.snippet.title+"채널"}}</span>
                     <figure>
+                      <div class="number_box" v-if="!data.id.channelId" @click.stop="saveVideo(data)">
+                        <span class="show_number">저장</span>
+                        <img class="number_image" src="../../static/images/listing-option.svg" alt="">
+                      </div>
                       <img :src="data.snippet.thumbnails.medium.url" value="data.id.videoId"><figcaption>{{data.snippet.title}}</figcaption>
                     </figure>
                   </li>
@@ -60,6 +64,7 @@ export default {
       e.target.scrollTop == this.scrollHeight ? this.moreYoutubeVideo(this.searchedLists[this.searchedLists.length-1].nextToken) : console.log(e.target.scrollTop);
     },
     moreYoutubeVideo: function(token){
+
       console.log("moreYoutubeVideo Token: ",token);
       let keword = $("#search_keword").val();
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keword:keword,nextPageToken:token});
@@ -69,6 +74,9 @@ export default {
       this.$store.dispatch(Constant.MODAL_FLAG,'');
       this.$store.dispatch(Constant.REMOVE_SEARCHED_LIST);
     },
+    saveVideo: function(data){
+
+    }
   }
 }
 </script>

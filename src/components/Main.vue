@@ -14,9 +14,16 @@
         </span>
       </li><!-- SearchYoutube에 있는 거를 일단 가져옴 기능상 문제는 없음 다만 유지보수 때 문제가 생길 수 있으니 수정 요망 -->
       <li @click="channelListToggle">
-        <span>구독중인 채널 보기 <toggle-button id="changed-font" @change="channelListToggle" :sync="true" :value="buttonFlag.channel"
+        <span>구독중인 채널 보기 <toggle-button id="changed-font" @change="channelListToggle" :sync="true" :value="isActive.channellists"
                :labels="{checked: 'ON', unchecked: 'OFF'}"
                :width="80" :height="33"/>
+        </span>
+      </li>
+
+      <li @click="myListToggle">
+        <span>나의 목록 <toggle-button id="changed-font" @change="myListToggle" :sync="true" :value="isActive.mylists"
+          :labels="{checked: 'ON', unchecked: 'OFF'}"
+          :width="80" :height="33"/>
         </span>
       </li>
 
@@ -25,16 +32,10 @@
                :labels="{checked: 'ON', unchecked: 'OFF'}"
                :width="80" :height="33"/>
         </span>
-
       </li>
+
       <li @click="removeYoutube">
         <span>유튜브(제거)</span>
-      </li>
-      <li @click="widgetToggle"
-      ><span>위젯 <toggle-button id="changed-font" @change="widgetToggle" :sync="true" :value="buttonFlag.widget"
-             :labels="{checked: 'ON', unchecked: 'OFF'}"
-             :width="80" :height="33"/>
-      </span>
       </li>
       <!--<li @click="test"><span>test</span></li>-->
     </ul>
@@ -76,7 +77,7 @@ export default {
     this.sync();
   },
   data: function(){
-    return { keword:'',buttonFlag:{channel:false,minimization:false,removal:false,widget:false}};
+    return { keword:'',buttonFlag:{minimization:false,removal:false,widget:false}};
   },
   methods: {
     sync: function(){
@@ -89,7 +90,9 @@ export default {
     },
     channelListToggle: function(){
       this.$store.dispatch(Constant.TOGGLE_CHANNEL_ACTIVE);
-      this.buttonFlag.channel = !this.buttonFlag.channel;
+    },
+    myListToggle: function(){
+      this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
     },
     youtubeToggle: function(){
       this.$store.dispatch(Constant.TOGGLE_YOUTUBE_ACTIVE);
@@ -106,11 +109,7 @@ export default {
       console.log("this is keword",this.keword);
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keword:this.keword});
     },
-    /*
-    test: function(){
-      this.$store.dispatch(Constant.GET_LIST_COUNT,{playlistId:"PLVXsWLG72QDaeAKIbvC1zKdxkueUWEhWr"});
-    },
-    */
+
   }
 }
 </script>

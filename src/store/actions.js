@@ -49,6 +49,9 @@ export default {
   [Constant.TOGGLE_CHANNEL_ACTIVE] : (store) => {
     store.commit(Constant.TOGGLE_CHANNEL_ACTIVE);
   },
+  [Constant.TOGGLE_MYLIST_ACTIVE] : (store) => {
+    store.commit(Constant.TOGGLE_MYLIST_ACTIVE);
+  },
   [Constant.TOGGLE_HAMBURGER_ACTIVE] : (store) => {
     store.commit(Constant.TOGGLE_HAMBURGER_ACTIVE);
   },
@@ -58,7 +61,7 @@ export default {
   [Constant.TOGGLE_WIDGET_ACTIVE] : (store) => {
     store.commit(Constant.TOGGLE_WIDGET_ACTIVE);
   },
-  
+
   [Constant.MODAL_FLAG] : (store,payload) => {
     console.log("FLAG CALLED",payload);
     store.commit(Constant.MODAL_FLAG,payload);
@@ -117,11 +120,6 @@ export default {
     AxiosAPI.playListItems(payload)
     .then((response) => {
       console.log("listitmes: ",response.data);
-      /*
-      console.log(data);
-      console.log(data.items[0].snippet.resourceId.videoId);
-      payload = data.items.map((x) => { return {id:x.snippet.resourceId.videoId,image:x.snippet.thumbnails.medium} });
-      */
       let checkedData = ForAction.checkRemovedVideo(response.data);
       store.dispatch(Constant.ADD_PLAY_LIST_ITEMS,checkedData);
     })
@@ -130,4 +128,20 @@ export default {
   [Constant.SET_LOADING_STATE] : (store, payload) => {
     store.commit(Constant.SET_LOADING_STATE,payload);
   },
+
+
+  //about MyList
+  [Constant.ADD_MY_LIST] : (store,payload) => {
+
+  },
+  [Constant.ADD_MY_LIST_ITEMS] : (store,payload) => {
+
+  },
+  [Constant.REMOVE_MY_LIST] : (store,payload) => {
+
+  },
+  [Constant.REMOVE_MY_LIST_ITEMS] : (store,payload) => {
+
+  },
+
 }

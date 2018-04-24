@@ -13,6 +13,7 @@ export default {
   SET_DAY: "setDay",
   SYNC_CHANNEL: "syncChannel",
   TOGGLE_CHANNEL_ACTIVE: "toggleChannelActive",
+  TOGGLE_MYLIST_ACTIVE: "toggleMyListActive",
   TOGGLE_HAMBURGER_ACTIVE: "toggleHamburgerActive",
   TOGGLE_YOUTUBE_ACTIVE: "toggleYoutubeActive", // 유튜브 화면 토글
   TOGGLE_WIDGET_ACTIVE: "toggleWidgetActive",
@@ -28,6 +29,12 @@ export default {
   //about Channel
   ADD_PLAY_LIST: "addPlayList",
   ADD_PLAY_LIST_ITEMS: "addPlayListItems",
+
+  //about MyList
+  ADD_MY_LIST: "addMyList",
+  ADD_MY_LIST_ITEMS:"addMyListItems",
+  REMOVE_MY_LIST:"removeMyList",
+  REMOVE_MY_LIST_ITEMS:"removeMyListItems",
 
   // about Loading bar
   SET_LOADING_STATE: "setLoadingState",

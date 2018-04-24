@@ -12,6 +12,6 @@ export default {
   playListItems:[], //선택된 재생목록이 가진 영상들
 
   dayObject:{today:'',tomorrow:''},
-  isActive: {channellists:false,hamburger:false, youtube:false, widget:false,loading:true},
+  isActive: {channellists:false,mylists:false,hamburger:false, youtube:false, widget:false,loading:true},
   modalFlag:''
 }

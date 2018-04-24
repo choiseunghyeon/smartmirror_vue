@@ -58,6 +58,9 @@ export default {
   [Constant.TOGGLE_CHANNEL_ACTIVE] : (state) => {
     state.isActive.channellists = !state.isActive.channellists;
   },
+  [Constant.TOGGLE_MYLIST_ACTIVE] : (state) => {
+    state.isActive.mylists = !state.isActive.mylists;
+  },
   [Constant.TOGGLE_HAMBURGER_ACTIVE] : (state) => {
     state.isActive.hamburger = !state.isActive.hamburger;
   },
@@ -78,4 +81,19 @@ export default {
   [Constant.SET_LOADING_STATE] : (state, payload) => {
     state.isActive.loading = payload;
   },
+
+  //about MyList
+  [Constant.ADD_MY_LIST] : (state,payload) => {
+
+  },
+  [Constant.ADD_MY_LIST_ITEMS] : (state,payload) => {
+
+  },
+  [Constant.REMOVE_MY_LIST] : (state,payload) => {
+
+  },
+  [Constant.REMOVE_MY_LIST_ITEMS] : (state,payload) => {
+
+  },
+
 }

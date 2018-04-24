@@ -3,9 +3,9 @@
 - Let's get started
 
       // you have to install node and npm at first
-      $ npm install // hit this commend in the smartmirror folder
+      $ sudo npm install // hit this commend in the smartmirror folder
       $ mkdir /src/ApiKey.js // almost functions need API KEY. check API SETTING
-      $ npm run dev // hit http://localhost:8080/ in browser
+      $ sudo npm run dev // and then hit http://localhost:8080/ in browser
 
 - Introduction
 
@@ -22,7 +22,7 @@
   d. youtube(removal): it will remove youtube video perfectly
 
   e. widget: when you click it, widget(weather, fineDust, Clock) will disappear
-  
+
 - Weather
 
   it shows today and tomorrow weather summary such as min temperature and max temperature

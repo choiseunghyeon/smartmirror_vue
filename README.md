@@ -3,9 +3,9 @@
 - 시작하기
 
       // node와 npm이 깔려있어야 합니다.
-      $ npm install // 다운받은 폴더에서 명령어 입력
+      $ sudo npm install // 다운받은 폴더에서 명령어 입력
       $ mkdir /src/ApiKey.js // 유튜브, 날씨, 미세먼지의 기능은 api키가 필요합니다 API설정 참조
-      $ npm run dev // smartmirror가 실행되며 브라우저에  http://localhost:8080/ 입력
+      $ sudo npm run dev // smartmirror가 실행되며 브라우저에  http://localhost:8080/ 입력
 
 - 기본 기능
 

@@ -1,6 +1,5 @@
 <template lang="html">
   <div class="col-md-12">
-    <!--<input id="search_keword" type="text" name="" value="">-->
     <transition name="elastic">
     <div id="channellist" v-if="isActive.channellists">
         <transition-group name="list" tag="div">
@@ -15,13 +14,10 @@
     </div>
   </transition>
 
-
+    <!--<my-list v-if="modalFlag == 'MyList'"></my-list>-->
     <searched-list v-if="modalFlag == 'SearchedList'" @changeYoutube="changeYoutube"></searched-list>
     <play-list v-if="modalFlag == 'PlayList'" ></play-list>
 
-
-
-  <!--<button @click="channelListToggle" type="button" name="button">쇼미 채널</button>-->
   </div> <!-- the end -->
 </template>
 
@@ -30,12 +26,13 @@ import Constant from '../Constant.js';
 import ApiKey from '../ApiKey.js';
 import SearchedList from './SearchedList';
 import PlayList from './PlayList';
+//import MyList from './MyList';
 import {mapState} from 'vuex';
 import _ from "lodash";
 
 export default {
   name:"SearchYoutube",
-  components: {SearchedList,PlayList},
+  components: {SearchedList,PlayList}, //,MyList
   computed: mapState(['channelLists','isActive','modalFlag']),
   methods: {
     changeYoutube: function(data){

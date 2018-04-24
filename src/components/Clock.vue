@@ -20,7 +20,6 @@ export default {
     realTimeClock: function(){
       let t=new Date();
       let ap; // AM PM
-      let result;
       let t_array=[t.getFullYear(),t.getMonth()+1,t.getDate(),t.getHours(),t.getMinutes()];
       if(t_array[3] == 12){
         ap="PM";

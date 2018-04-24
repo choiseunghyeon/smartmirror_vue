@@ -13,11 +13,10 @@
             <loading v-if="isActive.loading" ></loading>
           </div>
 
-          <!-- the begining of palyList
-        -->
+          <!-- the begining of palyList-->
         <transition name="slide" mode="out-in"
           @after-enter="slideAfterEnter">
-          <div id="playlist" class="white-scale-100" v-if="isLocalActive.playList" key="playList">
+          <div class="white-scale-100" v-if="isLocalActive.playList" key="playList">
             <ul class="row">
               <div v-for="list in selectedPlayLists ">
                 <li v-for="(data,index) in list.items" class="col-md-4" @click="getListItems(data.id,data.snippet.title)">
@@ -35,15 +34,14 @@
           </div>
           <!-- the end of playList -->
 
-          <!-- the begining of listItem
-        -->
-          <div id="listItem" class="white-scale-100" v-if="isLocalActive.listItem" key="listItem">
+          <!-- the begining of listItem-->
+          <div class="white-scale-100" v-if="isLocalActive.listItem" key="listItem">
             <ul class="row">
-              <div v-for="list in playListItems ">
-                <li v-for="(data,index) in list.items" class="col-md-4">
+              <div v-for="(list,index) in playListItems ">
+                <li v-for="(data) in list.items" class="col-md-4">
 
                    <figure>
-                     <img :src="data.snippet.thumbnails.medium.url" @click="setVideoList(data.snippet.resourceId.videoId)" >
+                     <img :src="data.snippet.thumbnails.medium.url" @click="setVideoList(data.snippet.resourceId.videoId,index)" >
                      <figcaption>{{data.snippet.title}}</figcaption>
                    </figure>
                 </li>
@@ -95,17 +93,12 @@ export default {
 
 
     slideAfterEnter: function(){
-
       let modalContainer = document.getElementsByClassName('modal-container')[0];
       this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
       console.log("* AfterEnter! height: ",this.scrollHeight);
-
     },
-
-
     getPlayList: function(value){
       let channelId=value;
-      //this.animation.clickCard=true;
       this.$store.dispatch(Constant.REMOVE_PLAY_LIST_ITEMS);
       this.$store.dispatch(Constant.GET_PLAY_LISTS,{channelId:channelId})
     },
@@ -114,17 +107,18 @@ export default {
       if(token == "NULL") return;
       this.$store.dispatch(Constant.GET_PLAY_LISTS,{channelId:channelId,nextPageToken:token});
     },
+
     handleScroll: function(e){
-      console.log("scroll!!: ",e.target.scrollTop);
+      //console.log("scroll!!: ",e.target.scrollTop);
       e.target.scrollTop !== 0 ? this.modal_top_value="modal_top" : this.modal_top_value="";
       if (e.target.scrollTop == this.scrollHeight) {
-        console.log("I'm in the if state");
         this.isLocalActive.playList == true ? // playList가 켜져 있는 것을 의미
          this.morePlayList(this.selectedChannel,this.selectedPlayLists[this.selectedPlayLists.length-1].nextToken)
         : this.moreListItems(this.selectedListId, this.playListItems[this.playListItems.length-1].nextToken); //
       }
     },
-    getListItems: function(id,title){ // PlayList의 영상 9개를 긁어옴
+
+    getListItems: function(id,title){ // PlayList의 영상 6개를 긁어옴
       console.log("get items!!", id);
       this.selectedListId = id;
       this.$store.dispatch(Constant.REMOVE_PLAY_LIST_ITEMS);
@@ -132,23 +126,23 @@ export default {
       this.toggle.title = title;
       this.toggleList();
     },
+
     moreListItems: function(playlistId,token){ // 스크롤이 바닥을 찍으면 PlayList의 영상 9개를 추가적으로 가져옴
       console.log("moreListItems called");
       if(token == "NULL") return;
       this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:playlistId,nextPageToken:token});
     },
-    setVideoList: function(id){ // 선택된 영상을 실행하고 선택된 영상이 있는 플레이 리스트의 영상을 자동실행으로 setting함
+
+    setVideoList: function(id,index){ // 선택된 영상을 실행하고 선택된 영상이 있는 플레이 리스트의 영상을 자동실행으로 setting함
       let oneArray =[];
-      for (var i = 0; i < this.playListItems.length; i++){  // 여러개로 나뉘어 져있는 객체 속 배열들을 한 배열로 합치기
+      for (var i = index; i < this.playListItems.length; i++){  // 여러개로 나뉘어 져있는 객체 속 배열들을 한 배열로 합치기
         let items = this.playListItems[i].items;
-        oneArray = oneArray.concat(items.map(x=>x.snippet.resourceId.videoId));
+        items.forEach(function(x){
+          oneArray.push(x.snippet.resourceId.videoId);
+        });
       }
       console.log("oneArray: ",oneArray);
-      let selectedNum = oneArray.findIndex((x) => { // 선택된 id의  index 찾기
-        return x == id;
-      });
-      console.log(selectedNum);
-      //console.log(data);
+      let selectedNum = oneArray.indexOf(id);
       let payload = {
         idArray:oneArray,
         num:selectedNum,
@@ -156,7 +150,7 @@ export default {
       this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
       this.closeYoutubeListModal();
       this.channelListToggle();
-    },
+          },
     closeYoutubeListModal: function(){
       this.$store.dispatch(Constant.MODAL_FLAG,'');
       this.$store.dispatch(Constant.REMOVE_PLAY_LIST);

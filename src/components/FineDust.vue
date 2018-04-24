@@ -1,6 +1,6 @@
 <template lang="html">
-  <div id="dust" class="col-md-12 bright-shadow">
-    미세먼지: {{dust.state}}
+  <div id="pollution" class="col-md-12 bright-shadow">
+    {{info.name}}: {{info.state}}
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import ApiKey from '../ApiKey.js';
 export default {
   name:"FineDust",
   data: function(){
-    return {dust:{state:""}}
+    return {info:{state:"",name:""}}
   },
   created: function(){
     this.fineDustGet();
@@ -26,13 +26,16 @@ export default {
         dataType:"json",
         success:function(data){
           console.log(data);
-          let fineDustObj={aqi:data.data.current.pollution.aqius,mainus:data.data.current.pollution.mainus}
+          let fineDustObj={aqi:data.data.current.pollution.aqius,mainus:data.data.current.pollution.mainus};
           if (fineDustObj.mainus == 'p2') {
-            if(fineDustObj.aqi <= 50) that.dust.state="좋음"
-            else if (fineDustObj.aqi <= 100) that.dust.state="보통"
-            else if(fineDustObj.aqi <= 150) that.dust.state="나쁨"
-            else that.dust.state="매우 나쁨"
+            that.info.name="미세먼지";
+          } else if (fineDustObj.mainus == 'o3') {
+            that.info.name="오존";
           }
+          if(fineDustObj.aqi <= 50) that.info.state="좋음"
+          else if (fineDustObj.aqi <= 100) that.info.state="보통"
+          else if(fineDustObj.aqi <= 150) that.info.state="나쁨"
+          else that.info.state="매우 나쁨"
         }
       }) // the end of ajax
 
@@ -43,7 +46,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-#dust {
+#pollution {
   margin-top: 5px;
   font-family: 'Share Tech Mono', monospace;
   letter-spacing: 0.3em;
