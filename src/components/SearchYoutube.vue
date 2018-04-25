@@ -26,13 +26,12 @@ import Constant from '../Constant.js';
 import ApiKey from '../ApiKey.js';
 import SearchedList from './SearchedList';
 import PlayList from './PlayList';
-//import MyList from './MyList';
 import {mapState} from 'vuex';
 import _ from "lodash";
 
 export default {
   name:"SearchYoutube",
-  components: {SearchedList,PlayList}, //,MyList
+  components: {SearchedList,PlayList},
   computed: mapState(['channelLists','isActive','modalFlag']),
   methods: {
     changeYoutube: function(data){

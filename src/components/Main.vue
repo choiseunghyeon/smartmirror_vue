@@ -52,6 +52,7 @@
     </div>
   </div>
   <search-youtube></search-youtube>
+  <my-list v-if="isActive.mylists"></my-list>
   <div class="col-md-8">
     <youtube-controller></youtube-controller>
   </div>
@@ -65,13 +66,14 @@ import Weather from './Weather';
 import FineDust from './FineDust';
 import SearchYoutube from './SearchYoutube';
 import YoutubeController from './YoutubeController';
+import MyList from './MyList';
 import Constant from '../Constant.js';
 import {mapState} from 'vuex';
 
 
 export default {
   name: 'Main',
-  components: {Clock,Weather,FineDust,SearchYoutube,YoutubeController},
+  components: {Clock,Weather,FineDust,SearchYoutube,YoutubeController,MyList},
   computed: mapState(['isActive']),
   created: function(){
     this.sync();
@@ -164,5 +166,9 @@ export default {
 
 .vue-js-switch#changed-font { /* changing font-size of toggle-button  */
   font-size: 16px;
+}
+
+.isMyListActive {
+  display: none;
 }
 </style>

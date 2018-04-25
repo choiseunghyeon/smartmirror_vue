@@ -39,7 +39,10 @@
             <ul class="row">
               <div v-for="(list,index) in playListItems ">
                 <li v-for="(data) in list.items" class="col-md-4">
-
+                  <div class="number_box" @click.stop="saveVideo(data)">
+                    <span class="show_number">저장</span>
+                    <img class="number_image" src="../../static/images/listing-option.svg" alt="">
+                  </div>
                    <figure>
                      <img :src="data.snippet.thumbnails.medium.url" @click="setVideoList(data.snippet.resourceId.videoId,index)" >
                      <figcaption>{{data.snippet.title}}</figcaption>
@@ -60,8 +63,8 @@
 
 <script>
 import Constant from '../Constant.js';
-import Loading from './Loading'
 import {mapState} from 'vuex';
+import Loading from './Loading'
 import ApiKey from '../ApiKey.js';
 
 export default {
@@ -150,7 +153,17 @@ export default {
       this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
       this.closeYoutubeListModal();
       this.channelListToggle();
-          },
+    },
+    saveVideo: function(data){
+      let obj = {
+        saveFlag:true,
+        data:{
+          title: data.snippet.title, videoId: data.snippet.resourceId.videoId,imgUrl: data.snippet.thumbnails.medium.url
+        }
+      };
+      this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
+      this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
+    },
     closeYoutubeListModal: function(){
       this.$store.dispatch(Constant.MODAL_FLAG,'');
       this.$store.dispatch(Constant.REMOVE_PLAY_LIST);

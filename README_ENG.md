@@ -71,6 +71,16 @@
 
     d. if Video List scroll hit the bottom then it will show additional Video List
 
+- My List
+
+   ㄱ. 목록을 생성 하거나 삭제 가능(초기 이미지는 없음)
+
+   ㄴ. 목록 클릭시 해당 목록이 가지고 있는 영상들을 보여줌
+
+     - 영상 클릭시 해당 영상부터 다음 영상들을 리스트로 만들어 순차적으로 재생
+
+   ㄷ. 유튜브 검색 또는 채널이 가지고 있는 영상에서 저장 기능 클릭시 나의 목록이 토글되어 보여짐 -> 목록 클릭시 저장됨
+
 API SETTING
  - you need a few API key about Weather, FineDust and Youtube
  - you have to make ApiKey.js file in src folder and then you have to set ApiKey.js with your API key

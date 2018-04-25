@@ -75,7 +75,14 @@ export default {
       this.$store.dispatch(Constant.REMOVE_SEARCHED_LIST);
     },
     saveVideo: function(data){
-
+      let obj = {
+        saveFlag:true,
+        data:{
+          title: data.snippet.title, videoId: data.id.videoId,imgUrl: data.snippet.thumbnails.medium.url
+        }
+      };
+      this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
+      this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
     }
   }
 }

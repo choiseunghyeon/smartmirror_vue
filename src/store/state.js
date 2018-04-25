@@ -13,5 +13,8 @@ export default {
 
   dayObject:{today:'',tomorrow:''},
   isActive: {channellists:false,mylists:false,hamburger:false, youtube:false, widget:false,loading:true},
-  modalFlag:''
+  modalFlag:'',
+
+  // about MyList
+  videoDataSave:{saveFlag:false, data:''},
 }

@@ -144,4 +144,12 @@ export default {
 
   },
 
+  [Constant.VIDEO_DATA_SAVE] : (store,payload) => {
+    console.log("VIDEO_DATA_SAVE called");
+    store.commit(Constant.VIDEO_DATA_SAVE,payload);
+  },
+  [Constant.REMOVE_VIDEO_DATA_SAVE] : (store) => {
+    console.log("REMOVE_VIDEO_DATA_SAVE called");
+    store.commit(Constant.TURN_OFF_DATAFLAG);
+  },
 }

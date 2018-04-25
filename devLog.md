@@ -9,6 +9,7 @@
   - PlayList.vue: SearchYoutube를 상위 컴포넌트로 가지며 채널 클릭시 채널이 가진 재생목록을 보여주며 한 재생목록 클릭시 재생목록이 가진 영상들을 보여줌
   - YoutubeController: PlayList에서 선택된 영상일 경우 그 영상이 포함된 재생목록을 리스트로 가짐 또한 선택된 영상을 틀어주는 역할
   - FineDust: 미세먼지 관련 api호출 및 설정
+  - MyList: 유튜브 영상을 나만의 리스트에 저장  독립적으로 실행
 
 -store
   actions.js index.js mutation.js state.js를 가짐 각 모듈 파일들에 역할을 분리하여 사용하도록 노력함
@@ -240,3 +241,13 @@ Page Loading 추가
     구독중인 채널의 플레이리스트나 리스트아이템 같은경우( 업데이트 되었다면 따로 추가 요청을 해야하지만) 재요청의 가능성이 높고 cache기능을 만들 시 효율이 증대됨을 기대할 수 있다.
     - 비디오 저장기능을 만들어서 나만의 custom video array를 만들어도 좋을듯 (local에 저장)
     비디오 저장기능 flow = 유튜브 검색 또는 listitems에서 저장을 클릭 하면 mini MyList의 재생목록을 보여줌 저장할 목록이 없으면 생성도 할 수 있게끔
+
+18.04.25
+  진행상황: MyList의 기능 구현중
+    MyList(폴더 또는 여기서의 playlist와 같은 개념) 생성, 삭제, 중복 제거, 이미지 설정 완료
+    MyListItmes(파일들 또는 여기서의 listItems와 같은 개념) 생성, 삭제, 재생 완료
+    youtubeSearch를 통한 또는 구독중인 채널에서의 영상을 MyList에 저장할 수 있음
+    MyList와 MyListItmes 각각으로의 이동 구현
+    영상을 저장할 때 MyList component의 크기 조율
+
+  수정사항: 기능을 빠르게 구현하기 위해 단시간에 만들어냄 따라서 MyList 리펙토링 할 부분이 있으면 리펙토링 하기.
