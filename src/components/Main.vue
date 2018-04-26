@@ -52,7 +52,7 @@
     </div>
   </div>
   <search-youtube></search-youtube>
-  <my-list v-if="isActive.mylists"></my-list>
+  <my-list></my-list>
   <div class="col-md-8">
     <youtube-controller></youtube-controller>
   </div>
@@ -168,7 +168,4 @@ export default {
   font-size: 16px;
 }
 
-.isMyListActive {
-  display: none;
-}
 </style>

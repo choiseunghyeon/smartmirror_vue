@@ -1,17 +1,20 @@
 <template lang="html">
   <transition name="modal">
-    <div :class="videoDataSave.saveFlag ? 'modal-mask-small' : 'modal-mask'">
+    <div :class="[videoDataSave.saveFlag ? 'modal-mask-small' : 'modal-mask',{'isMyListActive':!isActive.mylists}]">
       <div class="modal-wrapper">
         <div id="my-list-modal" class="modal-container" @scroll="handleScroll">
-          <div :class="'row ' + modal_top_value">
+          <div :class="'row ' + modal_top_value" style="margin-bottom: 20px !important;">
             <button class="modal-default-button" @click="closeMyListModal">
               OK
             </button>
             <button class="modal-default-button" @click="toggleList">
               {{toggle.message}}
             </button>
-            <button class="modal-default-button" @click="makeMyList()">
-              생성
+            <button class="modal-default-button">
+              <transition name="input">
+                <input v-if="animation.listInput" v-model="myListName" type="text" class="make-input" name="" placeholder="이름을 입력하세요!">
+              </transition>
+              <span @click="makeMyList()">생성</span>
             </button>
           </div>
           <!-- the begining of MyList-->
@@ -22,8 +25,10 @@
               <div class="height-290 col-md-4" v-for="(data,index) in myLists" @click.stop="getMyListItems(data.name)">
                 <figure>
                   <div class="number_box" @click.stop="removeList(index)">
-                    <span>&#88;</span>
-                    <span class="show_number">삭제</span>
+
+                      <span>&#88;</span>
+                      <span class="show_number">삭제</span>
+
                   </div>
                   <img class="img-320-180" :src="data.imgUrl"><figcaption>{{data.name}}</figcaption>
                 </figure>
@@ -62,42 +67,35 @@ import {mapState} from 'vuex';
 
 export default {
   name: "MyList",
-  computed: mapState(['videoDataSave']),
+  computed: mapState(['videoDataSave','isActive']),
   created: function(){
     console.log("I'm created")
     if(localStorage.listNames == undefined)
       localStorage.listNames=JSON.stringify([]);
 
-    let listNames = JSON.parse(localStorage.listNames);
-    let listNameImg=[];
-    listNames.forEach(function(val){
-      let temp = JSON.parse(localStorage[val]);
-      if(temp.length > 0)
-        listNameImg.push({name:val,imgUrl:temp[0].imgUrl});
-      else
-        listNameImg.push({name:val,imgUrl:'../../static/images/x.png'});
-    });
-
-    this.myLists = listNameImg;
+    this.myLists = this.retunMyListValue();
   },
   /*
-  mounted: function(){
-    let modalContainer = document.getElementById('my-list-modal')[0];
-    this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight ;
-    console.log("data mounted Height: ",this.scrollHeight);
-  },
   updated: function(){ // 데이터가 변경되면 scroll의 길이를 구함
+  console.log('mylist updated');
+  let modalContainer = document.getElementById('my-list-modal')[0];
+  this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
+  console.log("upgrade complete height: ",this.scrollHeight);
 
-    let modalContainer = document.getElementById('my-list-modal')[0];
-    this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
-    console.log("upgrade complete height: ",this.scrollHeight);
-  },
+},
+  mounted: function(){
+  let modalContainer = document.getElementById('my-list-modal')[0];
+  this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight ;
+  console.log("data mounted Height: ",this.scrollHeight);
+
+},
   */
   data: function(){
     return {scrollHeight:0,selectedListId:''
     ,isLocalActive:{myList:true,myListItem:false}
     ,toggle:{message:"MOVE - X",title:""}
-    ,modal_top_value:"",myLists:'',myListItems:''}
+    ,modal_top_value:"",myLists:'',myListItems:''
+    ,animation:{listInput:false},myListName:'' }
   },
   methods: {
     slideAfterEnter: function(){
@@ -107,13 +105,14 @@ export default {
       console.log("* AfterEnter! height: ",this.scrollHeight);
       */
     },
-    handleScroll: function(e){
-      e.target.scrollTop !== 0 ? this.modal_top_value="modal_top" : this.modal_top_value="";
-      //e.target.scrollTop == this.scrollHeight ? this.moreYoutubeVideo(this.searchedLists[this.searchedLists.length-1].nextToken) : console.log(e.target.scrollTop);
-    },
     makeMyList: function(){
+      if(this.animation.listInput == false){
+        this.animation.listInput = true;
+        return;
+      }
       let names = JSON.parse(localStorage.listNames)
-      let name = prompt('이름을 입력해주세요');
+      let name = this.myListName;
+      //let name = prompt('이름을 입력해주세요');
       if( names.some((val) => val == name) ){ // 하나라도 같으면 참
         alert('이름이 중복됩니다.');
         return
@@ -122,18 +121,14 @@ export default {
       localStorage.listNames=JSON.stringify(names);
       localStorage[name]=JSON.stringify([]); // localStorage에 MyList의 이름을 가진 값 선언 이곳에 비디오를 저장
 
-      let listNameImg=[];
-      names.forEach(function(val){
-        let temp = JSON.parse(localStorage[val]);
-        if(temp.length > 0)
-          listNameImg.push({name:val,imgUrl:temp[0].imgUrl});
-        else
-          listNameImg.push({name:val,imgUrl:'../../static/images/x.png'});
-      });
 
-      this.myLists = listNameImg;
+
+      this.myLists = this.retunMyListValue();
+      this.animation.listInput = false;
     },
     removeList: function(index){
+      if(!confirm('해당 목록을 삭제하시겠습니까??')) // 아니오를 누르면 함수 실행 안함
+          return;
       console.log(index);
       let names = JSON.parse(localStorage.listNames)
 
@@ -143,17 +138,7 @@ export default {
       localStorage.listNames=JSON.stringify(names); // 지우고 난 이후의 temp array저장
       localStorage.removeItem(removedName);
 
-
-      let listNameImg=[];
-      names.forEach(function(val){
-        let temp = JSON.parse(localStorage[val]);
-        if(temp.length > 0)
-          listNameImg.push({name:val,imgUrl:temp[0].imgUrl});
-        else
-          listNameImg.push({name:val,imgUrl:'../../static/images/x.png'});
-      });
-
-      this.myLists = listNameImg;
+      this.myLists = this.retunMyListValue();
 
     },
 
@@ -164,6 +149,7 @@ export default {
         localStorage[listId]=JSON.stringify(listArr);
         this.closeMyListModal();
         this.$store.dispatch(Constant.VIDEO_DATA_SAVE,{saveFlag:false,data:''});
+        this.myLists = this.retunMyListValue();
       } else {
 
         this.myListItems = JSON.parse(localStorage[listId])
@@ -178,9 +164,7 @@ export default {
       localStorage[listId]=JSON.stringify(this.myListItems);
     },
 
-    closeMyListModal: function(){
-      this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
-    },
+
     setVideoList: function(id,index){
       let arr = this.myListItems.reduce((a,val,i) => {
         if(i >= index)
@@ -194,6 +178,29 @@ export default {
       this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
       this.closeMyListModal();
 
+    },
+    handleScroll: function(e){
+      e.target.scrollTop !== 0 ? this.modal_top_value="modal_top" : this.modal_top_value="";
+      //e.target.scrollTop == this.scrollHeight ? this.moreYoutubeVideo(this.searchedLists[this.searchedLists.length-1].nextToken) : console.log(e.target.scrollTop);
+    },
+    closeMyListModal: function(){
+      this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
+    },
+    retunMyListValue: function(){
+      let t0 = performance.now();
+
+      let listNames = JSON.parse(localStorage.listNames);
+      let listNameImg=[];
+      listNames.forEach(function(val){
+        let temp = JSON.parse(localStorage[val]);
+        if(temp.length > 0)
+        listNameImg.push({name:val,imgUrl:temp[0].imgUrl});
+        else
+        listNameImg.push({name:val,imgUrl:'../../static/images/x.png'});
+      });
+      let t1 = performance.now();
+      console.log("Call to retunMyListValue took " + (t1 - t0) + " milliseconds.");
+      return listNameImg;
     },
     toggleList: function(){
       this.isLocalActive.myList = !this.isLocalActive.myList;
@@ -238,5 +245,38 @@ export default {
 .img-320-180 {
   width: 320px;
   height: 180px;
+}
+.isMyListActive {
+  display: none;
+}
+.make-input {
+  border-radius: 15px;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  width: 80%;
+  height: 80%;
+
+}
+
+.input-enter-active {
+  animation: input-effect 0.5s;
+}
+.input-leave-active {
+  animation: input-effect 0.5s reverse;
+}
+@keyframes input-effect {
+  0% {
+    width: 0%;
+    height: 0%;
+  }
+  70%{
+    width: 50%;
+    height: 60%;
+  }
+  100%{
+    width: 80%;
+    height: 80%;
+  }
 }
 </style>
