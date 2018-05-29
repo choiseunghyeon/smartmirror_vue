@@ -83,21 +83,7 @@ export default {
   },
 
   //about MyList
-  [Constant.ADD_MY_LIST] : (state,payload) => {
-
-  },
-  [Constant.ADD_MY_LIST_ITEMS] : (state,payload) => {
-  },
-  [Constant.REMOVE_MY_LIST] : (state,payload) => {
-
-  },
-  [Constant.REMOVE_MY_LIST_ITEMS] : (state,payload) => {
-
-  },
   [Constant.VIDEO_DATA_SAVE] : (state,payload) => {
     state.videoDataSave = payload;
-  },
-  [Constant.REMOVE_VIDEO_DATA_SAVE] : (state) => {
-    state.videoDataSave.saveFlag = false;
   },
 }

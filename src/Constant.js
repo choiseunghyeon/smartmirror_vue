@@ -31,12 +31,7 @@ export default {
   ADD_PLAY_LIST_ITEMS: "addPlayListItems",
 
   //about MyList
-  ADD_MY_LIST: "addMyList",
-  ADD_MY_LIST_ITEMS:"addMyListItems",
-  REMOVE_MY_LIST:"removeMyList",
-  REMOVE_MY_LIST_ITEMS:"removeMyListItems",
   VIDEO_DATA_SAVE: "videoDataSave",
-  REMOVE_VIDEO_DATA_SAVE: "removeVideoDataSave",
 
   // about Loading bar
   SET_LOADING_STATE: "setLoadingState",

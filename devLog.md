@@ -260,3 +260,8 @@ Page Loading 추가
   진행상황:
     MyList component는 항상 실행된 상태이며 display 토글을 통해서 화면에 보여줌과 사라짐만 조절 하도록 함
     mylist생성할 때의 애니메이션 추가
+
+
+18.05.29
+  수정사항:
+   - muation.js 및 actions.js와 Constant.js 에서 VIDEO_DATA_SAVE제외 MyList 관련된 부분 삭제(안쓰는 코드들임)

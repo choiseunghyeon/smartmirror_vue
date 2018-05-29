@@ -30,7 +30,7 @@ export default {
   },
   computed: mapState(['dayObject']),
   created: function(){
-      return this.weatherGet();
+       this.weatherGet();
     //this.weatherGet();
     //setInterval(this.weatherGet,3600000); // 1000ms = 1 second 1시간마다 한번씩 날씨 정보 로딩
   },

@@ -7,6 +7,16 @@
       $ mkdir /src/ApiKey.js // almost functions need API KEY. check API SETTING
       $ sudo npm run dev // and then hit http://localhost:8080/ in browser
 
+  - **조작**
+
+    1. Install TeamViewer on rasberry pi and cellphone.
+
+    2. Run sudo npm run dev and browser(you have to know Let's get started section)
+
+    3. Control browser which rasberry pi shows with cellphone.
+
+       Tip. lowering down the screen with two fingers is scroll down
+
 - Introduction
 
   You can controll Widget, Hamburger Menu, Channel List and Youtube with your mouse
@@ -73,13 +83,14 @@
 
 - My List
 
-   ㄱ. 목록을 생성 하거나 삭제 가능(초기 이미지는 없음)
+   a. you can make or remove your own list(No image at the first time)
 
-   ㄴ. 목록 클릭시 해당 목록이 가지고 있는 영상들을 보여줌
+   b. if you click one of your lists then it will show you videos
 
-     - 영상 클릭시 해당 영상부터 다음 영상들을 리스트로 만들어 순차적으로 재생
+     - if you click one of videos in your list that you clicked then the video play on screen and will play a next video in regular sequence
 
-   ㄷ. 유튜브 검색 또는 채널이 가지고 있는 영상에서 저장 기능 클릭시 나의 목록이 토글되어 보여짐 -> 목록 클릭시 저장됨
+   c. whenever you click 저장(save) in video, My List display on screen -> if you click your own list then the list save the video
+   
 
 API SETTING
  - you need a few API key about Weather, FineDust and Youtube

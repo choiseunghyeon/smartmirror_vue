@@ -80,6 +80,7 @@ export default {
       console.log("ERROR!!!!", ex);
     })
   },
+
   [Constant.YOUTUBE_SEARCH] : (store,payload) => {
     AxiosAPI.youtubeSearch(payload)
     .then((response) => {
@@ -91,8 +92,9 @@ export default {
       store.dispatch(Constant.MODAL_FLAG,"SearchedList");
     })
   },
-  [Constant.GET_PLAY_LISTS] : (store,payload) => {
-    async function forSync(payload){
+
+  [Constant.GET_PLAY_LISTS] : async (store,payload) => {
+
       try {
         store.commit(Constant.SET_LOADING_STATE,true);
         const response = await AxiosAPI.playLists(payload)
@@ -112,10 +114,11 @@ export default {
       } catch (e) {
         console.error(error);
       }
-    }
-    forSync(payload);
+
+
 
   },
+
   [Constant.GET_PLAY_LIST_ITEMS] : (store,payload) => {
     AxiosAPI.playListItems(payload)
     .then((response) => {
@@ -129,27 +132,9 @@ export default {
     store.commit(Constant.SET_LOADING_STATE,payload);
   },
 
-
-  //about MyList
-  [Constant.ADD_MY_LIST] : (store,payload) => {
-
-  },
-  [Constant.ADD_MY_LIST_ITEMS] : (store,payload) => {
-
-  },
-  [Constant.REMOVE_MY_LIST] : (store,payload) => {
-
-  },
-  [Constant.REMOVE_MY_LIST_ITEMS] : (store,payload) => {
-
-  },
-
   [Constant.VIDEO_DATA_SAVE] : (store,payload) => {
     console.log("VIDEO_DATA_SAVE called");
     store.commit(Constant.VIDEO_DATA_SAVE,payload);
   },
-  [Constant.REMOVE_VIDEO_DATA_SAVE] : (store) => {
-    console.log("REMOVE_VIDEO_DATA_SAVE called");
-    store.commit(Constant.TURN_OFF_DATAFLAG);
-  },
+
 }
