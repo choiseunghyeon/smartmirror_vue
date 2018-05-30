@@ -1,5 +1,9 @@
 # 기능 설명 - KOR
 
+- **하드웨어 만들기, API설정, 기능 영상**
+
+    blog: http://webigotr.tistory.com/228
+
 - **시작하기**
 
       // node와 npm이 깔려있어야 합니다.

@@ -1,5 +1,9 @@
 # Funcitons Explanation - ENG
 
+- **How to make hardware, API Setting, Demo Video**
+
+  blog: http://webigotr.tistory.com/228
+  
 - Let's get started
 
       // you have to install node and npm at first
@@ -90,7 +94,7 @@
      - if you click one of videos in your list that you clicked then the video play on screen and will play a next video in regular sequence
 
    c. whenever you click 저장(save) in video, My List display on screen -> if you click your own list then the list save the video
-   
+
 
 API SETTING
  - you need a few API key about Weather, FineDust and Youtube
