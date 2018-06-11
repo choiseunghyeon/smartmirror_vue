@@ -3,7 +3,7 @@
 - **How to make hardware, API Setting, Demo Video**
 
   blog: http://webigotr.tistory.com/228
-  
+
 - Let's get started
 
       // you have to install node and npm at first
@@ -11,7 +11,7 @@
       $ mkdir /src/ApiKey.js // almost functions need API KEY. check API SETTING
       $ sudo npm run dev // and then hit http://localhost:8080/ in browser
 
-  - **조작**
+  - **Control**
 
     1. Install TeamViewer on rasberry pi and cellphone.
 
