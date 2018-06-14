@@ -1,8 +1,13 @@
 <template lang="html">
-  <div id="clock" class="col-md-12">
-    <div class="date bright-shadow">{{currentDate+" "+currentDay.today}}</div>
-    <div class="time bright-shadow">{{currentHour}}</div>
-  </div>
+  <v-layout justify-center align-center row wrap id="clock">
+    <v-flex xs12>
+      <div class="date bright-shadow">{{currentDate+" "+currentDay.today}}</div>
+    </v-flex>
+    <v-flex xs12>
+      <div class="time bright-shadow">{{currentHour}}</div>
+
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>

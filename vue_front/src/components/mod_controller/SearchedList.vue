@@ -15,7 +15,7 @@
                     <figure>
                       <div class="number_box" :style="{ right: numberBoxRightValue }" v-if="!data.id.channelId" @click.stop="saveVideo(data)">
                         <span class="show_number">저장</span>
-                        <img class="number_image" src="../../static/images/listing-option.svg" alt="">
+                        <img class="number_image" src="../../../static/images/listing-option.svg" alt="">
                       </div>
                       <img :src="data.snippet.thumbnails.medium.url" value="data.id.videoId"><figcaption>{{data.snippet.title}}</figcaption>
                     </figure>
@@ -33,9 +33,9 @@
 </template>
 
 <script>
-import Constant from '../Constant.js';
+import Constant from '../../Constant.js';
 import {mapState} from 'vuex';
-import ApiKey from '../ApiKey.js';
+import ApiKey from '../../ApiKey.js';
 
 export default {
   name: "SearchedList",
@@ -61,7 +61,7 @@ export default {
 
     handleScroll: function(e){
       e.target.scrollTop !== 0 ? this.modal_top_value="modal_top" : this.modal_top_value="";
-      e.target.scrollTop == this.scrollHeight ? this.moreYoutubeVideo(this.searchedLists[this.searchedLists.length-1].nextToken) : console.log(e.target.scrollTop);
+      Math.floor(e.target.scrollTop) == this.scrollHeight ? this.moreYoutubeVideo(this.searchedLists[this.searchedLists.length-1].nextToken) : console.log(e.target.scrollTop);
     },
     moreYoutubeVideo: function(token){
 

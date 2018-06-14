@@ -13,6 +13,22 @@
 
 18.06.11
   - back-end와 front-end에서 socket.io 통신 확인
-  - front-end에서 기기에 따라 url 리다이렉트 달리함 -> mobile은 controller url로 아니면 mirror url로 보냄
+  - front-end에서 기기에 따라 url 리다이렉트 달리함 -> mobile은 controller url로 보냄
   - front-end components안에서 folder를 만들어 controller와 mirror 부분 구분
   - VueSocketio 사용
+  - mod_controller로 mobile에서 조작할 부분 옮겨 놓음 기능 정사 작동 확인
+
+18.06.12
+  - bootstrap, jquery 관련의존성 삭제
+  - bootstrap 대신 vuetify 사용
+  - controller로 이동하는 부분 App.vue로 이동
+  - FineDust 및 Weather의 ajax 부분을 axios로 변경
+
+
+18.06.14
+  - vutify 적용
+  - Main.vue(widget)부분 vutify 적용 완료
+
+  수정 예정사항
+  - mobile에서 볼 때 편하게 보도록 css 수정
+  - socket을 이용하여 data 보내주기 (유트브 검색하고 나의 목록 구독중 채널 모두 mobile에서 확인 유튜브 영상 data만 보내주기(data list도))

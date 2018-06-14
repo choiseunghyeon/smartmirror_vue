@@ -137,6 +137,7 @@ export default {
     store.commit(Constant.VIDEO_DATA_SAVE,payload);
   },
 
+
   // about CSS
   [Constant.SET_NUMBERBOX_CSS] : (store, payload) => {
     console.log("SET_NUMBERBOX_CSS called", payload);

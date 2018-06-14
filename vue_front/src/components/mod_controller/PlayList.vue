@@ -23,7 +23,7 @@
                    <figure>
                      <div class="number_box" :style="{ right: numberBoxRightValue }" >
                        <span class="show_number">{{data.totalPage}}</span>
-                       <img class="number_image" src="../../static/images/listing-option.svg" alt="">
+                       <img class="number_image" src="../../../static/images/listing-option.svg" alt="">
                      </div>
                      <img :src="data.snippet.thumbnails.medium.url" value="data.id.videoId">
                      <figcaption>{{data.snippet.title}}</figcaption>
@@ -41,7 +41,7 @@
                 <li v-for="(data) in list.items" class="col-md-4">
                   <div class="number_box" :style="{ right: numberBoxRightValue }" @click.stop="saveVideo(data)">
                     <span class="show_number">저장</span>
-                    <img class="number_image" src="../../static/images/listing-option.svg" alt="">
+                    <img class="number_image" src="../../../static/images/listing-option.svg" alt="">
                   </div>
                    <figure>
                      <img :src="data.snippet.thumbnails.medium.url" @click="setVideoList(data.snippet.resourceId.videoId,index)" >
@@ -62,10 +62,10 @@
 </template>
 
 <script>
-import Constant from '../Constant.js';
+import Constant from '../../Constant.js';
 import {mapState} from 'vuex';
-import Loading from './Loading'
-import ApiKey from '../ApiKey.js';
+import Loading from '../Loading'
+import ApiKey from '../../ApiKey.js';
 
 export default {
   name: "PlayList",
@@ -114,7 +114,7 @@ export default {
     handleScroll: function(e){
       //console.log("scroll!!: ",e.target.scrollTop);
       e.target.scrollTop !== 0 ? this.modal_top_value="modal_top" : this.modal_top_value="";
-      if (e.target.scrollTop == this.scrollHeight) {
+      if (Math.floor(e.target.scrollTop) == this.scrollHeight) {
         this.isLocalActive.playList == true ? // playList가 켜져 있는 것을 의미
          this.morePlayList(this.selectedChannel,this.selectedPlayLists[this.selectedPlayLists.length-1].nextToken)
         : this.moreListItems(this.selectedListId, this.playListItems[this.playListItems.length-1].nextToken); //

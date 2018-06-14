@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import Constant from '../Constant.js';
-import ApiKey from '../ApiKey.js';
+import Constant from '../../Constant.js';
+import ApiKey from '../../ApiKey.js';
 import SearchedList from './SearchedList';
 import PlayList from './PlayList';
 import {mapState} from 'vuex';

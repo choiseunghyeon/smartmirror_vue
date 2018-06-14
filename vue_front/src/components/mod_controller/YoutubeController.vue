@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import ApiKey from '../ApiKey.js';
-import Constant from '../Constant.js';
+import ApiKey from '../../ApiKey.js';
+import Constant from '../../Constant.js';
 
 import {mapState} from 'vuex';
 

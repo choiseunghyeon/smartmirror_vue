@@ -111,7 +111,6 @@ io.sockets.on('connection', function(socket){
 
   socket.on('message', function(message){
     console.log('message 이벤트를 받았습니다.', message);
-    io.sockets.emit('message',"response");
-    console.dir(io.sockets);
+    io.sockets.emit('message',message);
   });
 });

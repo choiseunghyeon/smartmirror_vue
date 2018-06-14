@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import Constant from '../Constant.js';
+import Constant from '../../Constant.js';
 import {mapState} from 'vuex';
 
 export default {
