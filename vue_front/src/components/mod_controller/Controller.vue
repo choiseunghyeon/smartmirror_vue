@@ -1,71 +1,101 @@
 <template>
-<div id="main" class="container">
-
-  <div id="title_row" class="row">
-    <div id="control_title" class="align-self-end">
-      <p><a href="#"><i>i</i></a> Smart Mirror</p>
-    </div>
-  </div>
-
-  <div id="package_row" class="row">
-    <div class="col-xs-6">
-      youtube
-    </div>
-    <div class="col-xs-6">
-      Lamp
-    </div>
-  </div>
-
-  <div id="content_row" class="row">
-    <div class="col-xs-6">
-      <li @click="myListToggle">
-        <span>나의 목록 <toggle-button id="changed-font" @change="myListToggle" :sync="true" :value="isActive.mylists"
-          :labels="{checked: 'ON', unchecked: 'OFF'}"
-          :width="80" :height="33"/>
-        </span>
-      </li>
-    </div>
-    <div class="col-xs-6">
-      <li @click="channelListToggle">
-        <span>구독중인 채널 보기 <toggle-button id="changed-font" @change="channelListToggle" :sync="true" :value="isActive.channellists"
-               :labels="{checked: 'ON', unchecked: 'OFF'}"
-               :width="80" :height="33"/>
-        </span>
-      </li>
-    </div>
-    <div class="col-xs-6">
-      <div class="row">
-        <li @click="youtubeToggle">
-          <span>유튜브(최소화) <toggle-button id="changed-font" @change="youtubeToggle" :sync="true" :value="buttonFlag.minimization"
-                 :labels="{checked: 'ON', unchecked: 'OFF'}"
-                 :width="80" :height="33"/>
-          </span>
-        </li>
-      </div>
-      <div class="row">
-
-                <li @click="removeYoutube">
-                  <span>유튜브(제거)</span>
-                </li>
-      </div>
-    </div>
-    <div class="col-xs-6">
-      <li>
-        <input id="search_keword" type="text" name="" v-model="keword">
-        <span @click="youtubeSearch">
-          검색
-        </span>
-      </li><!-- SearchYoutube에 있는 거를 일단 가져옴 기능상 문제는 없음 다만 유지보수 때 문제가 생길 수 있으니 수정 요망 -->
-
-    </div>
-  </div>
-
-  <search-youtube></search-youtube>
-  <my-list></my-list>
-  <div class="col-xs-8">
-    <youtube-controller></youtube-controller>
-  </div>
-</div> <!-- the end of main-->
+<v-app dark id="inspire">
+  <v-navigation-drawer
+    fixed
+    clipped
+    v-model="drawer"
+    app
+  >
+    <v-list dense>
+      <v-list-tile v-for="item in items" :key="item.text" @click="">
+        <v-list-tile-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>
+            {{ item.text }}
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-subheader class="mt-3 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader>
+      <v-list>
+        <v-list-tile v-for="item in items2" :key="item.text" avatar @click="">
+          <v-list-tile-avatar>
+            <img :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`" alt="">
+          </v-list-tile-avatar>
+          <v-list-tile-title v-text="item.text"></v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+      <v-list-tile class="mt-3" @click="">
+        <v-list-tile-action>
+          <v-icon color="grey darken-1">add_circle_outline</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-title class="grey--text text--darken-1">Browse Channels</v-list-tile-title>
+      </v-list-tile>
+      <v-list-tile @click="">
+        <v-list-tile-action>
+          <v-icon color="grey darken-1">settings</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-title class="grey--text text--darken-1">Manage Subscriptions</v-list-tile-title>
+      </v-list-tile>
+    </v-list>
+  </v-navigation-drawer>
+  <v-toolbar
+    color="red" dense
+    fixed clipped-left app >
+    <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+    <!-- <v-icon class="mx-3">fab fa-youtube</v-icon> -->
+    <v-menu :nedge-width="100">
+      <v-toolbar-title slot="activator" class="mr-3">
+        <span class="title">{{ toolbar_title }}</span>
+        <v-icon dark>arrow_drop_down</v-icon>
+      </v-toolbar-title>
+      <v-list>
+        <v-list-tile v-for="title in toolbar_title_lists" :key="title" @click="changeToolbarTitle(title)">
+          <v-list-tile-title v-text="title"></v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
+    <v-spacer></v-spacer>
+    <v-layout row align-center style="max-width: 650px">
+      <v-text-field
+        placeholder="Search..."
+        single-line
+        append-icon="search"
+        :append-icon-cb="(keyword) => {this.youtubeSearch(keyword)}"
+        color="white"
+        hide-details
+      ></v-text-field>
+    </v-layout>
+  </v-toolbar>
+  <v-content>
+    <v-container fill-height style="padding: 15px;">
+      <v-layout justify-center>
+        <v-flex xs12 shrink>
+          <v-card tile color="blue-grey lighten-1" class="white--text">
+              <v-container fluid grid-list-lg>
+                <v-layout row>
+                  <v-flex xs7>
+                    <div>
+                      <div class="headline">Halycon Days</div>
+                      <div>Ellie Goulding</div>
+                    </div>
+                  </v-flex>
+                  <v-flex xs5>
+                    <v-card-media
+                      src="./static/images/x.png"
+                      height="125px"
+                      contain
+                    ></v-card-media>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-content>
+</v-app>
 </template>
 
 <script>
@@ -91,7 +121,27 @@ export default {
   },
 
   data: function(){
-    return { keword:'',buttonFlag:{minimization:false,removal:false,widget:false}};
+    return { keword:'',buttonFlag:{minimization:false,removal:false,widget:false},drawer: true,
+    items: [
+        { icon: 'trending_up', text: 'Most Popular' },
+        { icon: 'subscriptions', text: '채널' },
+        { icon: 'grade', text: 'MyList' },
+        { icon: 'visibility_off', text: '최소화' },
+        { icon: 'clear', text: '끄기' },
+      ],
+      items2: [
+        { picture: 28, text: 'Joseph' },
+        { picture: 38, text: 'Apple' },
+        { picture: 48, text: 'Xbox Ahoy' },
+        { picture: 58, text: 'Nokia' },
+        { picture: 78, text: 'MKBHD' }
+      ],
+      toolbar_title_lists: [
+        "Youtube",
+        "Lamp"
+      ],
+      toolbar_title: "Youtube",
+    }
   },
   sockets: {
     connect: function(){
@@ -144,19 +194,9 @@ export default {
 
       this.$store.dispatch(Constant.SET_NUMBERBOX_CSS, rightValue+"px");
     },
-
+    changeToolbarTitle(title){
+      this.toolbar_title = title;
+    }
   }
 }
 </script>
-
-<style lang="css">
-/*hamburger*/
-
-body {
-  background: rgba(1,1,1,1);
-  font-size: 1.5rem;
-  color: white;
-}
-
-
-</style>

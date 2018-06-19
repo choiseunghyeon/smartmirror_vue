@@ -1,4 +1,5 @@
 <template>
+<v-app class="grey darken-4">
   <v-container fluid>
     <v-layout row wrap>
       <v-flex xs5 offset-xs7 id="widget" :class="{isWidgetActive:isActive.widget}">
@@ -11,6 +12,7 @@
       </v-flex>
     </v-layout>
   </v-container>
+</v-app>
 
 </template>
 
