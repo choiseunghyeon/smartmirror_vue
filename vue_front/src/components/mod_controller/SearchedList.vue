@@ -1,5 +1,5 @@
 <template lang="html">
-    <transition name="modal">
+    <!-- <transition name="modal">
       <div class="modal-mask">
         <div class="modal-wrapper">
           <div class="modal-container" @scroll="handleScroll">
@@ -27,9 +27,41 @@
           </div>
         </div>
       </div>
-    </transition>
+    </transition> -->
+    <div class="searchedList-container" @scroll="handleScroll">
 
+      <div v-for="searchedList in searchedLists">
+        <v-card tile flat v-for="(data) in searchedList.items" @click.stop="changeEvent(data)" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
 
+              <v-card-media
+              :src="data.snippet.thumbnails.medium.url"
+              :value="data.id.videoId"
+              height="200px"
+              ></v-card-media>
+              <v-card-title>
+                <div>
+                  <span v-if="data.id.channelId">{{data.snippet.title+"채널"}}</span>
+                  <div>{{data.snippet.title}}</div>
+                </div>
+              </v-card-title>
+        </v-card>
+        </div>
+
+      </div>
+    <!-- <v-card>
+      <v-card-media src="/static/doc-images/cards/desert.jpg" height="200px">
+      </v-card-media>
+      <v-card-title primary-title>
+        <div>
+          <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
+          <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div>
+        </div>
+      </v-card-title>
+      <v-card-actions>
+        <v-btn flat color="orange">Share</v-btn>
+        <v-btn flat color="orange">Explore</v-btn>
+      </v-card-actions>
+    </v-card> -->
 </template>
 
 <script>
@@ -42,13 +74,13 @@ export default {
   computed: mapState(['carouselFlag','searchedLists', 'numberBoxRightValue',]),
   mounted: function(){
     console.log("data mounted");
-    let modalContainer = document.getElementsByClassName('modal-container')[0];
-    this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight ;
+    let searchContainer = document.getElementsByClassName('searchedList-container')[0];
+    this.scrollHeight = searchContainer.scrollHeight;
   },
   updated: function(){ // 데이터가 변경되면 scroll의 길이를 구함
     console.log("upgrade complete");
-    let modalContainer = document.getElementsByClassName('modal-container')[0];
-    this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
+    let searchContainer = document.getElementsByClassName('searchedList-container')[0];
+    this.scrollHeight = searchContainer.scrollHeight //- searchContainer.clientHeight;
   },
   data: function(){
     return {scrollHeight:0, modal_top_value:"",}
@@ -60,6 +92,7 @@ export default {
     },
 
     handleScroll: function(e){
+      console.log(e);
       e.target.scrollTop !== 0 ? this.modal_top_value="modal_top" : this.modal_top_value="";
       Math.floor(e.target.scrollTop) == this.scrollHeight ? this.moreYoutubeVideo(this.searchedLists[this.searchedLists.length-1].nextToken) : console.log(e.target.scrollTop);
     },

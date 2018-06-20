@@ -17,15 +17,15 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-subheader class="mt-3 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader>
-      <v-list>
+      <!-- <v-subheader class="mt-3 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader> -->
+      <!-- <v-list>
         <v-list-tile v-for="item in items2" :key="item.text" avatar @click="">
           <v-list-tile-avatar>
             <img :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`" alt="">
           </v-list-tile-avatar>
           <v-list-tile-title v-text="item.text"></v-list-tile-title>
         </v-list-tile>
-      </v-list>
+      </v-list> -->
       <v-list-tile class="mt-3" @click="">
         <v-list-tile-action>
           <v-icon color="grey darken-1">add_circle_outline</v-icon>
@@ -62,17 +62,19 @@
         placeholder="Search..."
         single-line
         append-icon="search"
-        :append-icon-cb="(keyword) => {this.youtubeSearch(keyword)}"
+        :append-icon-cb="() => {this.youtubeSearch()}"
         color="white"
+        v-model="keword"
         hide-details
       ></v-text-field>
     </v-layout>
   </v-toolbar>
   <v-content>
-    <v-container fill-height style="padding: 15px;">
+    <v-container fill-height style="padding: 0;">
       <v-layout justify-center>
         <v-flex xs12 shrink>
-          <v-card tile color="blue-grey lighten-1" class="white--text">
+          <router-view></router-view>
+          <!-- <v-card tile flat color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
               <v-container fluid grid-list-lg>
                 <v-layout row>
                   <v-flex xs7>
@@ -90,7 +92,7 @@
                   </v-flex>
                 </v-layout>
               </v-container>
-            </v-card>
+            </v-card> -->
         </v-flex>
       </v-layout>
     </v-container>
@@ -181,8 +183,9 @@ export default {
       this.buttonFlag.widget = !this.buttonFlag.widget;
     },
     youtubeSearch(){
-      console.log("this is keword",this.keword);
+      console.log("this is keword ",this.keword);
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keword:this.keword});
+      this.$router.push({name: 'search'});
     },
     setNumberBox(event){ // 현재 윈도우의 width를 알아내어 .number_box의 right값 수정
       let temp = Math.floor( (document.body.offsetWidth - 37) / 3 ); // 현재크기에서 - 37 후 나누기 3 결과 값의 소수점은 버리기

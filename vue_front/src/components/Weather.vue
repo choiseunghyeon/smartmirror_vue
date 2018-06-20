@@ -1,9 +1,9 @@
 <template lang="html">
-<v-layout justify-center align-center row wrap id="weatherRow">
+<v-layout id="weatherRow"  justify-center align-center row wrap >
   <v-flex xs6 id="today-weather" class="img">
     <p id="stat">{{stat}}</p>
 
-    <i v-if="weatherData[0].image !== true" :class="weatherData[0].data +' '+'bright-shadow'" style="font-size:90px; display:block;"></i>
+    <i v-if="weatherData[0].image !== true" :class="weatherData[0].data +' '+'bright-shadow'" style="font-size:90px;"></i>
     <img v-else :src="weatherData[0].data" style="width:100px;">
     <p id="temperature-max">max - {{weatherData[0].tmax}}</p>
     <p>{{dayObject.today}}</p>
@@ -88,7 +88,7 @@ export default {
   }
 }
 </script>
-<style scoped media="screen">
+<style scoped>
 /* Weather */
 #weatherRow i{
   color: #f7f7f7;
@@ -100,7 +100,6 @@ export default {
   color: #f7f7f7;
 }
 #today-weather {
-  float: left;
   border-right: 1px solid rgba(255,255,255,0.3);
 }
 </style>

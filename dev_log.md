@@ -34,6 +34,11 @@
   - vuetify에서 제공하는 Google Youtube layouts 적용
   - toolbar 및 기타 기능 필요에 맞게 수정
 
+
+18.06.20
+  - vue-router를 통해 각 router를 렌더링 해주도록 설정
+  - searchedList router 띄워줌 (* scroll event가 안됨)
+
   수정 예정사항
   - 전체적인 layout 맞춰 놓고 기능 추가하기
   - socket을 이용하여 data 보내주기 (유트브 검색하고 나의 목록 구독중 채널 모두 mobile에서 확인 유튜브 영상 data만 보내주기(data list도))

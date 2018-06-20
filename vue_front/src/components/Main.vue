@@ -1,14 +1,15 @@
 <template>
 <v-app class="grey darken-4">
   <v-container fluid>
-    <v-layout row wrap>
-      <v-flex xs5 offset-xs7 id="widget" :class="{isWidgetActive:isActive.widget}">
+    <v-layout row>
+      <v-flex xs4 offset-xs8 id="widget" :class="{isWidgetActive:isActive.widget}">
 
             <weather></weather>
 
             <fine-dust></fine-dust>
 
             <clock></clock>
+
       </v-flex>
     </v-layout>
   </v-container>
@@ -118,11 +119,8 @@ body {
 
   /* widget */
   #widget{
-    margin-top: 30px;
     width: 500px;
     height: 400px;
-    border: 1px solid white;
-    float: right;
   }
 
 </style>
