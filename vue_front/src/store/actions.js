@@ -80,8 +80,12 @@ export default {
       console.log("ERROR!!!!", ex);
     })
   },
+  [Constant.CHANGE_KEYWORD] : (store, payload) => {
 
+    store.commit(Constant.CHANGE_KEYWORD, payload); // 검색명 저장 및 수정
+  },
   [Constant.YOUTUBE_SEARCH] : (store,payload) => {
+    console.log(payload);
     AxiosAPI.youtubeSearch(payload)
     .then((response) => {
       console.log(response);

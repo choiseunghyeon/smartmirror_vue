@@ -5,6 +5,7 @@ export default {
   ADD_SEARCHED_LIST: "addSearchedList",
   ADD_CHANNEL: "addChannel",
   DELETE_CHANNEL: "deleteChannel",
+  CHANGE_KEYWORD: "changeKeyword",
 
   REMOVE_SEARCHED_LIST: "removeSearchedList",
   REMOVE_PLAY_LIST : "removePlayList",
@@ -25,7 +26,7 @@ export default {
   YOUTUBE_SEARCH: "youtubeSearch",
   GET_PLAY_LISTS: "getPlayLists",
   GET_PLAY_LIST_ITEMS: "getPlayListItems",
-  
+
 
   //about Channel
   ADD_PLAY_LIST: "addPlayList",

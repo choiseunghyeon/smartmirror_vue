@@ -44,7 +44,7 @@ export default {
     let order = {'최신순':'date','조회수':'viewCount'};
     let request = {
       part:'snippet',
-      q: payload.keword,
+      q: payload.keyword,
       maxResults: 6,
       order: order.조회수,
       key: ApiKey.youtube,

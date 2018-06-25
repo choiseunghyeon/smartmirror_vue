@@ -3,7 +3,7 @@ export default {
   currentVideoId:"",
   videoList:{idArray:[],num:0},
   searchedLists:[],
-
+  searchKeyword:"",
   // about Channel
   channelLists:[],
   selectedChannel:'', // 선택된 채널의 id

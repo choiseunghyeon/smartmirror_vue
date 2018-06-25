@@ -17,15 +17,16 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <!-- <v-subheader class="mt-3 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader> -->
-      <!-- <v-list>
-        <v-list-tile v-for="item in items2" :key="item.text" avatar @click="">
+      <v-subheader class="mt-3 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader>
+      <v-list>
+        <v-list-tile v-for="item in channels" :key="item.text" avatar @click="showPlayList">
           <v-list-tile-avatar>
             <img :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`" alt="">
           </v-list-tile-avatar>
           <v-list-tile-title v-text="item.text"></v-list-tile-title>
+          <v-icon color="red lighten-2" @click.stop="removeChannel()">{{ item.icon }}</v-icon>
         </v-list-tile>
-      </v-list> -->
+      </v-list>
       <v-list-tile class="mt-3" @click="">
         <v-list-tile-action>
           <v-icon color="grey darken-1">add_circle_outline</v-icon>
@@ -64,7 +65,7 @@
         append-icon="search"
         :append-icon-cb="() => {this.youtubeSearch()}"
         color="white"
-        v-model="keword"
+        v-model="keyword"
         hide-details
       ></v-text-field>
     </v-layout>
@@ -74,25 +75,6 @@
       <v-layout justify-center>
         <v-flex xs12 shrink>
           <router-view></router-view>
-          <!-- <v-card tile flat color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
-              <v-container fluid grid-list-lg>
-                <v-layout row>
-                  <v-flex xs7>
-                    <div>
-                      <div class="headline">Halycon Days</div>
-                      <div>Ellie Goulding</div>
-                    </div>
-                  </v-flex>
-                  <v-flex xs5>
-                    <v-card-media
-                      src="./static/images/x.png"
-                      height="125px"
-                      contain
-                    ></v-card-media>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-card> -->
         </v-flex>
       </v-layout>
     </v-container>
@@ -123,7 +105,7 @@ export default {
   },
 
   data: function(){
-    return { keword:'',buttonFlag:{minimization:false,removal:false,widget:false},drawer: true,
+    return { keyword:'',buttonFlag:{minimization:false,removal:false,widget:false},drawer: true,
     items: [
         { icon: 'trending_up', text: 'Most Popular' },
         { icon: 'subscriptions', text: '채널' },
@@ -131,12 +113,12 @@ export default {
         { icon: 'visibility_off', text: '최소화' },
         { icon: 'clear', text: '끄기' },
       ],
-      items2: [
-        { picture: 28, text: 'Joseph' },
-        { picture: 38, text: 'Apple' },
-        { picture: 48, text: 'Xbox Ahoy' },
-        { picture: 58, text: 'Nokia' },
-        { picture: 78, text: 'MKBHD' }
+      channels: [
+        { picture: 28, text: 'Joseph', icon:'clear' },
+        { picture: 38, text: 'Apple', icon:'clear' },
+        { picture: 48, text: 'Xbox Ahoy', icon:'clear' },
+        { picture: 58, text: 'Nokia', icon:'clear' },
+        { picture: 78, text: 'MKBHD', icon:'clear' }
       ],
       toolbar_title_lists: [
         "Youtube",
@@ -183,9 +165,16 @@ export default {
       this.buttonFlag.widget = !this.buttonFlag.widget;
     },
     youtubeSearch(){
-      console.log("this is keword ",this.keword);
-      this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keword:this.keword});
+      console.log("this is keword ",this.keyword);
+      this.$store.dispatch(Constant.CHANGE_KEYWORD,{keyword:this.keyword}); // 검색명 저장
+      this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keyword:this.keyword}); // 검색명을 통해 유튜브 영상 불러오기
       this.$router.push({name: 'search'});
+    },
+    showPlayList(){
+      console.log('test');
+    },
+    removeChannel(){
+      console.log('icon');
     },
     setNumberBox(event){ // 현재 윈도우의 width를 알아내어 .number_box의 right값 수정
       let temp = Math.floor( (document.body.offsetWidth - 37) / 3 ); // 현재크기에서 - 37 후 나누기 3 결과 값의 소수점은 버리기

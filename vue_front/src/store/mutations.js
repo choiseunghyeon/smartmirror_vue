@@ -5,6 +5,10 @@ export default {
     console.log("VIDEO_CHANGE "+payload);
     state.currentVideoId=payload.videoId;
   },
+  [Constant.CHANGE_KEYWORD] : (state, payload) => {
+    console.log("mutation "+payload);
+    state.searchKeyword = payload.keyword;
+  },
   [Constant.SET_VIDEO_LIST] : (state,payload) => {
     state.videoList=payload;
   },
