@@ -19,12 +19,12 @@
       </v-list-tile>
       <v-subheader class="mt-3 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader>
       <v-list>
-        <v-list-tile v-for="item in channels" :key="item.text" avatar @click="showPlayList">
+        <v-list-tile v-for="(item,index) in channelLists" :key="item.snippet.channelTitle" avatar @click="showPlayList(item)">
           <v-list-tile-avatar>
-            <img :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`" alt="">
+            <img :src="item.snippet.thumbnails.default.url" alt="">
           </v-list-tile-avatar>
-          <v-list-tile-title v-text="item.text"></v-list-tile-title>
-          <v-icon color="red lighten-2" @click.stop="removeChannel()">{{ item.icon }}</v-icon>
+          <v-list-tile-title v-text="item.snippet.channelTitle"></v-list-tile-title>
+          <v-icon color="red lighten-2" @click.stop="removeChannel(index)">clear</v-icon>
         </v-list-tile>
       </v-list>
       <v-list-tile class="mt-3" @click="">
@@ -84,6 +84,7 @@
 
 <script>
 import SearchYoutube from './SearchYoutube';
+import YoutubeChannel from './YoutubeChannel';
 import YoutubeController from './YoutubeController';
 import MyList from './MyList';
 import Constant from '../../Constant.js';
@@ -92,8 +93,8 @@ import {mapState} from 'vuex';
 
 export default {
   name: 'Controller',
-  components: {SearchYoutube,YoutubeController,MyList},
-  computed: mapState(['isActive']),
+  components: {SearchYoutube,YoutubeController,MyList,YoutubeChannel},
+  computed: mapState(['isActive','channelLists']),
 
   created: function(){
     console.log('created!!!!!!!!!!!!!!!!!====');
@@ -112,13 +113,6 @@ export default {
         { icon: 'grade', text: 'MyList' },
         { icon: 'visibility_off', text: '최소화' },
         { icon: 'clear', text: '끄기' },
-      ],
-      channels: [
-        { picture: 28, text: 'Joseph', icon:'clear' },
-        { picture: 38, text: 'Apple', icon:'clear' },
-        { picture: 48, text: 'Xbox Ahoy', icon:'clear' },
-        { picture: 58, text: 'Nokia', icon:'clear' },
-        { picture: 78, text: 'MKBHD', icon:'clear' }
       ],
       toolbar_title_lists: [
         "Youtube",
@@ -144,25 +138,21 @@ export default {
     emitSocket: function(){
       this.$socket.emit('message','data 받아랏!');
     },
-    hamburgerToggle: function(){
-      this.$store.dispatch(Constant.TOGGLE_HAMBURGER_ACTIVE);
-    },
-    channelListToggle: function(){
-      this.$store.dispatch(Constant.TOGGLE_CHANNEL_ACTIVE);
-    },
-    myListToggle: function(){
-      this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
-    },
-    youtubeToggle: function(){
-      this.$store.dispatch(Constant.TOGGLE_YOUTUBE_ACTIVE);
-      this.buttonFlag.minimization = !this.buttonFlag.minimization;
-    },
+    // hamburgerToggle: function(){
+    //   this.$store.dispatch(Constant.TOGGLE_HAMBURGER_ACTIVE);
+    // },
+    // channelListToggle: function(){
+    //   this.$store.dispatch(Constant.TOGGLE_CHANNEL_ACTIVE);
+    // },
+    // myListToggle: function(){
+    //   this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
+    // },
+    // youtubeToggle: function(){
+    //   this.$store.dispatch(Constant.TOGGLE_YOUTUBE_ACTIVE);
+    //   this.buttonFlag.minimization = !this.buttonFlag.minimization;
+    // },
     removeYoutube: function(){
       this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:''});
-    },
-    widgetToggle: function(){
-      this.$store.dispatch(Constant.TOGGLE_WIDGET_ACTIVE);
-      this.buttonFlag.widget = !this.buttonFlag.widget;
     },
     youtubeSearch(){
       console.log("this is keword ",this.keyword);
@@ -170,11 +160,15 @@ export default {
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keyword:this.keyword}); // 검색명을 통해 유튜브 영상 불러오기
       this.$router.push({name: 'search'});
     },
-    showPlayList(){
-      console.log('test');
+    showPlayList(channelInfo){
+      console.log('channelInfo: ');
+      console.dir(channelInfo);
+      // this.$store.dispatch(Constant.REMOVE_PLAY_LIST);
+      this.$store.dispatch(Constant.SET_CHANNELID,{id:channelInfo.snippet.channelId,title:channelInfo.snippet.channelTitle});
+      this.$router.push({name:'channel'});
     },
-    removeChannel(){
-      console.log('icon');
+    removeChannel(index){
+      this.$store.dispatch(Constant.DELETE_CHANNEL,index);
     },
     setNumberBox(event){ // 현재 윈도우의 width를 알아내어 .number_box의 right값 수정
       let temp = Math.floor( (document.body.offsetWidth - 37) / 3 ); // 현재크기에서 - 37 후 나누기 3 결과 값의 소수점은 버리기

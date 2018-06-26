@@ -1,20 +1,8 @@
 <template lang="html">
-  <transition name="modal">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container" @scroll="handleScroll">
-          <div :class="'row ' + modal_top_value">
-            <button class="modal-default-button" @click="closeYoutubeListModal">
-              OK
-            </button>
-            <button class="modal-default-button" @click="toggleList">
-              {{toggle.message}}
-            </button>
-            <loading v-if="isActive.loading" ></loading>
-          </div>
+
 
           <!-- the begining of palyList-->
-        <transition name="slide" mode="out-in"
+        <!-- <transition name="slide" mode="out-in"
           @after-enter="slideAfterEnter">
           <div class="white-scale-100" v-if="isLocalActive.playList" key="playList">
             <ul class="row">
@@ -31,34 +19,36 @@
                 </li>
               </div>
             </ul>
-          </div>
+          </div> -->
           <!-- the end of playList -->
 
-          <!-- the begining of listItem-->
-          <div class="white-scale-100" v-if="isLocalActive.listItem" key="listItem">
-            <ul class="row">
-              <div v-for="(list,index) in playListItems ">
-                <li v-for="(data) in list.items" class="col-md-4">
-                  <div class="number_box" :style="{ right: numberBoxRightValue }" @click.stop="saveVideo(data)">
-                    <span class="show_number">저장</span>
-                    <img class="number_image" src="../../../static/images/listing-option.svg" alt="">
-                  </div>
-                   <figure>
-                     <img :src="data.snippet.thumbnails.medium.url" @click="setVideoList(data.snippet.resourceId.videoId,index)" >
-                     <figcaption>{{data.snippet.title}}</figcaption>
-                   </figure>
-                </li>
-              </div>
-            </ul>
-          </div>
-        </transition>
-        <!-- the end of listItem -->
 
-        </div>
+
+        <!-- </div>
       </div>
     </div>
-  </transition>
+  </transition> -->
 
+
+<div class="playList-container" v-scroll="handleScroll">
+
+  <div v-for="list in selectedPlayLists">
+    <v-card tile flat v-for="(data,index) in list.items" @click.native="routeListItem()" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
+
+      <v-card-media
+      :src="data.snippet.thumbnails.medium.url"
+      :value="data.id.videoId"
+      height="200px"
+      ></v-card-media>
+      <v-card-title>
+        <div>
+          <div>{{data.snippet.title}}</div>
+        </div>
+      </v-card-title>
+    </v-card>
+  </div>
+
+</div>
 </template>
 
 <script>
@@ -70,39 +60,37 @@ import ApiKey from '../../ApiKey.js';
 export default {
   name: "PlayList",
   data: function(){
-    return {scrollHeight:0,selectedListId:''
-    ,isLocalActive:{playList:true,listItem:false}
-    ,toggle:{message:"MOVE - X",title:""}
-    ,modal_top_value:""}
+    return {scrollHeight:0};
   },
   components: {Loading },
   created: function(){
-    this.getPlayList(this.selectedChannel);
+    console.log("playlist created!!");
+    this.getPlayList(this.selectedChannel.id);
   },
   mounted: function(){
-    let modalContainer = document.getElementsByClassName('modal-container')[0];
-    this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight ;
-    console.log("data mounted Height: ",this.scrollHeight);
+    console.log("data mounted");
+    this.scrollHeight = document.body.scrollHeight - 100; // 바닥을 찍고 데이터를 요청하면 늦어져서 100px 정도 조절함
+
   },
   updated: function(){ // 데이터가 변경되면 scroll의 길이를 구함
-
-    let modalContainer = document.getElementsByClassName('modal-container')[0];
-    this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
-    console.log("upgrade complete height: ",this.scrollHeight);
+    console.log("upgrade complete");
+    this.scrollHeight = document.body.scrollHeight - 100 //- searchContainer.clientHeight;
   },
-
-  computed: mapState(['selectedChannel','selectedPlayLists','playListItems','isActive', 'numberBoxRightValue',]),
+  watch: {
+    '$route' (to, from){
+      console.log('watching route');
+      console.log('from :');
+      console.log(from);
+      console.log('to: ');
+      console.log(to);
+      this.getPlayList(this.selectedChannel.id);
+    }
+  },
+  computed: mapState(['selectedChannel','selectedPlayLists', 'numberBoxRightValue',]),
   methods: {
-
-
-    slideAfterEnter: function(){
-      let modalContainer = document.getElementsByClassName('modal-container')[0];
-      this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
-      console.log("* AfterEnter! height: ",this.scrollHeight);
-    },
     getPlayList: function(value){
       let channelId=value;
-      this.$store.dispatch(Constant.REMOVE_PLAY_LIST_ITEMS);
+      this.$store.dispatch(Constant.REMOVE_PLAY_LIST);
       this.$store.dispatch(Constant.GET_PLAY_LISTS,{channelId:channelId})
     },
     morePlayList: function(channelId ,token){
@@ -112,91 +100,14 @@ export default {
     },
 
     handleScroll: function(e){
-      //console.log("scroll!!: ",e.target.scrollTop);
-      e.target.scrollTop !== 0 ? this.modal_top_value="modal_top" : this.modal_top_value="";
-      if (Math.floor(e.target.scrollTop) == this.scrollHeight) {
-        this.isLocalActive.playList == true ? // playList가 켜져 있는 것을 의미
-         this.morePlayList(this.selectedChannel,this.selectedPlayLists[this.selectedPlayLists.length-1].nextToken)
-        : this.moreListItems(this.selectedListId, this.playListItems[this.playListItems.length-1].nextToken); //
-      }
-    },
+        console.log(e);
+        let result = e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight - 100; // 문서 전체의 높이와 같음
+        result == this.scrollHeight ? this.morePlayList(this.selectedChannel.id,this.selectedPlayLists[this.selectedPlayLists.length-1].nextToken) : console.log(result);
 
-    getListItems: function(id,title){ // PlayList의 영상 6개를 긁어옴
-      console.log("get items!!", id);
-      this.selectedListId = id;
-      this.$store.dispatch(Constant.REMOVE_PLAY_LIST_ITEMS);
-      this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:id});
-      this.toggle.title = title;
-      this.toggleList();
     },
+  },
 
-    moreListItems: function(playlistId,token){ // 스크롤이 바닥을 찍으면 PlayList의 영상 9개를 추가적으로 가져옴
-      console.log("moreListItems called");
-      if(token == "NULL") return;
-      this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:playlistId,nextPageToken:token});
-    },
 
-    setVideoList: function(id,index){ // 선택된 영상을 실행하고 선택된 영상이 있는 플레이 리스트의 영상을 자동실행으로 setting함
-      let oneArray =[];
-      for (var i = index; i < this.playListItems.length; i++){  // 여러개로 나뉘어 져있는 객체 속 배열들을 한 배열로 합치기
-        let items = this.playListItems[i].items;
-        items.forEach(function(x){
-          oneArray.push(x.snippet.resourceId.videoId);
-        });
-      }
-      console.log("oneArray: ",oneArray);
-      let selectedNum = oneArray.indexOf(id);
-      let payload = {
-        idArray:oneArray,
-        num:selectedNum,
-      };
-      this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
-      this.closeYoutubeListModal();
-      this.channelListToggle();
-    },
-    saveVideo: function(data){
-      let obj = {
-        saveFlag:true,
-        data:{
-          title: data.snippet.title, videoId: data.snippet.resourceId.videoId,imgUrl: data.snippet.thumbnails.medium.url
-        }
-      };
-      this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
-      this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
-    },
-    closeYoutubeListModal: function(){
-      this.$store.dispatch(Constant.MODAL_FLAG,'');
-      this.$store.dispatch(Constant.REMOVE_PLAY_LIST);
-      this.$store.dispatch(Constant.REMOVE_PLAY_LIST_ITEMS);
-    },
-    toggleList: function(){
-      this.isLocalActive.playList = !this.isLocalActive.playList;
-      this.isLocalActive.listItem = !this.isLocalActive.listItem;
-
-      this.isLocalActive.listItem == true ? this.toggle.message = "MOVE - PLAY LISTS"
-      : this.toggle.message = "MOVE - "+this.toggle.title;
-    },
-    channelListToggle: function(){
-      this.$store.dispatch(Constant.TOGGLE_CHANNEL_ACTIVE);
-    },
-  }
 }
+
 </script>
-<style lang="css" scoped>
-.slide-enter-active {
-  transition: all .3s ease;
-}
-.slide-leave-active {
-  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-enter, .slide-leave-to {
-  transform: translateX(10px);
-  opacity: 0;
-}
-.modal_top {
-  position: fixed;
-
-  z-index: 1111;
-}
-
-</style>

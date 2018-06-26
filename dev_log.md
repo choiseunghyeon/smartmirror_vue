@@ -43,7 +43,17 @@
   - searchedList scroll issue 해결 및 스크롤이 바닥과 가까워 지면 추가 영상 요청
   - state에 keyword를 추가함( 검색 keyword는 Controller에 있고 추가 요청은 SearchedList컴포넌트에 있음 추가 요청시 Controller에 있는 keyword 정보가 필요함  이벤트 버스 및 props등으로 SearchedList컴포넌트에서 받아도 되지만 데이터 흐름의 일관성을 위해 vuex 사용)
   - channel 정보를 햄버거 메뉴 안에 넣음 channel에 관한 playlist 보여주기, 삭제를 함수와 연결(기능 구현x)
-  
+
+
+18.06.26
+  - searchedList 채널 저장 및 비디오 체인지 기능 연결(구현x)
+  - channel 추가 및 삭제 기능 구현
+  - Channel 관련 기능들 모듈화 Channel 안에서 playlist, listitem, recent 등으로 나누어서 라우팅
+  - playlist의 데이터 요청 및 추가 요청 구현
+
+  문제사항
+  - 채널 playlist를 요청한 route에서 다른 채널을 요청하면 route가 channel에서 멈춤 
+
   추가 예정사항
   - snackbars(vuetify)를 이용하면 여러 인터랙션(영상 보기, 저장 등)을 이쁘게 할 수 있을 것 같다.
   - 전체적인 layout 맞춰 놓고 기능 추가하기

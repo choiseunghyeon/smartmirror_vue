@@ -46,26 +46,27 @@ export default {
     store.commit(Constant.SET_DAY, payload);
   },
 
-  [Constant.TOGGLE_CHANNEL_ACTIVE] : (store) => {
-    store.commit(Constant.TOGGLE_CHANNEL_ACTIVE);
-  },
-  [Constant.TOGGLE_MYLIST_ACTIVE] : (store) => {
-    store.commit(Constant.TOGGLE_MYLIST_ACTIVE);
-  },
-  [Constant.TOGGLE_HAMBURGER_ACTIVE] : (store) => {
-    store.commit(Constant.TOGGLE_HAMBURGER_ACTIVE);
-  },
-  [Constant.TOGGLE_YOUTUBE_ACTIVE] : (store) => {
-    store.commit(Constant.TOGGLE_YOUTUBE_ACTIVE);
-  },
-  [Constant.TOGGLE_WIDGET_ACTIVE] : (store) => {
-    store.commit(Constant.TOGGLE_WIDGET_ACTIVE);
-  },
+  // [Constant.TOGGLE_CHANNEL_ACTIVE] : (store) => {
+  //   store.commit(Constant.TOGGLE_CHANNEL_ACTIVE);
+  // },
+  // [Constant.TOGGLE_MYLIST_ACTIVE] : (store) => {
+  //   store.commit(Constant.TOGGLE_MYLIST_ACTIVE);
+  // },
+  // [Constant.TOGGLE_HAMBURGER_ACTIVE] : (store) => {
+  //   store.commit(Constant.TOGGLE_HAMBURGER_ACTIVE);
+  // },
+  // [Constant.TOGGLE_YOUTUBE_ACTIVE] : (store) => {
+  //   store.commit(Constant.TOGGLE_YOUTUBE_ACTIVE);
+  // },
+  // [Constant.TOGGLE_WIDGET_ACTIVE] : (store) => {
+  //   store.commit(Constant.TOGGLE_WIDGET_ACTIVE);
+  // },
 
-  [Constant.MODAL_FLAG] : (store,payload) => {
-    console.log("FLAG CALLED",payload);
-    store.commit(Constant.MODAL_FLAG,payload);
-  },
+  // [Constant.MODAL_FLAG] : (store,payload) => {
+  //   console.log("FLAG CALLED",payload);
+  //   store.commit(Constant.MODAL_FLAG,payload);
+  // },
+
   [Constant.SET_CHANNELID] : (store,payload) => {
     store.commit(Constant.SET_CHANNELID,payload);
   },

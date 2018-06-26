@@ -58,26 +58,26 @@ export default {
     state.dayObject=payload;
   },
 
-  // about isActive of state
-  [Constant.TOGGLE_CHANNEL_ACTIVE] : (state) => {
-    state.isActive.channellists = !state.isActive.channellists;
-  },
-  [Constant.TOGGLE_MYLIST_ACTIVE] : (state) => {
-    state.isActive.mylists = !state.isActive.mylists;
-  },
-  [Constant.TOGGLE_HAMBURGER_ACTIVE] : (state) => {
-    state.isActive.hamburger = !state.isActive.hamburger;
-  },
-  [Constant.TOGGLE_YOUTUBE_ACTIVE] : (state) => {
-    state.isActive.youtube = !state.isActive.youtube;
-  },
-  [Constant.TOGGLE_WIDGET_ACTIVE] : (state) => {
-    state.isActive.widget = !state.isActive.widget;
-  },
-  [Constant.MODAL_FLAG] : (state,payload) => {
-    console.log("MODAL_FLAG called");
-    state.modalFlag = payload;
-  },
+  // // about isActive of state
+  // [Constant.TOGGLE_CHANNEL_ACTIVE] : (state) => {
+  //   state.isActive.channellists = !state.isActive.channellists;
+  // },
+  // [Constant.TOGGLE_MYLIST_ACTIVE] : (state) => {
+  //   state.isActive.mylists = !state.isActive.mylists;
+  // },
+  // [Constant.TOGGLE_HAMBURGER_ACTIVE] : (state) => {
+  //   state.isActive.hamburger = !state.isActive.hamburger;
+  // },
+  // [Constant.TOGGLE_YOUTUBE_ACTIVE] : (state) => {
+  //   state.isActive.youtube = !state.isActive.youtube;
+  // },
+  // [Constant.TOGGLE_WIDGET_ACTIVE] : (state) => {
+  //   state.isActive.widget = !state.isActive.widget;
+  // },
+  // [Constant.MODAL_FLAG] : (state,payload) => {
+  //   console.log("MODAL_FLAG called");
+  //   state.modalFlag = payload;
+  // },
   [Constant.SET_CHANNELID] : (state, payload) => {
     state.selectedChannel = payload;
   },

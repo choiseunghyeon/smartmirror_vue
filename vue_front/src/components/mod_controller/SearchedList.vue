@@ -2,7 +2,7 @@
     <div class="searchedList-container" v-scroll="handleScroll">
 
       <div v-for="searchedList in searchedLists">
-        <v-card tile flat v-for="(data) in searchedList.items" @click.stop="changeEvent(data)" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
+        <v-card tile flat v-for="(data) in searchedList.items" @click.native="changeYoutube(data)" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
 
               <v-card-media
               :src="data.snippet.thumbnails.medium.url"
@@ -42,10 +42,18 @@ export default {
     return {scrollHeight:0, }
   },
   methods: {
-    changeEvent: function(data){
-      this.$emit('changeYoutube',data);
+    // changeEvent: function(data){
+    //   console.log('good');
+    //   this.$emit('changeYoutube',data);
+    // },
+    changeYoutube: function(data){
+      console.log("change",data);
+      data.id.hasOwnProperty("channelId") ? this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet})
+        : this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:data.id.videoId});
+      // this.removeSearchedList();
+      //
+      // this.closeYoutubeListModal();
     },
-
     handleScroll: function(e){
       console.log(e);
       let result = e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight - 100; // 문서 전체의 높이와 같음

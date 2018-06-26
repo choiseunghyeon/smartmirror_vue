@@ -25,23 +25,23 @@
 import Constant from '../../Constant.js';
 import ApiKey from '../../ApiKey.js';
 import SearchedList from './SearchedList';
-import PlayList from './PlayList';
+import YoutubeChannel from './YoutubeChannel';
 import {mapState} from 'vuex';
 import _ from "lodash";
 
 export default {
   name:"SearchYoutube",
-  components: {SearchedList,PlayList},
+  components: {SearchedList,YoutubeChannel},
   computed: mapState(['channelLists','isActive','modalFlag']),
   methods: {
-    changeYoutube: function(data){
-      console.log("change",data);
-      data.id.hasOwnProperty("channelId") ? this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet})
-        : this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:data.id.videoId});
-      this.removeSearchedList();
-
-      this.closeYoutubeListModal();
-    },
+    // changeYoutube: function(data){
+    //   console.log("change",data);
+    //   data.id.hasOwnProperty("channelId") ? this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet})
+    //     : this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:data.id.videoId});
+    //   this.removeSearchedList();
+    //
+    //   this.closeYoutubeListModal();
+    // },
     deleteChannel: function(index){
       this.$store.dispatch(Constant.DELETE_CHANNEL,index);
     },
