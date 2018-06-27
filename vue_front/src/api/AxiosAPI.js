@@ -56,5 +56,19 @@ export default {
       params: request
     })
   },
+  mostPopularVideos: function(payload){
+    let request = {
+      part:'snippet',
+      chart: "mostPopular",
+      maxResults: 6,
+      key: ApiKey.youtube
+    };
+    // 추가적인 요청이면 token을 넣어서 다음 데이터 요청
+    if( payload.hasOwnProperty("nextPageToken") )  request.pageToken = payload.nextPageToken;
+    console.log("mostPopularVideos payload: ",request);
+    return axios.get(CONF.YOUTUBE_SEARCH, {
+      params: request
+    });
+  },
 
 }

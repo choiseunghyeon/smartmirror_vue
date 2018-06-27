@@ -14,7 +14,7 @@ ul {
 } */
 
 /* modal */
-.modal-mask {
+/* .modal-mask {
   position: fixed;
   z-index: 9998;
   top: 0;
@@ -53,7 +53,7 @@ ul {
   color: white;
   font-size: 40px;
   margin: 0 0 0 20px;
-}
+} */
 
 /*
  * The following styles are auto-applied to elements with
@@ -64,7 +64,7 @@ ul {
  * these styles.
  */
 
-.modal-enter {
+/* .modal-enter {
   opacity: 0;
 }
 
@@ -76,7 +76,7 @@ ul {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-}
+} */
 
 
 /* youtube */

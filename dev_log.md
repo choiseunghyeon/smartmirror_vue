@@ -51,10 +51,15 @@
   - Channel 관련 기능들 모듈화 Channel 안에서 playlist, listitem, recent 등으로 나누어서 라우팅
   - playlist의 데이터 요청 및 추가 요청 구현
 
-  문제사항
-  - 채널 playlist를 요청한 route에서 다른 채널을 요청하면 route가 channel에서 멈춤 
+18.06.27
+  - channel -> playlist route된 상태에서 playlist로 라우트 했을 때 playlist data reload가 안되는 문제 해결(router-view에 key값 부여)
+  - channel 관련 기능 완료
+  - Most Popular 기능 구현
+  - 필요없는 코드와 컴포넌트(SearchYoutube) 삭제 및 수정
+  - SearchedList -> YoutubeSearch로 이름 변경
 
   추가 예정사항
+  - 나의 목록 및 backend에 db 연결
   - snackbars(vuetify)를 이용하면 여러 인터랙션(영상 보기, 저장 등)을 이쁘게 할 수 있을 것 같다.
   - 전체적인 layout 맞춰 놓고 기능 추가하기
   - socket을 이용하여 data 보내주기 (유트브 검색하고 나의 목록 구독중 채널 모두 mobile에서 확인 유튜브 영상 data만 보내주기(data list도))

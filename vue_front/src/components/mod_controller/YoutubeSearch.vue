@@ -25,11 +25,13 @@
 <script>
 import Constant from '../../Constant.js';
 import {mapState} from 'vuex';
-import ApiKey from '../../ApiKey.js';
 
 export default {
-  name: "SearchedList",
-  computed: mapState(['carouselFlag','searchedLists', 'numberBoxRightValue','searchKeyword']),
+  name: "YoutubeSearch",
+  computed: mapState(['searchedLists','searchKeyword']),
+  created: function(){
+    console.log("SearchedList created!!");
+  },
   mounted: function(){
     console.log("data mounted");
     this.scrollHeight = document.body.scrollHeight - 100; // 바닥을 찍고 데이터를 요청하면 늦어져서 100px 정도 조절함
@@ -51,8 +53,6 @@ export default {
       data.id.hasOwnProperty("channelId") ? this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet})
         : this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:data.id.videoId});
       // this.removeSearchedList();
-      //
-      // this.closeYoutubeListModal();
     },
     handleScroll: function(e){
       console.log(e);

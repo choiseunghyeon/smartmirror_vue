@@ -7,7 +7,7 @@
     app
   >
     <v-list dense>
-      <v-list-tile v-for="item in items" :key="item.text" @click="">
+      <v-list-tile v-for="item in items" :key="item.text" @click="routeFromTollBar(item.routeName)">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
@@ -83,8 +83,6 @@
 </template>
 
 <script>
-import SearchYoutube from './SearchYoutube';
-import YoutubeChannel from './YoutubeChannel';
 import YoutubeController from './YoutubeController';
 import MyList from './MyList';
 import Constant from '../../Constant.js';
@@ -93,26 +91,25 @@ import {mapState} from 'vuex';
 
 export default {
   name: 'Controller',
-  components: {SearchYoutube,YoutubeController,MyList,YoutubeChannel},
-  computed: mapState(['isActive','channelLists']),
+  components: {YoutubeController,MyList},
+  computed: mapState(['channelLists']),
 
   created: function(){
     console.log('created!!!!!!!!!!!!!!!!!====');
     this.sync();
-    this.setNumberBox();
-    this.$options.sockets.message = (data) => {
-      console.log('메시지 받았다 !! ',data);
-    }
+    this.$router.push({name:'popular'});
+    // this.$options.sockets.message = (data) => {
+    //   console.log('메시지 받았다 !! ',data);
+    // }
   },
 
   data: function(){
     return { keyword:'',buttonFlag:{minimization:false,removal:false,widget:false},drawer: true,
     items: [
-        { icon: 'trending_up', text: 'Most Popular' },
-        { icon: 'subscriptions', text: '채널' },
-        { icon: 'grade', text: 'MyList' },
-        { icon: 'visibility_off', text: '최소화' },
-        { icon: 'clear', text: '끄기' },
+        { icon: 'trending_up', text: 'Most Popular' ,routeName: 'popular'},
+        { icon: 'grade', text: '나의 목록' ,routeName:'mostPopular'},
+        { icon: 'visibility_off', text: '최소화' ,routeName:'mostPopular'},
+        { icon: 'clear', text: '끄기' ,routeName:'mostPopular'},
       ],
       toolbar_title_lists: [
         "Youtube",
@@ -121,14 +118,14 @@ export default {
       toolbar_title: "Youtube",
     }
   },
-  sockets: {
-    connect: function(){
-      console.log('socket connected');
-    },
-    customEmit: function(val){
-      console.log('this method was fired by the socket server : ',val);
-    }
-  },
+  // sockets: {
+  //   connect: function(){
+  //     console.log('socket connected');
+  //   },
+  //   customEmit: function(val){
+  //     console.log('this method was fired by the socket server : ',val);
+  //   }
+  // },
   methods: {
     sync: function(){
       // 채널 정보 localStorage에 저장되어 있는 데이터를 vue에 동기화
@@ -138,24 +135,15 @@ export default {
     emitSocket: function(){
       this.$socket.emit('message','data 받아랏!');
     },
-    // hamburgerToggle: function(){
-    //   this.$store.dispatch(Constant.TOGGLE_HAMBURGER_ACTIVE);
-    // },
-    // channelListToggle: function(){
-    //   this.$store.dispatch(Constant.TOGGLE_CHANNEL_ACTIVE);
-    // },
-    // myListToggle: function(){
-    //   this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
-    // },
-    // youtubeToggle: function(){
-    //   this.$store.dispatch(Constant.TOGGLE_YOUTUBE_ACTIVE);
-    //   this.buttonFlag.minimization = !this.buttonFlag.minimization;
-    // },
+    routeFromTollBar: function(routeName){
+      this.$router.push({name: routeName});
+    },
     removeYoutube: function(){
       this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:''});
     },
     youtubeSearch(){
       console.log("this is keword ",this.keyword);
+      this.$store.dispatch(Constant.REMOVE_SEARCHED_LIST);
       this.$store.dispatch(Constant.CHANGE_KEYWORD,{keyword:this.keyword}); // 검색명 저장
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keyword:this.keyword}); // 검색명을 통해 유튜브 영상 불러오기
       this.$router.push({name: 'search'});
@@ -170,19 +158,29 @@ export default {
     removeChannel(index){
       this.$store.dispatch(Constant.DELETE_CHANNEL,index);
     },
-    setNumberBox(event){ // 현재 윈도우의 width를 알아내어 .number_box의 right값 수정
-      let temp = Math.floor( (document.body.offsetWidth - 37) / 3 ); // 현재크기에서 - 37 후 나누기 3 결과 값의 소수점은 버리기
-                                                                     // 37은  <ul class="row white-scale-100"> 의 값이 항상 현재 크기 - 37이기 때문
-                                                                    // col-md-4 이기때문에 3개의 컬럼이 존재 하기 때문에 나누기 3
 
-      let rightValue = ( temp - 320 ) / 2; // col-md-4의 하나 값 - 320(img값) 그리고 이미지 양옆으로 차지하는 공간이 있기 때문에 나누기 2
-                                           // 결과 값을 right해주면 img 제일 오른쪽으로 .number_box가 붙게됨
-
-      this.$store.dispatch(Constant.SET_NUMBERBOX_CSS, rightValue+"px");
-    },
     changeToolbarTitle(title){
       this.toolbar_title = title;
     }
   }
 }
 </script>
+<style lang="css">
+.number_box {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  height: 200px;
+  width: 100px;
+  right: 0; border: 0;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(26, 26, 27,0.7);
+  color: white;
+  font-size: 1.0rem;
+}
+.show_number {
+  font-size: 1.5rem;
+}
+</style>

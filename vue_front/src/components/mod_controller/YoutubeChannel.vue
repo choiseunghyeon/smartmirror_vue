@@ -3,20 +3,18 @@
 
 <div class="channel-container" v-scroll="" style="height: 100%;">
 <v-card color="transparent" height="100%" flat>
-  <router-view></router-view>
+  <!-- key를 넣지 않으면 같은 url로 가는 path에 대해서 같은 것으로 인식 component들을 reload하지 않음
+       key를 넣으면 다른 값으로 인식 component -->
+  <router-view :key="$route.fullPath"></router-view>
 
-  <v-bottom-nav fixed shift :value="true" :active.sync="syncVal" color="red">
-    <v-btn flat color="teal" value="recent" @click="test()">
-      <span>Recent</span>
-      <v-icon>history</v-icon>
-    </v-btn>
+  <v-bottom-nav fixed shift :value="true" :active.sync="localNavVal" color="grey darken-4">
     <v-btn flat color="teal" value="playlist" @click="routePlayList()">
-      <span>Favorites</span>
-      <v-icon>favorite</v-icon>
+      <span>재생목록</span>
+      <v-icon>view_week</v-icon>
     </v-btn>
     <v-btn flat color="teal" value="listitem" @click="routeListItem()">
-      <span>Nearby</span>
-      <v-icon>place</v-icon>
+      <span>동영상</span>
+      <v-icon>video_library</v-icon>
     </v-btn>
   </v-bottom-nav>
 </v-card>
@@ -26,47 +24,35 @@
 <script>
 import Constant from '../../Constant.js';
 import {mapState} from 'vuex';
-import Loading from '../Loading'
-import ApiKey from '../../ApiKey.js';
 
 export default {
   name: "YoutubeChannel",
   data: function(){
-    return {scrollHeight:0,selectedListId:''
-    ,syncVal:'playlist'}
+    return {scrollHeight:0,localNavVal:'playlist'};
   },
-  components: {Loading },
   created: function(){
     console.log('channel created');
     this.routePlayList();
   },
-  mounted: function(){
-    console.log('channel mounted');
-  },
-  beforeUpdate: function(){
-    console.log(" channel beforeUpdate!!");
-    // this.routePlayList();
-  },
   watch: {
-    '$route' (to, from){
-      console.log('watching route');
-      console.log('from :');
-      console.log(from);
-      console.log('to: ');
-      console.log(to);
+    selectedChannel: function() { // channel은 created 이후에 새로 만들지 않음 updated은 다른 컴포넌트로 연결할 때도 쓰이기 때문에 안됨
+      console.log('i\'m watching you');
       this.routePlayList();
-    }
+    },
+    channelNavVal: function(){
+      return this.localNavVal = this.channelNavVal;
+    },
   },
-  computed: mapState(['selectedChannel','selectedPlayLists','playListItems', 'numberBoxRightValue',]),
+  computed: mapState(['selectedChannel','channelNavVal']),
   methods: {
     routePlayList: function(){
-      // this.$store.dispatch(Constant.REMOVE_PLAY_LIST_ITEMS);
-      // this.$store.dispatch(Constant.GET_PLAY_LISTS,{channelId:channelId})
-      // this.$store.dispatch(Constant.REMOVE_PLAY_LIST);
-      this.$router.push({name:'playlist', params:{name: this.selectedChannel.title}});
+      console.log("called routerPlayList");
+      this.$store.dispatch(Constant.SYNC_CHANNEL_NAVIGATION,"playlist");
+      this.$router.push({name:'playlist', params:{id: this.selectedChannel.id}});
     },
     routeListItem: function(){
-
+      this.$store.dispatch(Constant.SYNC_CHANNEL_NAVIGATION,"listitem");
+      this.$router.push({name:'listitem'});
     },
 
   }
