@@ -2,7 +2,7 @@
 <v-app class="grey darken-4">
   <v-container fluid>
     <v-layout row>
-      <v-flex xs4 offset-xs8 id="widget" :class="{isWidgetActive:isActive.widget}">
+      <v-flex xs4 offset-xs8 id="widget">
 
             <weather></weather>
 
@@ -29,7 +29,6 @@ import {mapState} from 'vuex';
 export default {
   name: 'Main',
   components: {Clock,Weather,FineDust},
-  computed: mapState(['isActive']),
 
   created: function(){
     console.log('created!!!!!!!!!!!!!!!!!====');
@@ -40,9 +39,6 @@ export default {
     // }
   },
 
-  data: function(){
-    return { keword:'',buttonFlag:{minimization:false,removal:false,widget:false}};
-  },
   // sockets: {
   //   connect: function(){
   //     console.log('socket connected');
@@ -76,10 +72,10 @@ export default {
     // removeYoutube: function(){
     //   this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:''});
     // },
-    widgetToggle: function(){
-      this.$store.dispatch(Constant.TOGGLE_WIDGET_ACTIVE);
-      this.buttonFlag.widget = !this.buttonFlag.widget;
-    },
+    // widgetToggle: function(){
+    //   this.$store.dispatch(Constant.TOGGLE_WIDGET_ACTIVE);
+    //   this.buttonFlag.widget = !this.buttonFlag.widget;
+    // },
 
     // youtubeSearch(){
     //   console.log("this is keword",this.keword);
@@ -101,13 +97,6 @@ export default {
 </script>
 
 <style lang="css">
-
-.isListActive {
-  display: none;
-}
-.isWidgetActive {
-  display: none;
-}
 
 body {
   background: rgba(1,1,1,1);

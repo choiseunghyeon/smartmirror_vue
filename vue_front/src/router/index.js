@@ -7,6 +7,7 @@ import YoutubeChannel from '@/components/mod_controller/YoutubeChannel'
 import PlayList from '@/components/mod_controller/PlayList'
 import ListItem from '@/components/mod_controller/ListItem'
 import MostPopular from '@/components/mod_controller/MostPopular'
+import MyList from '@/components/mod_controller/MyList'
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +22,7 @@ export default new Router({
       children : [
         { path:'/controller/mostpopular', name:'popular', component: MostPopular},
         { path:'/controller/search', name:'search', component: YoutubeSearch},
+        { path:'/controller/mylist', name:'mylist', component: MyList,},
         { path:'/controller/channel', name:'channel', component: YoutubeChannel,
         children : [
           { path:'/controller/channel/:id', name:'playlist', component: PlayList},

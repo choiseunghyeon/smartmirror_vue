@@ -58,8 +58,11 @@
   - 필요없는 코드와 컴포넌트(SearchYoutube) 삭제 및 수정
   - SearchedList -> YoutubeSearch로 이름 변경
 
+18.06.28
+  - MyList 모듈 생성 및 기본 기능 구현
+  - Controller 색상 변경
+
   추가 예정사항
   - 나의 목록 및 backend에 db 연결
   - snackbars(vuetify)를 이용하면 여러 인터랙션(영상 보기, 저장 등)을 이쁘게 할 수 있을 것 같다.
-  - 전체적인 layout 맞춰 놓고 기능 추가하기
   - socket을 이용하여 data 보내주기 (유트브 검색하고 나의 목록 구독중 채널 모두 mobile에서 확인 유튜브 영상 data만 보내주기(data list도))

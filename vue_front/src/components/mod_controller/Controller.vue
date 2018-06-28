@@ -42,7 +42,7 @@
     </v-list>
   </v-navigation-drawer>
   <v-toolbar
-    color="red" dense
+    color="indigo darken-2" dense
     fixed clipped-left app >
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <!-- <v-icon class="mx-3">fab fa-youtube</v-icon> -->
@@ -75,6 +75,7 @@
       <v-layout justify-center>
         <v-flex xs12 shrink>
           <router-view></router-view>
+
         </v-flex>
       </v-layout>
     </v-container>
@@ -107,7 +108,7 @@ export default {
     return { keyword:'',buttonFlag:{minimization:false,removal:false,widget:false},drawer: true,
     items: [
         { icon: 'trending_up', text: 'Most Popular' ,routeName: 'popular'},
-        { icon: 'grade', text: '나의 목록' ,routeName:'mostPopular'},
+        { icon: 'grade', text: '나의 목록' ,routeName:'mylist'},
         { icon: 'visibility_off', text: '최소화' ,routeName:'mostPopular'},
         { icon: 'clear', text: '끄기' ,routeName:'mostPopular'},
       ],
@@ -166,6 +167,9 @@ export default {
 }
 </script>
 <style lang="css">
+#inspire{
+background-color: #212121 !important;
+}
 .number_box {
   display: flex;
   flex-direction: column;
