@@ -29,16 +29,14 @@
 </template>
 
 <script>
-import Constant from '../../Constant.js';
+import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
-import Loading from '../Loading'
 
 export default {
   name: "PlayList",
   data: function(){
     return {scrollHeight:0};
   },
-  components: {Loading },
   created: function(){
     console.log("playlist created!!");
     this.getPlayList(this.$route.params.id);

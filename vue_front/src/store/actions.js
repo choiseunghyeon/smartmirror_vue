@@ -139,10 +139,18 @@ export default {
     store.commit(Constant.REMOVE_SEARCHED_LIST);
   },
 
-
+  //MyList.vue
   [Constant.VIDEO_DATA_SAVE] : (store,payload) => {
     console.log("VIDEO_DATA_SAVE called");
     store.commit(Constant.VIDEO_DATA_SAVE,payload);
   },
-
+  [Constant.SET_MYLIST_NAME] : (store, payload) => {
+    store.commit(Constant.SET_MYLIST_NAME,payload);
+  },
+  [Constant.SYNC_MYLIST_NAVIGATION] : (store, payload) => {
+    store.commit(Constant.SYNC_MYLIST_NAVIGATION, payload);
+  },
+  [Constant.SET_MYLIST_DIALOG] : (store, payload) => {
+    store.commit(Constant.SET_MYLIST_DIALOG, payload);
+  },
 }

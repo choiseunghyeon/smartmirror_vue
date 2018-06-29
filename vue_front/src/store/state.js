@@ -21,5 +21,7 @@ export default {
 
   // about MyList
   videoDataSave:{saveFlag:false, data:''},
-
+  selectedMyListName:'',
+  myListNavVal: "mylist", // MyListBridge.vue에서 bottom navigation의 값을 조절
+  myListDialog: false,
 }

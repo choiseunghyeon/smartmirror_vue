@@ -41,6 +41,7 @@ export default {
 
   //about MyList
   VIDEO_DATA_SAVE: "videoDataSave",
-
-
+  SET_MYLIST_NAME: "setMyListName",
+  SYNC_MYLIST_NAVIGATION: "syncMyListNavigation",
+  SET_MYLIST_DIALOG: "setMyListDialog",
 }

@@ -62,6 +62,10 @@
   - MyList 모듈 생성 및 기본 기능 구현
   - Controller 색상 변경
 
+18.06.29
+  -MyListBridge 아래에 MyList와 MyListItem으로 모듈화
+  -MyList 목록 생성 및 삭제 디자인 구현 MyListItem 불러오기 구현
+
   추가 예정사항
   - 나의 목록 및 backend에 db 연결
   - snackbars(vuetify)를 이용하면 여러 인터랙션(영상 보기, 저장 등)을 이쁘게 할 수 있을 것 같다.

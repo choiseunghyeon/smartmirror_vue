@@ -9,7 +9,7 @@
       :value="data.id.videoId"
       height="200px"
       >
-      <div class="number_box" >
+      <div class="number_box" @click.stop="saveVideo(data)">
         <span class="show_number">저장</span>
         <v-icon x-large >list</v-icon>
       </div>
@@ -97,16 +97,16 @@ export default {
     //   this.closeYoutubeListModal();
     //   this.channelListToggle();
     // },
-    // saveVideo: function(data){
-    //   let obj = {
-    //     saveFlag:true,
-    //     data:{
-    //       title: data.snippet.title, videoId: data.snippet.resourceId.videoId,imgUrl: data.snippet.thumbnails.medium.url
-    //     }
-    //   };
-    //   this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
-    //   this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
-    // },
+    saveVideo: function(data){
+      let obj = {
+        saveFlag:true,
+        data:{
+          title: data.snippet.title, videoId: data.snippet.resourceId.videoId,imgUrl: data.snippet.thumbnails.medium.url
+        }
+      };
+      this.$store.dispatch(Constant.SET_MYLIST_DIALOG,true);
+      this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
+    },
   }
 }
 </script>

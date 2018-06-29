@@ -60,77 +60,55 @@
     </div>
   </transition> -->
 
-<div class="mylist-container" v-scroll="" style="height: 100%;">
-<v-card color="transparent" height="100%" flat>
-  <!-- myList -->
+<div id="mylist">
 
-  <div v-if="localNavVal=='mylist'" class="mylist">
+<v-flex v-if="myListDialog==true" xs2 offset-xs10 style="padding-left:15px;" @click="setMyListDialog">
+    <v-icon x-large color="red">clear</v-icon>
+</v-flex>
 
-    <v-dialog v-model="dialog" full-width persistent>
-      <v-card>
-        <v-card-text>
-          <v-text-field v-model="myListName" label="목록 이름"></v-text-field>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="success" flat @click.native="makeMyList">추가</v-btn>
-          <v-btn color="error" flat @click.native="dialog = false">취소</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <v-card tile flat v-for="(data,index) in myLists" @click.native="getMyListItems(data.name)" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
-
-      <v-card-media
-      :src="data.imgUrl"
-      value="default"
-      height="200px"
-      >
-      <!-- <div class="number_box" style="left:0" @click.stop="removeList(index)">
-        <span class="show_number">삭제</span>
-        <v-icon x-large >list</v-icon>
-      </div> -->
-      </v-card-media>
-      <v-card-title style="padding:0px;">
-        <v-flex xs4><v-btn color="error" outline depressed @click.native="removeList(index)">삭제</v-btn></v-flex>
-        <v-flex xs8>{{data.name}}</v-flex>
-
-      </v-card-title>
+  <v-dialog v-model="dialog" full-width persistent>
+    <v-card>
+      <v-card-text>
+        <v-text-field v-model="myListName" label="목록 이름"></v-text-field>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="success" flat @click.native="makeMyList">추가</v-btn>
+        <v-btn color="error" flat @click.native="dialog = false">취소</v-btn>
+      </v-card-actions>
     </v-card>
-    <!-- the end of myList -->
-    <v-btn dark fab
-    top right color="blue darken-2" @click="toggleDialog">
-      <v-icon>add</v-icon>
-    </v-btn>
-  </div> <!-- the end of mylist -->
+  </v-dialog>
 
-  <my-list-item v-else></my-list-item>
+  <v-card tile flat v-for="(data,index) in myLists" @click.native="setMyListName(data.name)" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
 
-  <v-bottom-nav fixed shift :value="true" :active.sync="localNavVal" color="grey darken-4">
-    <v-btn flat color="teal" value="mylist" @click="">
-      <span>나의목록</span>
-      <v-icon>view_week</v-icon>
-    </v-btn>
-    <v-btn flat color="teal" value="mylistitem" @click="">
-      <span>동영상</span>
-      <v-icon>video_library</v-icon>
-    </v-btn>
-  </v-bottom-nav>
-</v-card>
-  <!-- 밑에 bottom navigation의 height가 56px임 이게 없으면 navigation이 card일부를 가리게 됨 -->
-  <div class="box-56" style="height: 56px;">
-  </div>
-</div>
+    <v-card-media
+    :src="data.imgUrl"
+    value="default"
+    height="200px"
+    >
+    </v-card-media>
+    <v-card-title style="padding:0px;">
+      <v-flex xs4><v-btn color="error" outline depressed @click.native="removeList(index)">삭제</v-btn></v-flex>
+      <v-flex xs8>{{data.name}}</v-flex>
+
+    </v-card-title>
+  </v-card>
+  <!-- the end of myList -->
+  <v-btn dark fab
+  top right color="blue darken-2" @click="toggleDialog">
+    <v-icon>add</v-icon>
+  </v-btn>
+
+
+</div> <!-- the end of mylist -->
 </template>
 
 <script>
 import Constant from '../../Constant.js';
 import {mapState} from 'vuex';
-import MyListItem from './MyListItem'
 export default {
   name: "MyList",
-  components: {MyListItem},
-  computed: mapState(['videoDataSave','isActive','numberBoxRightValue',]),
+  computed: mapState(['videoDataSave','myListDialog',]),
   created: function(){
     console.log("myList created")
     if(localStorage.listNames == undefined)
@@ -154,7 +132,7 @@ export default {
 },
   */
   data: function(){
-    return {scrollHeight:0,localNavVal:'mylist', selectedListId:''
+    return {scrollHeight:0, selectedListId:''
     ,myLists:'',myListItems:'',fab:false,bottom:true, left:true,dialog:false
     ,animation:{listInput:false},myListName:'' }
   },
@@ -175,8 +153,11 @@ export default {
       this.myLists = this.retunMyListValue();
       this.dialog = false;
     },
-    toggleDialog: function(){
+    toggleDialog: function(){ // MyList 내부에서 쓰는 목록 추가용 Dialog
       this.dialog = !this.dialog;
+    },
+    setMyListDialog: function(){ // Controller.vue에서 지정한 myListDialog
+      this.$store.dispatch(Constant.SET_MYLIST_DIALOG,false);
     },
     removeList: function(index){
       if(!confirm('해당 목록을 삭제하시겠습니까??')) // 아니오를 누르면 함수 실행 안함
@@ -193,22 +174,19 @@ export default {
       this.myLists = this.retunMyListValue();
 
     },
-    //
-    // getMyListItems: function(listId){
-    //   if(this.videoDataSave.saveFlag == true){
-    //     let listArr = JSON.parse(localStorage[listId]);
-    //     listArr.push(this.videoDataSave.data);
-    //     localStorage[listId]=JSON.stringify(listArr);
-    //     this.closeMyListModal();
-    //     this.$store.dispatch(Constant.VIDEO_DATA_SAVE,{saveFlag:false,data:''});
-    //     this.myLists = this.retunMyListValue();
-    //   } else {
-    //
-    //     this.myListItems = JSON.parse(localStorage[listId])
-    //     this.toggle.title=listId;
-    //     this.toggleList();
-    //   }
-    // },
+
+    setMyListName: function(listId){
+      if(this.videoDataSave.saveFlag == true){
+        let tempArr = JSON.parse(localStorage[listId]) //local에 있는 정보 가져오기
+        tempArr.push(this.videoDataSave.data);  // 정보 추가
+        localStorage[listId] = JSON.stringify(tempArr); //localStorage에 저장
+        this.setMyListDialog(); // dialog 끄기
+      } else {
+        this.$store.dispatch(Constant.SET_MYLIST_NAME,listId);
+        this.$store.dispatch(Constant.SYNC_MYLIST_NAVIGATION,"mylistitem");
+      }
+    },
+
     //
     // removeVideo: function(index){
     //   this.myListItems.splice(index,1); // 해당 영상 삭제
@@ -256,3 +234,8 @@ export default {
   }
 }
 </script>
+<style>
+  #mylist {
+    width: 100% !important;
+  }
+</style>

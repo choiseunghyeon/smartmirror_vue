@@ -91,5 +91,13 @@ export default {
   [Constant.VIDEO_DATA_SAVE] : (state,payload) => {
     state.videoDataSave = payload;
   },
-
+  [Constant.SET_MYLIST_NAME] : (state, payload) => {
+    state.selectedMyListName = payload;
+  },
+  [Constant.SYNC_MYLIST_NAVIGATION] : (state, payload) => {
+    state.myListNavVal = payload;
+  },
+  [Constant.SET_MYLIST_DIALOG] : (state, payload) => {
+    state.myListDialog = payload;
+  },
 }

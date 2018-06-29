@@ -80,20 +80,31 @@
       </v-layout>
     </v-container>
   </v-content>
+<v-layout row justify-center >
+  <v-dialog
+  v-model="myListDialog"
+  fullscreen hide-overlay
+  transition="dialog-bottom-transition"
+  scrollable
+  content-class="grey darken-4"
+  >
+    <my-list></my-list>
+  </v-dialog>
+</v-layout>
 </v-app>
 </template>
 
 <script>
 import YoutubeController from './YoutubeController';
 import MyList from './MyList';
-import Constant from '../../Constant.js';
+import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
 
 
 export default {
   name: 'Controller',
-  components: {YoutubeController,MyList},
-  computed: mapState(['channelLists']),
+  components: {YoutubeController, MyList},
+  computed: mapState(['channelLists','myListDialog']),
 
   created: function(){
     console.log('created!!!!!!!!!!!!!!!!!====');
@@ -105,10 +116,10 @@ export default {
   },
 
   data: function(){
-    return { keyword:'',buttonFlag:{minimization:false,removal:false,widget:false},drawer: true,
+    return { keyword:'',drawer: true,
     items: [
         { icon: 'trending_up', text: 'Most Popular' ,routeName: 'popular'},
-        { icon: 'grade', text: '나의 목록' ,routeName:'mylist'},
+        { icon: 'grade', text: '나의 목록' ,routeName:'mylistbridge'},
         { icon: 'visibility_off', text: '최소화' ,routeName:'mostPopular'},
         { icon: 'clear', text: '끄기' ,routeName:'mostPopular'},
       ],
