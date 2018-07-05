@@ -52,12 +52,12 @@ export default {
   computed: mapState(['selectedMyListName',]),
   methods: {
 
-    // handleScroll: function(e){
-    //   console.log(e);
-    //   let result = e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight - 100; // 문서 전체의 높이와 같음
-    //   result == this.scrollHeight ? this.moreListItems(this.selectedListId, this.playListItems[this.playListItems.length-1].nextToken) : console.log(result);
-    //
-    // },
+    handleScroll: function(e){
+      console.log(e);
+      // let result = e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight - 100; // 문서 전체의 높이와 같음
+      // result == this.scrollHeight ? this.moreListItems(this.selectedListId, this.playListItems[this.playListItems.length-1].nextToken) : console.log(result);
+      //
+    },
 
     getMyListItems: function(){ // 선택된 mylist 영상 6개를 긁어옴
       this.myListItems = JSON.parse(localStorage[this.selectedMyListName]);

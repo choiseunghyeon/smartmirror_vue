@@ -1,83 +1,31 @@
 <template lang="html">
-  <!-- <transition name="modal">
-    <div :class="[videoDataSave.saveFlag ? 'modal-mask-small' : 'modal-mask',{'isMyListActive':!isActive.mylists}]">
-      <div class="modal-wrapper">
-        <div id="my-list-modal" class="modal-container" @scroll="handleScroll">
-          <div :class="'row ' + modal_top_value" style="margin-bottom: 20px !important;">
-            <button class="modal-default-button" @click="closeMyListModal">
-              OK
-            </button>
-            <button class="modal-default-button" @click="toggleList">
-              {{toggle.message}}
-            </button>
-            <button class="modal-default-button">
-              <transition name="input">
-                <input v-if="animation.listInput" v-model="myListName" type="text" class="make-input" name="" placeholder="이름을 입력하세요!">
-              </transition>
-              <span @click="makeMyList()">생성</span>
-            </button>
-          </div> -->
-          <!-- the begining of MyList-->
-        <!-- <transition name="slide" mode="out-in"
-          @after-enter="slideAfterEnter">
-          <div class="white-scale-100" v-if="isLocalActive.myList" key="myList">
-            <ul class="row">
-              <div class="height-290 col-md-4" v-for="(data,index) in myLists" @click.stop="getMyListItems(data.name)">
-                <figure>
-                  <div class="number_box" :style="{ right: numberBoxRightValue }" @click.stop="removeList(index)">
-
-                      <span>&#88;</span>
-                      <span class="show_number">삭제</span>
-
-                  </div>
-                  <img class="img-320-180" :src="data.imgUrl"><figcaption>{{data.name}}</figcaption>
-                </figure>
-              </div>
-            </ul>
-          </div> -->
-          <!-- the end of MyList -->
-
-          <!-- the begining of listItem-->
-          <!-- <div class="white-scale-100" v-if="isLocalActive.myListItem" key="myListItem">
-            <ul class="row">
-              <div class="height-290 col-md-4" v-for="(data,index) in myListItems">
-                <figure>
-                  <div class="number_box" :style="{ right: numberBoxRightValue }" @click.stop="removeVideo(index)">
-                    <span>&#88;</span>
-                    <span class="show_number">삭제</span>
-                  </div>
-                  <img :src="data.imgUrl" @click="setVideoList(data.videoId,index)" >
-                  <figcaption>{{data.title}}</figcaption>
-                </figure>
-              </div>
-            </ul>
-          </div>
-        </transition> -->
-        <!-- the end of listItem -->
-<!--
-        </div>
-      </div>
-    </div>
-  </transition> -->
-
 <div id="mylist">
+<v-layout v-if="videoDataSave.saveFlag == true">
+  <v-flex xs6>
+    <div class="">
 
-<v-flex v-if="myListDialog==true" xs2 offset-xs10 style="padding-left:15px;" @click="setMyListDialog">
-    <v-icon x-large color="red">clear</v-icon>
-</v-flex>
+      <v-icon x-large color="blue" @click="toggleDialog" >add</v-icon>
+      <span>목록추가</span>
+    </div>
 
-  <v-dialog v-model="dialog" full-width persistent>
-    <v-card>
-      <v-card-text>
-        <v-text-field v-model="myListName" label="목록 이름"></v-text-field>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="success" flat @click.native="makeMyList">추가</v-btn>
-        <v-btn color="error" flat @click.native="dialog = false">취소</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+    <v-dialog v-model="dialog" full-width persistent>
+      <v-card>
+        <v-card-text>
+          <v-text-field v-model="myListName" label="목록 이름"></v-text-field>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="success" flat @click.native="makeMyList">추가</v-btn>
+          <v-btn color="error" flat @click.native="dialog = false">취소</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-flex>
+  <v-flex xs2 offset-xs4 style="padding-left:15px;">
+    <v-icon x-large color="red" @click="setVideoDataSaveFalse">clear</v-icon>
+  </v-flex>
+</v-layout>
+
 
   <v-card tile flat v-for="(data,index) in myLists" @click.native="setMyListName(data.name)" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
 
@@ -88,16 +36,13 @@
     >
     </v-card-media>
     <v-card-title style="padding:0px;">
-      <v-flex xs4><v-btn color="error" outline depressed @click.native="removeList(index)">삭제</v-btn></v-flex>
+      <v-flex xs4><v-btn color="error" outline depressed @click.native.stop="removeList(index)">삭제</v-btn></v-flex>
       <v-flex xs8>{{data.name}}</v-flex>
 
     </v-card-title>
   </v-card>
   <!-- the end of myList -->
-  <v-btn dark fab
-  top right color="blue darken-2" @click="toggleDialog">
-    <v-icon>add</v-icon>
-  </v-btn>
+
 
 
 </div> <!-- the end of mylist -->
@@ -156,8 +101,12 @@ export default {
     toggleDialog: function(){ // MyList 내부에서 쓰는 목록 추가용 Dialog
       this.dialog = !this.dialog;
     },
-    setMyListDialog: function(){ // Controller.vue에서 지정한 myListDialog
-      this.$store.dispatch(Constant.SET_MYLIST_DIALOG,false);
+    setVideoDataSaveFalse: function(){ // Controller.vue에서 지정한 myListDialog
+      let obj = {
+        saveFlag:false,
+        data:{}
+      };
+      this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
     },
     removeList: function(index){
       if(!confirm('해당 목록을 삭제하시겠습니까??')) // 아니오를 누르면 함수 실행 안함
@@ -180,7 +129,7 @@ export default {
         let tempArr = JSON.parse(localStorage[listId]) //local에 있는 정보 가져오기
         tempArr.push(this.videoDataSave.data);  // 정보 추가
         localStorage[listId] = JSON.stringify(tempArr); //localStorage에 저장
-        this.setMyListDialog(); // dialog 끄기
+        this.setVideoDataSaveFalse(); // dialog 끄기
       } else {
         this.$store.dispatch(Constant.SET_MYLIST_NAME,listId);
         this.$store.dispatch(Constant.SYNC_MYLIST_NAVIGATION,"mylistitem");
@@ -236,6 +185,7 @@ export default {
 </script>
 <style>
   #mylist {
+    /* for Modal */
     width: 100% !important;
   }
 </style>

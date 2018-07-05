@@ -66,6 +66,12 @@
   -MyListBridge 아래에 MyList와 MyListItem으로 모듈화
   -MyList 목록 생성 및 삭제 디자인 구현 MyListItem 불러오기 구현
 
+
+18.07.05
+  - MyListBridge와 MyList에 존재하던 html 주석부분들 삭제
+  - MyList에 있던 +(목록추가) 버튼을 videoDataSave.saveFlag가 true일때만 활성화 하도록 설정 즉 모달과 함께 등장 이유: 비디오를 저장할 때 목록을 같이 생성하는게 더 나아보임 그리고 MyList에서 목록을 찾는데 불필요해 보임
+  - MostPopular, listitem, YoutubeSearch에 saveVideo() 추가하여 MyList에 저장할 수 있도록 구현
+
   추가 예정사항
   - 나의 목록 및 backend에 db 연결
   - snackbars(vuetify)를 이용하면 여러 인터랙션(영상 보기, 저장 등)을 이쁘게 할 수 있을 것 같다.

@@ -150,7 +150,5 @@ export default {
   [Constant.SYNC_MYLIST_NAVIGATION] : (store, payload) => {
     store.commit(Constant.SYNC_MYLIST_NAVIGATION, payload);
   },
-  [Constant.SET_MYLIST_DIALOG] : (store, payload) => {
-    store.commit(Constant.SET_MYLIST_DIALOG, payload);
-  },
+
 }

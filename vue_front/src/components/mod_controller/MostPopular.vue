@@ -9,7 +9,7 @@
       :value="data.id.videoId"
       height="200px"
       >
-      <div class="number_box" >
+      <div class="number_box" @click.stop="saveVideo(data)">
         <span class="show_number">저장</span>
         <v-icon x-large >list</v-icon>
         <!-- <img class="number_image" src="../../../static/images/listing-option.svg" alt=""> -->
@@ -65,6 +65,15 @@ export default {
         let result = e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight - 100; // 문서 전체의 높이와 같음
         result == this.scrollHeight ? this.morePopularList(this.mostPopularVideoLists[this.mostPopularVideoLists.length-1].nextToken) : console.log(result);
 
+    },
+    saveVideo: function(data){
+      let obj = {
+        saveFlag:true,
+        data:{
+          title: data.snippet.title, videoId: data.id.videoId, imgUrl: data.snippet.thumbnails.medium.url
+        }
+      };
+      this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
     },
   },
 

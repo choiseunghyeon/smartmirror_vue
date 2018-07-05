@@ -8,7 +8,13 @@
               :src="data.snippet.thumbnails.medium.url"
               :value="data.id.videoId"
               height="200px"
-              ></v-card-media>
+              >
+              <div class="number_box" @click.stop="saveVideo(data)">
+                <span class="show_number">저장</span>
+                <v-icon x-large >list</v-icon>
+                <!-- <img class="number_image" src="../../../static/images/listing-option.svg" alt=""> -->
+              </div>
+              </v-card-media>
               <v-card-title>
                 <div>
                   <span v-if="data.id.channelId">{{data.snippet.title+"채널"}}</span>
@@ -74,10 +80,9 @@ export default {
       let obj = {
         saveFlag:true,
         data:{
-          title: data.snippet.title, videoId: data.id.videoId,imgUrl: data.snippet.thumbnails.medium.url
+          title: data.snippet.title, videoId: data.id.videoId, imgUrl: data.snippet.thumbnails.medium.url
         }
       };
-      this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
       this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
     },
 

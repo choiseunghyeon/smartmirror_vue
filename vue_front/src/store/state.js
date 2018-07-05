@@ -20,8 +20,7 @@ export default {
   searchKeyword:"",
 
   // about MyList
-  videoDataSave:{saveFlag:false, data:''},
+  videoDataSave:{saveFlag:false, data:''}, //videoDataSave.saveFlag면은 MyList Modal로 띄움
   selectedMyListName:'',
   myListNavVal: "mylist", // MyListBridge.vue에서 bottom navigation의 값을 조절
-  myListDialog: false,
 }

@@ -82,7 +82,7 @@
   </v-content>
 <v-layout row justify-center >
   <v-dialog
-  v-model="myListDialog"
+  v-model="videoDataSave.saveFlag"
   fullscreen hide-overlay
   transition="dialog-bottom-transition"
   scrollable
@@ -104,7 +104,7 @@ import {mapState} from 'vuex';
 export default {
   name: 'Controller',
   components: {YoutubeController, MyList},
-  computed: mapState(['channelLists','myListDialog']),
+  computed: mapState(['channelLists','videoDataSave']),
 
   created: function(){
     console.log('created!!!!!!!!!!!!!!!!!====');

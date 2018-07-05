@@ -97,7 +97,5 @@ export default {
   [Constant.SYNC_MYLIST_NAVIGATION] : (state, payload) => {
     state.myListNavVal = payload;
   },
-  [Constant.SET_MYLIST_DIALOG] : (state, payload) => {
-    state.myListDialog = payload;
-  },
+
 }

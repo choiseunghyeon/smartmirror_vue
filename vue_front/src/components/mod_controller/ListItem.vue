@@ -104,7 +104,6 @@ export default {
           title: data.snippet.title, videoId: data.snippet.resourceId.videoId,imgUrl: data.snippet.thumbnails.medium.url
         }
       };
-      this.$store.dispatch(Constant.SET_MYLIST_DIALOG,true);
       this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
     },
   }
