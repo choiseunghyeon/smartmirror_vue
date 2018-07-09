@@ -91,6 +91,24 @@
     <my-list></my-list>
   </v-dialog>
 </v-layout>
+<v-snackbar
+  v-model="snackbar.flag"
+  :timeout="snackbar.time"
+  top="top"
+>
+  {{ snackbar.text }}
+  <v-progress-circular v-if="snackbar.progress == true"
+      indeterminate
+      color="red"
+    ></v-progress-circular>
+  <v-btn
+    color="pink"
+    flat
+    @click="setSnackBar"
+  >
+    Close
+  </v-btn>
+</v-snackbar>
 </v-app>
 </template>
 
@@ -104,7 +122,7 @@ import {mapState} from 'vuex';
 export default {
   name: 'Controller',
   components: {YoutubeController, MyList},
-  computed: mapState(['channelLists','videoDataSave']),
+  computed: mapState(['channelLists','videoDataSave','snackbar']),
 
   created: function(){
     console.log('created!!!!!!!!!!!!!!!!!====');
@@ -167,13 +185,15 @@ export default {
       this.$store.dispatch(Constant.SET_CHANNELID,{id:channelInfo.snippet.channelId,title:channelInfo.snippet.channelTitle});
       this.$router.push({name:'channel'});
     },
-    removeChannel(index){
+    removeChannel(index){ //채널 삭제
       this.$store.dispatch(Constant.DELETE_CHANNEL,index);
     },
-
+    setSnackBar(){ //snackbar 끄기
+      this.$store.dispatch(Constant.SET_SNACKBAR,{flag:false,text:"",time:1000,progress:false});
+    },
     changeToolbarTitle(title){
       this.toolbar_title = title;
-    }
+    },
   }
 }
 </script>

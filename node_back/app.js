@@ -1,46 +1,37 @@
 
 // Express 기본 모듈 불러오기
-var express = require('express')
+let express = require('express')
   , http = require('http')
   , path = require('path');
 
 // Express의 미들웨어 불러오기
-var bodyParser = require('body-parser')
+let bodyParser = require('body-parser')
   , cookieParser = require('cookie-parser')
   , static = require('serve-static')
-  , errorHandler = require('errorhandler')
   , cors = require('cors')
   , socketio = require('socket.io')
 
 // 에러 핸들러 모듈 사용
-var expressErrorHandler = require('express-error-handler');
+let expressErrorHandler = require('express-error-handler');
 
 // Session 미들웨어 불러오기
-var expressSession = require('express-session');
+let expressSession = require('express-session');
 
 
-/*
 // 모듈로 분리한 설정 파일 불러오기
-var config = require('./config');
+let config = require('./config');
 
-*/
+let database = require('./database/database');
 
 // 모듈로 분리한 라우팅 파일 불러오기
-var route_loader = require('./routes/route_loader');
-
-// 모듈로 분리한 데이터베이스 파일 불러오기
-// var pool = require('./database/database');
+let route_loader = require('./routes/route_loader');
 
 
 // 익스프레스 객체 생성
-var app = express();
+let app = express();
 
-//===== 서버 변수 설정 및 static으로 public 폴더 설정  =====//
-// console.log('config.server_port : %d', config.server_port);
 app.set('port', process.env.PORT || 3000);
-// mysql pool 설정 app.get으로 가져올 수 있음
-// req 매개변수로 항상 app이 들어가있음
-// app.set('pool',pool);
+
 
 //CORS 설정
 app.use(cors());
@@ -69,7 +60,7 @@ route_loader.init(app, express.Router());
 
 
 // 404 에러 페이지 처리
-var errorHandler = expressErrorHandler({
+let errorHandler = expressErrorHandler({
  static: {
    '404': path.join(__dirname, 'public')+'/404.html'
  }
@@ -96,7 +87,7 @@ app.on('close', function () {
 let server = http.createServer(app).listen(app.get('port'), function(){
     console.log('서버가 시작되었습니다. 포트 : ' + app.get('port'));
 
-
+    database.init(app, config);
 });
 
 

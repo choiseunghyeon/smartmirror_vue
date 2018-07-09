@@ -72,7 +72,15 @@
   - MyList에 있던 +(목록추가) 버튼을 videoDataSave.saveFlag가 true일때만 활성화 하도록 설정 즉 모달과 함께 등장 이유: 비디오를 저장할 때 목록을 같이 생성하는게 더 나아보임 그리고 MyList에서 목록을 찾는데 불필요해 보임
   - MostPopular, listitem, YoutubeSearch에 saveVideo() 추가하여 MyList에 저장할 수 있도록 구현
 
+
+18.07.09
+  - snackbars 기능을 영상의 저장, 영상 재생, 영상 최소화, 영상 끄기, 다음 영상이 없을 때(nextPageToken) 등 사용
+  - axios에 async await을 한 이유: axios 앞부분 뒷부분에 SET_SNACKBAR를 통해 데이터를 불러오는 시간을 측정할 때 axios가 비동기적으로 이루어지기 때문에 await을 안하면 axios 앞뒷부분에 붙인 SET_SNACKBAR가 axios보다 먼저 실행되버림
+ - node에 boilerplate 설정(db url 등)
+
+  문제사항
+  - MyList에 video 저장 이후 다음 저장을 눌러서 나오는 목록에 이미지가 안바뀌어 있음 즉 데이터가 새로운 데이터가 들어가지 않았다는 것 해결방안: 서버 db에 저장시키면서 하게 되면 state의 값이 바뀌기 때문에 그값을 가지고 오면 수시로 바뀔듯 하다.
+
   추가 예정사항
-  - 나의 목록 및 backend에 db 연결
-  - snackbars(vuetify)를 이용하면 여러 인터랙션(영상 보기, 저장 등)을 이쁘게 할 수 있을 것 같다.
   - socket을 이용하여 data 보내주기 (유트브 검색하고 나의 목록 구독중 채널 모두 mobile에서 확인 유튜브 영상 data만 보내주기(data list도))
+  - 배포준비(package.json에 필요없는 package삭제)_local이 아닌 외부ip로 접근하는 경우 login을 통한 사용자 식별 등

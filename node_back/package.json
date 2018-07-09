@@ -19,7 +19,6 @@
     "express-session": "^1.15.6",
     "http": "0.0.0",
     "moment": "^2.22.1",
-    "mongodb": "^3.0.7",
     "mongoose": "^5.0.17",
     "mysql": "^2.15.0",
     "path": "^0.12.7",

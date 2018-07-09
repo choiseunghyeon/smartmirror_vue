@@ -61,21 +61,21 @@ export default {
 
     this.myLists = this.retunMyListValue();
   },
-  /*
   updated: function(){ // 데이터가 변경되면 scroll의 길이를 구함
-  console.log('mylist updated');
-  let modalContainer = document.getElementById('my-list-modal')[0];
-  this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
-  console.log("upgrade complete hㅈㅈeight: ",this.scrollHeight);
+    console.log('mylist updated');
 
-},
+    // let modalContainer = document.getElementById('my-list-modal')[0];
+    // this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
+    // console.log("upgrade complete hㅈㅈeight: ",this.scrollHeight);
+    //
+  },
   mounted: function(){
-  let modalContainer = document.getElementById('my-list-modal')[0];
-  this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight ;
-  console.log("data mounted Height: ",this.scrollHeight);
+    console.log('mylist mounted');
+    // let modalContainer = document.getElementById('my-list-modal')[0];
+    // this.scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight ;
+    // console.log("data mounted Height: ",this.scrollHeight);
 
-},
-  */
+  },
   data: function(){
     return {scrollHeight:0, selectedListId:''
     ,myLists:'',myListItems:'',fab:false,bottom:true, left:true,dialog:false
@@ -129,6 +129,7 @@ export default {
         let tempArr = JSON.parse(localStorage[listId]) //local에 있는 정보 가져오기
         tempArr.push(this.videoDataSave.data);  // 정보 추가
         localStorage[listId] = JSON.stringify(tempArr); //localStorage에 저장
+        this.$store.dispatch(Constant.SET_SNACKBAR,{flag:true,text:"저장되었습니다.",time:1000,progress:false});
         this.setVideoDataSaveFalse(); // dialog 끄기
       } else {
         this.$store.dispatch(Constant.SET_MYLIST_NAME,listId);

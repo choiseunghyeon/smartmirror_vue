@@ -10,9 +10,14 @@ export default {
 
 
   /* ===== CONTROLLER ===== */
+  //  Controller.vue
+  [Constant.SET_SNACKBAR] : (store,payload) => {
+    store.commit(Constant.SET_SNACKBAR,payload);
+  },
 
   // YoutubeChannel.vue
   [Constant.GET_PLAY_LISTS] : async (store,payload) => {
+    store.dispatch(Constant.SET_SNACKBAR, {flag:true,text:"목록을 불러오는 중입니다.",time:0,progress:true})
     try {
       const response = await AxiosAPI.playLists(payload)
       console.log("RESPONSE: ",response);
@@ -30,7 +35,7 @@ export default {
     } catch (e) {
       console.error(error);
     }
-
+    store.dispatch(Constant.SET_SNACKBAR, {flag:false,text:"목록을 불러오는 중입니다.",time:0,progress:false})
   },
   [Constant.GET_LIST_COUNT] : (store,payload) => {
     AxiosAPI.countPlayListItems(payload)
@@ -41,13 +46,15 @@ export default {
       console.log("ERROR!!!!", ex);
     })
   },
-  [Constant.GET_PLAY_LIST_ITEMS] : (store,payload) => {
-    AxiosAPI.playListItems(payload)
+  [Constant.GET_PLAY_LIST_ITEMS] : async (store,payload) => {
+    store.dispatch(Constant.SET_SNACKBAR, {flag:true,text:"영상을 불러오는 중입니다.",time:0,progress:true})
+    await AxiosAPI.playListItems(payload)
     .then((response) => {
       console.log("listitmes: ",response.data);
       let checkedData = ForAction.checkRemovedVideo(response.data);
       store.dispatch(Constant.ADD_PLAY_LIST_ITEMS,checkedData);
     })
+    store.dispatch(Constant.SET_SNACKBAR, {flag:false,text:"영상을 불러오는 중입니다.",time:0,progress:false})
   },
 
   [Constant.ADD_PLAY_LIST] : (store,payload) => {
@@ -82,18 +89,18 @@ export default {
   },
 
 
-
-
   //MostPopular.vue
-  [Constant.GET_MOSTPOPULAR_VIDEOS] : (store, payload) => {
+  [Constant.GET_MOSTPOPULAR_VIDEOS] : async (store, payload) => {
     console.log("GET_MOSTPOPULAR_VIDEOS: ", payload);
-    AxiosAPI.mostPopularVideos(payload)
+    store.dispatch(Constant.SET_SNACKBAR, {flag:true,text:"영상을 불러오는 중입니다.",time:0,progress:true})
+    await AxiosAPI.mostPopularVideos(payload)
     .then((response) => {
       console.log("RESPONSE: ");
       console.log(response);
       let payload = ForAction.itemsTokenObject(response.data) // items와 token을 object로 만들어서 반환
       store.dispatch(Constant.ADD_MOSTPOPULAR_LIST,payload);
     })
+    store.dispatch(Constant.SET_SNACKBAR, {flag:false,text:"영상을 불러오는 중입니다.",time:0,progress:false})
   },
 
   [Constant.ADD_MOSTPOPULAR_LIST] : (store, payload) => {
@@ -105,9 +112,10 @@ export default {
   },
 
   //SearchedList.vue
-  [Constant.YOUTUBE_SEARCH] : (store,payload) => {
+  [Constant.YOUTUBE_SEARCH] : async (store,payload) => {
+    store.dispatch(Constant.SET_SNACKBAR, {flag:true,text:"영상을 불러오는 중입니다.",time:0,progress:true})
     console.log(payload);
-    AxiosAPI.youtubeSearch(payload)
+    await AxiosAPI.youtubeSearch(payload)
     .then((response) => {
       console.log("RESPONSE: ");
       console.log(response);
@@ -116,6 +124,7 @@ export default {
       let payload = ForAction.itemsTokenObject(response.data) // items와 token을 object로 만들어서 반환
       store.dispatch(Constant.ADD_SEARCHED_LIST,payload);
     })
+    store.dispatch(Constant.SET_SNACKBAR, {flag:false,text:"영상을 불러오는 중입니다.",time:0,progress:false})
   },
   [Constant.VIDEO_CHANGE] : (store,payload) => {
     store.commit(Constant.VIDEO_CHANGE, payload)

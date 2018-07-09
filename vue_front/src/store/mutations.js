@@ -8,6 +8,10 @@ export default {
   },
 
   /* ===== CONTROLLER ===== */
+  // Controller.vue
+  [Constant.SET_SNACKBAR] : (state, payload) => {
+    state.snackbar = payload;
+  },
 
   // YoutubeChannel.vue
   [Constant.ADD_PLAY_LIST] : (state, payload) => {

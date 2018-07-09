@@ -3,6 +3,11 @@ export default {
   dayObject:{today:'',tomorrow:''},
 
   /* ===== CONTROLLER ===== */
+  // Controller.vue
+    // flag는 snackbar의 나타남과 사라짐의 여부 text는 표시할 내용
+    // time은 몇초간 표시할 것인지의 여부(0이면 안사라짐) progress는 loading 표시를 해줌
+  snackbar:{flag:false,text:"",time:1000,progress:false},
+
   // YoutubeChannel.vue
   channelLists:[],
   selectedChannel:'', // 선택된 채널의 id
@@ -19,7 +24,7 @@ export default {
   searchedLists:[],
   searchKeyword:"",
 
-  // about MyList
+  // MyList.vue
   videoDataSave:{saveFlag:false, data:''}, //videoDataSave.saveFlag면은 MyList Modal로 띄움
   selectedMyListName:'',
   myListNavVal: "mylist", // MyListBridge.vue에서 bottom navigation의 값을 조절

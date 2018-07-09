@@ -7,6 +7,7 @@ export default {
   VIDEO_CHANGE: "videoChange",
   SET_VIDEO_LIST: "videoList",
   PLAY_VIDEO_LIST: "playVideoList",
+  SET_SNACKBAR : "setSnackBar",
 
   ADD_SEARCHED_LIST: "addSearchedList",
   ADD_MOSTPOPULAR_LIST: "addMostPopularList",
