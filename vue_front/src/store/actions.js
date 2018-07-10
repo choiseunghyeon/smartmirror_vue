@@ -10,6 +10,16 @@ export default {
 
 
   /* ===== CONTROLLER ===== */
+  // Socket
+  [Constant.VIDEO_CHANGE] : (store,payload) => {
+    store.commit(Constant.VIDEO_CHANGE, payload)
+  },
+
+  [Constant.SET_VIDEO_LIST] : (store,payload) => {
+    store.commit(Constant.SET_VIDEO_LIST, payload);
+    store.dispatch(Constant.VIDEO_CHANGE, {videoId:payload.idArray[payload.num]});
+  },
+
   //  Controller.vue
   [Constant.SET_SNACKBAR] : (store,payload) => {
     store.commit(Constant.SET_SNACKBAR,payload);
@@ -64,15 +74,25 @@ export default {
   [Constant.ADD_PLAY_LIST_ITEMS] : (store,payload) => {
     store.commit(Constant.ADD_PLAY_LIST_ITEMS,payload);
   },
-  [Constant.ADD_CHANNEL] : (store,payload) => {
-    store.commit(Constant.ADD_CHANNEL, payload)
+  [Constant.ADD_CHANNEL] : async (store,payload) => {
+    await AxiosAPI.postChannel(payload)
+    .then((response) => {
+      console.log("channelItem: ",response.data);
+      store.dispatch(Constant.SET_SNACKBAR, {flag:true,text:"채널이 저장 되었습니다.",time:1000,progress:false})
+    })
+    store.dispatch(Constant.GET_CHANNEL);
   },
 
   [Constant.SYNC_CHANNEL_NAVIGATION] : (store,payload) => {
     store.commit(Constant.SYNC_CHANNEL_NAVIGATION,payload);
   },
-  [Constant.SYNC_CHANNEL] : (store, payload) => {
-    store.commit(Constant.SYNC_CHANNEL, payload);
+  [Constant.GET_CHANNEL] : (store) => {
+    console.log("CALLED GET_CHANNEL");
+    AxiosAPI.getChannel()
+    .then((response) => {
+      console.log("channelList: ",response.data);
+      store.commit(Constant.GET_CHANNEL, response.data);
+    })
   },
   [Constant.SET_CHANNELID] : (store,payload) => {
     store.commit(Constant.SET_CHANNELID,payload);
@@ -84,8 +104,14 @@ export default {
   [Constant.REMOVE_PLAY_LIST_ITEMS] : (store) => {
     store.commit(Constant.REMOVE_PLAY_LIST_ITEMS);
   },
-  [Constant.DELETE_CHANNEL] : (store,payload) => {
-    store.commit(Constant.DELETE_CHANNEL,payload);
+  [Constant.DELETE_CHANNEL] : async (store,payload) => {
+    await AxiosAPI.deleteChannel(payload)
+    .then((response) => {
+      console.log("DELETE!!");
+      console.log(response.data);
+      store.dispatch(Constant.SET_SNACKBAR, {flag:true,text:"해당 채널이 삭제되었습니다.",time:1500,progress:false})
+    })
+    await store.dispatch(Constant.GET_CHANNEL);
   },
 
 
@@ -126,13 +152,7 @@ export default {
     })
     store.dispatch(Constant.SET_SNACKBAR, {flag:false,text:"영상을 불러오는 중입니다.",time:0,progress:false})
   },
-  [Constant.VIDEO_CHANGE] : (store,payload) => {
-    store.commit(Constant.VIDEO_CHANGE, payload)
-  },
-  [Constant.SET_VIDEO_LIST] : (store,payload) => {
-    store.commit(Constant.SET_VIDEO_LIST, payload);
-    store.dispatch(Constant.VIDEO_CHANGE, {videoId:payload.idArray[payload.num]});
-  },
+
   [Constant.PLAY_VIDEO_LIST] : (store) => {
     store.commit(Constant.PLAY_VIDEO_LIST)
   },
@@ -153,8 +173,41 @@ export default {
     console.log("VIDEO_DATA_SAVE called");
     store.commit(Constant.VIDEO_DATA_SAVE,payload);
   },
-  [Constant.SET_MYLIST_NAME] : (store, payload) => {
-    store.commit(Constant.SET_MYLIST_NAME,payload);
+
+  [Constant.GET_MYLISTNAMES] : (store) => {
+    console.log("GET_MYLISTNAMES called");
+    AxiosAPI.getMyListNames()
+    .then((response) => {
+      let data = response.data;
+      data.forEach((val) => {
+        val['imgUrl'] = val.content.length > 0 ? val.content[0].imgUrl : '../../static/images/x.png';
+      });
+      store.commit(Constant.GET_MYLISTNAMES,response.data);
+    });
+  },
+  [Constant.POST_MYLISTNAME] : (store, payload) => {
+    AxiosAPI.postMyListName(payload)
+    .then((response) => {
+      store.dispatch(Constant.GET_MYLISTNAMES);
+      let text = payload.name + "이 저장되었습니다."
+      store.dispatch(Constant.SET_SNACKBAR, {flag:true,text:text,time:1000,progress:false})
+    })
+  },
+  [Constant.PUT_MYLIST] : (store, payload) => {
+    AxiosAPI.putMyList(payload)
+    .then((response) => {
+      store.dispatch(Constant.GET_MYLISTNAMES);
+    })
+  },
+  [Constant.DELETE_MYLIST] : (store, payload) => {
+    AxiosAPI.deleteMyList(payload)
+    .then((response) => {
+      store.dispatch(Constant.GET_MYLISTNAMES);
+    })
+  },
+
+  [Constant.SET_MYLIST_INDEX] : (store, payload) => {
+    store.commit(Constant.SET_MYLIST_INDEX,payload);
   },
   [Constant.SYNC_MYLIST_NAVIGATION] : (store, payload) => {
     store.commit(Constant.SYNC_MYLIST_NAVIGATION, payload);

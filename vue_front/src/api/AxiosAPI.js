@@ -3,6 +3,43 @@ import axios from 'axios';
 import ApiKey from '../ApiKey.js';
 
 export default {
+  /* SERVER */
+  getChannel: function(){
+    return axios.get(CONF.CHANNEL);
+  },
+  postChannel: function(payload){
+    console.log("postChannel payload: ",payload);
+    return axios.post(CONF.CHANNEL,{
+      data: payload
+    })
+  },
+  deleteChannel: function(payload){
+    console.log("deleteChannel payload: ",payload);
+    return axios.delete(CONF.CHANNEL,{
+      data: {id: payload}
+    })
+  },
+  getMyListNames: function(){ // MyList 목록들 가져오기
+    return axios.get(CONF.MYLIST);
+  },
+  postMyListName: function(payload){ // MyList 목록 생성
+    console.log("postMyList payload: ",payload);
+    return axios.post(CONF.MYLIST,{
+      data: payload
+    })
+  },
+  putMyList: function(payload){ // MyList 목록 생성
+    console.log("putMyList payload: ",payload);
+    return axios.put(CONF.MYLIST,{
+      data: { id:payload.id, content: payload.content }
+    })
+  },
+  deleteMyList: function(payload){
+    console.log("deleteMyList payload: ",payload);
+    return axios.delete(CONF.MYLIST,{
+      data: {id: payload}
+    })
+  },
   playLists: function(payload){
     let request = {
       part:'snippet',

@@ -1,8 +1,12 @@
 export default {
+
   /* ===== MIRROR ===== */
   dayObject:{today:'',tomorrow:''},
 
   /* ===== CONTROLLER ===== */
+  // Socket
+  currentVideoId:"",
+  videoList:{idArray:[],num:0},
   // Controller.vue
     // flag는 snackbar의 나타남과 사라짐의 여부 text는 표시할 내용
     // time은 몇초간 표시할 것인지의 여부(0이면 안사라짐) progress는 loading 표시를 해줌
@@ -19,13 +23,12 @@ export default {
   mostPopularVideoLists: [],
 
   //SearchedList.vue
-  currentVideoId:"",
-  videoList:{idArray:[],num:0},
   searchedLists:[],
   searchKeyword:"",
 
   // MyList.vue
   videoDataSave:{saveFlag:false, data:''}, //videoDataSave.saveFlag면은 MyList Modal로 띄움
-  selectedMyListName:'',
+  myListNames:[], // db에 저장된 mylistname들
+  selectedListIndex:-1,
   myListNavVal: "mylist", // MyListBridge.vue에서 bottom navigation의 값을 조절
 }

@@ -1,6 +1,7 @@
 import Constant from '../Constant.js';
 
 export default {
+
   /* ===== MIRROR ===== */
   [Constant.SET_DAY] : (state, payload) => {
     console.log("SET DAY called");
@@ -8,6 +9,14 @@ export default {
   },
 
   /* ===== CONTROLLER ===== */
+  // Socket
+  [Constant.VIDEO_CHANGE] : (state, payload) => {
+    console.log("VIDEO_CHANGE "+payload.videoId);
+    state.currentVideoId=payload.videoId;
+  },
+  [Constant.SET_VIDEO_LIST] : (state,payload) => {
+    state.videoList=payload;
+  },
   // Controller.vue
   [Constant.SET_SNACKBAR] : (state, payload) => {
     state.snackbar = payload;
@@ -20,14 +29,9 @@ export default {
   [Constant.ADD_PLAY_LIST_ITEMS] : (state,payload) => {
     state.playListItems.push(payload);
   },
-  [Constant.ADD_CHANNEL] : (state,payload) => {
-    console.log("ADD_CHANNEL called");
-    state.channelLists.push(payload);
-    localStorage.localChannelLists=JSON.stringify(state.channelLists)
-  },
 
-  [Constant.SYNC_CHANNEL] : (state, payload) => {
-    console.log("SYNC_CHANNEL called");
+  [Constant.GET_CHANNEL] : (state, payload) => {
+    console.log("GET_CHANNEL called");
     state.channelLists = payload;
   },
   [Constant.SYNC_CHANNEL_NAVIGATION] : (state, payload) => {
@@ -38,10 +42,6 @@ export default {
     state.selectedChannel = payload;
   },
 
-  [Constant.DELETE_CHANNEL] : (state, payload) => {
-    state.channelLists.splice(payload,1);
-    localStorage.localChannelLists=JSON.stringify(state.channelLists)
-  },
   [Constant.REMOVE_PLAY_LIST] : (state) => {
     state.selectedPlayLists=[];
   },
@@ -66,16 +66,9 @@ export default {
     state.searchedLists.push(payload);
   },
 
-  [Constant.VIDEO_CHANGE] : (state, payload) => {
-    console.log("VIDEO_CHANGE "+payload);
-    state.currentVideoId=payload.videoId;
-  },
   [Constant.CHANGE_KEYWORD] : (state, payload) => {
     console.log("mutation "+payload);
     state.searchKeyword = payload.keyword;
-  },
-  [Constant.SET_VIDEO_LIST] : (state,payload) => {
-    state.videoList=payload;
   },
   [Constant.PLAY_VIDEO_LIST] : (state) => {
     if (state.videoList.num == state.videoList.length-1 ) {
@@ -95,8 +88,11 @@ export default {
   [Constant.VIDEO_DATA_SAVE] : (state,payload) => {
     state.videoDataSave = payload;
   },
-  [Constant.SET_MYLIST_NAME] : (state, payload) => {
-    state.selectedMyListName = payload;
+  [Constant.GET_MYLISTNAMES]: (state, payload) => {
+    state.myListNames = payload;
+  },
+  [Constant.SET_MYLIST_INDEX] : (state, payload) => {
+    state.selectedListIndex = payload;
   },
   [Constant.SYNC_MYLIST_NAVIGATION] : (state, payload) => {
     state.myListNavVal = payload;

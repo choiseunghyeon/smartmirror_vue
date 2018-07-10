@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Constant from '../../Constant.js';
+import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
 import MyList from './MyList';
 import MyListItem from './MyListItem';

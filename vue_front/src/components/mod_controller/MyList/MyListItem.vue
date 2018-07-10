@@ -1,7 +1,7 @@
 <template lang="html">
 
 <div class="listItem-container" v-scroll="handleScroll" style="height: 100%;">
-    <v-card tile flat v-for="(data) in myListItems" @click.native="" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
+    <v-card tile flat v-for="(data,index) in myListItems" @click.native="setVideoList(index)" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
 
       <v-card-media
       :src="data.imgUrl"
@@ -26,17 +26,17 @@
 </template>
 
 <script>
-import Constant from '../../Constant.js';
+import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
 
 export default {
   name: "myListItem",
   data: function(){
-    return {scrollHeight:0,selectedListId:'',myListItems:[]}
+    return {scrollHeight:0,myListItems:[]}
   },
   created: function(){
     console.log("myListItem created!!");
-    if (this.selectedMyListName != '') {
+    if (this.selectedMyListId != '') {
       this.getMyListItems();
     }
   },
@@ -49,7 +49,7 @@ export default {
   //   this.scrollHeight = document.body.scrollHeight - 100 //- searchContainer.clientHeight;
   // },
 
-  computed: mapState(['selectedMyListName',]),
+  computed: mapState(['selectedListIndex','myListNames']),
   methods: {
 
     handleScroll: function(e){
@@ -60,7 +60,7 @@ export default {
     },
 
     getMyListItems: function(){ // 선택된 mylist 영상 6개를 긁어옴
-      this.myListItems = JSON.parse(localStorage[this.selectedMyListName]);
+      this.myListItems = this.myListNames[this.selectedListIndex].content;
     },
 
     // moreListItems: function(playlistId,token){ // 스크롤이 바닥을 찍으면 PlayList의 영상 9개를 추가적으로 가져옴
@@ -69,24 +69,23 @@ export default {
     //   this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:playlistId,nextPageToken:token});
     // },
     //
-    // setVideoList: function(id,index){ // 선택된 영상을 실행하고 선택된 영상이 있는 플레이 리스트의 영상을 자동실행으로 setting함
-    //   let oneArray =[];
-    //   for (var i = index; i < this.playListItems.length; i++){  // 여러개로 나뉘어 져있는 객체 속 배열들을 한 배열로 합치기
-    //     let items = this.playListItems[i].items;
-    //     items.forEach(function(x){
-    //       oneArray.push(x.snippet.resourceId.videoId);
-    //     });
-    //   }
-    //   console.log("oneArray: ",oneArray);
-    //   let selectedNum = oneArray.indexOf(id);
-    //   let payload = {
-    //     idArray:oneArray,
-    //     num:selectedNum,
-    //   };
-    //   this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
-    //   this.closeYoutubeListModal();
-    //   this.channelListToggle();
-    // },
+
+    // 선택된 영상을 실행하고 선택된 영상이 있는 목록의 영상을 자동실행으로 setting함
+    setVideoList: function(index){
+      let tempArr = this.myListNames[this.selectedListIndex].content;
+      let oneArray = tempArr.reduce((acc,val) => {
+        acc.push(val.videoId);
+        return acc;
+      },[]);
+      console.log("oneArray: ",oneArray);
+      let payload = {
+        idArray:oneArray,
+        num:index,
+      };
+      this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
+      // this.closeYoutubeListModal();
+      // this.channelListToggle();
+    },
     // saveVideo: function(data){
     //   let obj = {
     //     saveFlag:true,

@@ -1,9 +1,8 @@
 <template lang="html">
-<div class="col-md-12">
 
-  <div id="youtube">
-    <youtube v-if="currentVideoId !== '' " :class="{youtube_active:isActive.youtube}"
-      :video-id="currentVideoId" @ready="ready" @ended="ended" :player-vars="{autoplay:1}"
+  <div>
+    <youtube v-if="videoId !== '' "
+      :video-id="videoId" @ready="ready" @ended="ended" :player-vars="{autoplay:1}"
       :playerWidth="youtubeSize.width" :playerHeight="youtubeSize.height">
     </youtube>
     <!--
@@ -16,12 +15,10 @@
     <button @click="test" type="button" name="button">test</button>
   -->
   </div>
-</div>
 </template>
 
 <script>
-import ApiKey from '../../ApiKey.js';
-import Constant from '../../Constant.js';
+import Constant from '@/Constant.js';
 
 import {mapState} from 'vuex';
 
@@ -30,9 +27,20 @@ export default {
   data: function(){
     return {
         youtubeSize:{width:"840", height:"490"},
+        videoId: "",
+        videoList: {},
     }
   },
-  computed: mapState(['currentVideoId','videoList','isActive']),
+  created: function(){
+    this.$options.sockets.changeVideo = (data) => {
+      console.log('videoData 받았다!! : ',data);
+      this.videoId=data;
+    },
+    this.$options.sockets.changeVideoList = (data) => {
+      console.log('changeVideoList 받았다!! : ',data);
+      this.videoList=data;
+    }
+  },
   methods: {
     ready: function(player){
       this.player=player;
@@ -45,8 +53,9 @@ export default {
       console.log('list 추가완료');
       this.youtubeListItems.myList.push(videoId);
     },
-    change: function(videoId){
-      this.$store.dispatch(Constant.PLAY_VIDEO_LIST);
+    change: function(){
+      this.videoList.num+=1;
+      this.videoId=this.videoList.idArray[this.videoList.num];
     },
     /* 핸드폰 조작시 유튜브 영상으로 직접 컨트롤 할 수 있기 때문에 우선 주석처리
     pause: function(){

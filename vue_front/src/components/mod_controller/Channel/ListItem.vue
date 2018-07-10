@@ -30,16 +30,14 @@
 </template>
 
 <script>
-import Constant from '../../Constant.js';
+import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
-import Loading from '../Loading'
 
 export default {
   name: "ListItem",
   data: function(){
     return {scrollHeight:0,selectedListId:'',}
   },
-  components: {Loading },
   created: function(){
     console.log("created!!");
     let listId = this.$route.params.listId

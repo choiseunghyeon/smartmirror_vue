@@ -1,18 +1,28 @@
 
 module.exports = {
-  channel: (req, res) => {
+  channel: async (req, res) => {
       console.log(' POST channel');
-      let db = req.app.get('database');
-      let channel = new db.ChannelModel({"name":"버블디아","info":[1,2,3,4]});
-
-      channel.save(function(err){
-        if(err)
-          return;
-
-        console.log('channel 데이터 추가함.');
-
-      });
-      res.end();
+      try {
+        let db = req.app.get('database');
+        let snippet = req.body.data.snippet;
+        let channel = new db.ChannelModel({"snippet":snippet});
+        let result = await channel.save();
+        res.end();
+      } catch (err) {
+        console.error(err);
+      }
+  },
+  mylist: async (req, res) => {
+      console.log(' POST mylist');
+      try {
+        let db = req.app.get('database');
+        let name = req.body.data.name;
+        let mylist = new db.MyListModel({"name":name});
+        let result = await mylist.save();
+        res.end();
+      } catch (err) {
+        console.error(err);
+      }
   },
 
 }

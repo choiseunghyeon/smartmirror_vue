@@ -78,9 +78,16 @@
   - axios에 async await을 한 이유: axios 앞부분 뒷부분에 SET_SNACKBAR를 통해 데이터를 불러오는 시간을 측정할 때 axios가 비동기적으로 이루어지기 때문에 await을 안하면 axios 앞뒷부분에 붙인 SET_SNACKBAR가 axios보다 먼저 실행되버림
  - node에 boilerplate 설정(db url 등)
 
-  문제사항
-  - MyList에 video 저장 이후 다음 저장을 눌러서 나오는 목록에 이미지가 안바뀌어 있음 즉 데이터가 새로운 데이터가 들어가지 않았다는 것 해결방안: 서버 db에 저장시키면서 하게 되면 state의 값이 바뀌기 때문에 그값을 가지고 오면 수시로 바뀔듯 하다.
-
+18.07.10
+  - Channel과 MyList 생성, 삭제, 저장 등 localStorage 이용하던 부분 db와 연동
+  - 관련 컴포넌트끼리 같은 폴더에 정리해놓음
+  - socket을 이용한 controller와 mirror와의 통신 프로토타입 완성
+  - 검색, 채널, mostPopular등에서 실행 시킬 videoId들은 VIDEO_CHANGE를 통해 currentVideoId를 변경 시킨다. 이후 Controller에서 VIDEO_CHANGE를 관찰 속성을 통해 보고 있다가 바뀌면 server로 data를 보내고
+    server는 해당 이벤트를 발생시켜 mirror로 data와 함께 설정된 이벤트를 발생시킨다.
+  - MyList에서 videoList를 보낸 후 mirror에서 선택된 순서부터 순차적으로 list를 실행
+    
   추가 예정사항
   - socket을 이용하여 data 보내주기 (유트브 검색하고 나의 목록 구독중 채널 모두 mobile에서 확인 유튜브 영상 data만 보내주기(data list도))
   - 배포준비(package.json에 필요없는 package삭제)_local이 아닌 외부ip로 접근하는 경우 login을 통한 사용자 식별 등
+  - 코드의 간결함과 가독성을 위해서 controller와 mirror를 다른 폴더로 분리해 놓는게 좋겠음
+  - 코드 리펙토링 front_back

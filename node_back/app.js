@@ -15,7 +15,7 @@ let bodyParser = require('body-parser')
 let expressErrorHandler = require('express-error-handler');
 
 // Session 미들웨어 불러오기
-let expressSession = require('express-session');
+// let expressSession = require('express-session');
 
 
 // 모듈로 분리한 설정 파일 불러오기
@@ -49,11 +49,11 @@ console.log(path.join(__dirname, 'public'));
 app.use(cookieParser());
 
 // 세션 설정
-app.use(expressSession({
-	secret:'bank',
-	resave:true,
-	saveUninitialized:true
-}));
+// app.use(expressSession({
+// 	secret:'bank',
+// 	resave:true,
+// 	saveUninitialized:true
+// }));
 
 // 라우팅 정보를 읽어들여 라우팅 설정
 route_loader.init(app, express.Router());
@@ -100,8 +100,13 @@ io.sockets.on('connection', function(socket){
   socket.remoteAddress = socket.request.connection._peername.address;
   socket.remotePort = socket.request.connection._peername.port;
 
-  socket.on('message', function(message){
-    console.log('message 이벤트를 받았습니다.', message);
-    io.sockets.emit('message',message);
+  socket.on('changeVideo', function(videoId){
+    console.log('changeVideo 이벤트를 받았습니다.', videoId);
+    io.sockets.emit('changeVideo',videoId);
   });
+  socket.on('changeVideoList', function(objData){
+    console.log('changeVideoList 이벤트를 받았습니다.', objData);
+    io.sockets.emit('changeVideoList',objData);
+  });
+
 });

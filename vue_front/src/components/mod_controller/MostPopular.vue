@@ -2,7 +2,7 @@
 <div class="popular-container" v-scroll="handleScroll">
 
   <div v-for="list in mostPopularVideoLists">
-    <v-card tile flat v-for="(data,index) in list.items" @click.native="" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
+    <v-card tile flat v-for="(data,index) in list.items" @click.native="changeYoutube(data)" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
 
       <v-card-media
       :src="data.snippet.thumbnails.medium.url"
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import Constant from '../../Constant.js';
+import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
 
 export default {
@@ -65,6 +65,11 @@ export default {
         let result = e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight - 100; // 문서 전체의 높이와 같음
         result == this.scrollHeight ? this.morePopularList(this.mostPopularVideoLists[this.mostPopularVideoLists.length-1].nextToken) : console.log(result);
 
+    },
+    changeYoutube: function(data){
+      console.log("change",data);
+      this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:data.id.videoId});
+      // this.removeSearchedList();
     },
     saveVideo: function(data){
       let obj = {

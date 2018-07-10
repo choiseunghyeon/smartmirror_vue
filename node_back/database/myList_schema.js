@@ -1,21 +1,21 @@
 let Schema = {};
 
 Schema.createSchema = (mongoose) => {
-  let ChannelSchema = mongoose.Schema({
-
-    snippet:{ type: Object},
+  let MyListSchema = mongoose.Schema({
+    name: {type:String},
+    content:{ type: Array, 'default':[]},
     created_at: {type: Date, index: {unique: false}, 'default': Date.now},
     updated_at: {type: Date, index: {unique: false}, 'default': Date.now}
   });
 
-  ChannelSchema.static('findAll', function(callback){
+  MyListSchema.static('findAll', function(callback){
     return this.find({});
   });
 
 
   console.log('ChannelSchema 정의함.');
 
-  return ChannelSchema;
+  return MyListSchema;
 };
 
 module.exports = Schema;

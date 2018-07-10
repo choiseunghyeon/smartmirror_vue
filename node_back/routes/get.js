@@ -10,16 +10,21 @@ module.exports = {
     try {
       let db = req.app.get('database');
       let result = await db.ChannelModel.findAll().exec();
-      let names = result.reduce((acc,val,index) => {
-        acc.push(val.name);
-        return acc;
-      },[]);
-      console.log(names);
-
+      res.json(result);
     } catch (err) {
       return 'error occured';
-
-  }
-
+      }
+  },
+  mylist: async function(req, res){
+    console.log('GET mylist');
+    try {
+      let db = req.app.get('database');
+      let result = await db.MyListModel.findAll().exec();
+      // console.log(result);
+      res.json(result);
+    } catch (err) {
+      return 'error occured';
+      }
+  },
 
 } // the end of module.exports

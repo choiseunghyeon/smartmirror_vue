@@ -12,7 +12,6 @@
               <div class="number_box" @click.stop="saveVideo(data)">
                 <span class="show_number">저장</span>
                 <v-icon x-large >list</v-icon>
-                <!-- <img class="number_image" src="../../../static/images/listing-option.svg" alt=""> -->
               </div>
               </v-card-media>
               <v-card-title>
@@ -29,7 +28,7 @@
 </template>
 
 <script>
-import Constant from '../../Constant.js';
+import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
 
 export default {
@@ -50,10 +49,6 @@ export default {
     return {scrollHeight:0, }
   },
   methods: {
-    // changeEvent: function(data){
-    //   console.log('good');
-    //   this.$emit('changeYoutube',data);
-    // },
     changeYoutube: function(data){
       console.log("change",data);
       data.id.hasOwnProperty("channelId") ? this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet})

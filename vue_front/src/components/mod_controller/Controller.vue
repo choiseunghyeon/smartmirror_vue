@@ -7,7 +7,7 @@
     app
   >
     <v-list dense>
-      <v-list-tile v-for="item in items" :key="item.text" @click="routeFromTollBar(item.routeName)">
+      <v-list-tile v-for="(item,index) in items" :key="item.text" @click="routeFromTollBar(item.routeName,index)">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
@@ -19,12 +19,12 @@
       </v-list-tile>
       <v-subheader class="mt-3 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader>
       <v-list>
-        <v-list-tile v-for="(item,index) in channelLists" :key="item.snippet.channelTitle" avatar @click="showPlayList(item)">
+        <v-list-tile v-for="(item,index) in channelLists" :key="item._id" avatar @click="showPlayList(item)">
           <v-list-tile-avatar>
             <img :src="item.snippet.thumbnails.default.url" alt="">
           </v-list-tile-avatar>
           <v-list-tile-title v-text="item.snippet.channelTitle"></v-list-tile-title>
-          <v-icon color="red lighten-2" @click.stop="removeChannel(index)">clear</v-icon>
+          <v-icon color="red lighten-2" @click.stop="removeChannel(item._id)">clear</v-icon>
         </v-list-tile>
       </v-list>
       <v-list-tile class="mt-3" @click="">
@@ -113,24 +113,20 @@
 </template>
 
 <script>
-import YoutubeController from './YoutubeController';
-import MyList from './MyList';
+import MyList from './MyList/MyList';
 import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
 
 
 export default {
   name: 'Controller',
-  components: {YoutubeController, MyList},
-  computed: mapState(['channelLists','videoDataSave','snackbar']),
+  components: {MyList},
+  computed: mapState(['channelLists','videoDataSave','snackbar','currentVideoId','videoList']),
 
   created: function(){
     console.log('created!!!!!!!!!!!!!!!!!====');
     this.sync();
     this.$router.push({name:'popular'});
-    // this.$options.sockets.message = (data) => {
-    //   console.log('메시지 받았다 !! ',data);
-    // }
   },
 
   data: function(){
@@ -138,7 +134,7 @@ export default {
     items: [
         { icon: 'trending_up', text: 'Most Popular' ,routeName: 'popular'},
         { icon: 'grade', text: '나의 목록' ,routeName:'mylistbridge'},
-        { icon: 'visibility_off', text: '최소화' ,routeName:'mostPopular'},
+        { icon: 'visibility_off', text: '최소화' ,routeName:'emitSocket'},
         { icon: 'clear', text: '끄기' ,routeName:'mostPopular'},
       ],
       toolbar_title_lists: [
@@ -148,25 +144,40 @@ export default {
       toolbar_title: "Youtube",
     }
   },
-  // sockets: {
-  //   connect: function(){
-  //     console.log('socket connected');
-  //   },
-  //   customEmit: function(val){
-  //     console.log('this method was fired by the socket server : ',val);
-  //   }
-  // },
+  sockets: {
+    connect: function(){
+      console.log('socket connected');
+    },
+    customEmit: function(val){
+      console.log('this method was fired by the socket server : ',val);
+    }
+  },
+  watch: {
+    currentVideoId: function(){
+      console.log('Im watching videoId');
+      this.$socket.emit('changeVideo',this.currentVideoId);
+    },
+    videoList: function(){
+      console.log('Im watching videoList');
+      this.$socket.emit('changeVideoList',this.videoList);
+    }
+  },
   methods: {
     sync: function(){
-      // 채널 정보 localStorage에 저장되어 있는 데이터를 vue에 동기화
-      let localChannelLists = JSON.parse(localStorage.localChannelLists);
-      this.$store.dispatch(Constant.SYNC_CHANNEL,localChannelLists);
+      // server db에 있는 channel 정보를 가져옴
+      this.$store.dispatch(Constant.GET_CHANNEL);
+      this.$store.dispatch(Constant.GET_MYLISTNAMES);
     },
-    emitSocket: function(){
-      this.$socket.emit('message','data 받아랏!');
-    },
-    routeFromTollBar: function(routeName){
-      this.$router.push({name: routeName});
+    // emitSocket: function(){
+    //   this.$store.dispatch(socket_userMessage,'socket_video')
+    //   // this.$socket.emit('video','aJOTlE1K90k');
+    // },
+    routeFromTollBar: function(routeName,index){
+      if(index < 2)
+        this.$router.push({name: routeName});
+      else {
+        this[routeName]();
+      }
     },
     removeYoutube: function(){
       this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:''});
@@ -185,8 +196,8 @@ export default {
       this.$store.dispatch(Constant.SET_CHANNELID,{id:channelInfo.snippet.channelId,title:channelInfo.snippet.channelTitle});
       this.$router.push({name:'channel'});
     },
-    removeChannel(index){ //채널 삭제
-      this.$store.dispatch(Constant.DELETE_CHANNEL,index);
+    removeChannel(id){ //채널 삭제
+      this.$store.dispatch(Constant.DELETE_CHANNEL,id);
     },
     setSnackBar(){ //snackbar 끄기
       this.$store.dispatch(Constant.SET_SNACKBAR,{flag:false,text:"",time:1000,progress:false});

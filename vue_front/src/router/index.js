@@ -3,11 +3,11 @@ import Router from 'vue-router'
 import Main from '@/components/Main'
 import Controller from '@/components/mod_controller/Controller'
 import YoutubeSearch from '@/components/mod_controller/YoutubeSearch'
-import YoutubeChannel from '@/components/mod_controller/YoutubeChannel'
-import PlayList from '@/components/mod_controller/PlayList'
-import ListItem from '@/components/mod_controller/ListItem'
+import YoutubeChannel from '@/components/mod_controller/Channel/YoutubeChannel'
+import PlayList from '@/components/mod_controller/Channel/PlayList'
+import ListItem from '@/components/mod_controller/Channel/ListItem'
 import MostPopular from '@/components/mod_controller/MostPopular'
-import MyListBridge from '@/components/mod_controller/MyListBridge'
+import MyListBridge from '@/components/mod_controller/MyList/MyListBridge'
 Vue.use(Router)
 
 export default new Router({

@@ -1,5 +1,5 @@
 export default {
-
+  
   // Mirror
   SET_DAY: "setDay",
 
@@ -37,12 +37,17 @@ export default {
   ADD_PLAY_LIST: "addPlayList",
   ADD_PLAY_LIST_ITEMS: "addPlayListItems",
 
-  SYNC_CHANNEL: "syncChannel",
+  GET_CHANNEL: "syncChannel",
   SYNC_CHANNEL_NAVIGATION: 'syncChannelNavigation',
 
   //about MyList
   VIDEO_DATA_SAVE: "videoDataSave",
-  SET_MYLIST_NAME: "setMyListName",
+  GET_MYLISTNAMES: "getMyListNames",
+  POST_MYLISTNAME: 'postMyListName',
+  PUT_MYLIST: 'putMyList',
+  DELETE_MYLIST: 'deleteMyList',
+
+  SET_MYLIST_INDEX: "setMyListName", // mylistitems를 가지고 오기 위한 이름
   SYNC_MYLIST_NAVIGATION: "syncMyListNavigation",
   SET_MYLIST_DIALOG: "setMyListDialog",
 }
