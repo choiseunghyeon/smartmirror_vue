@@ -42,7 +42,7 @@
     </v-list>
   </v-navigation-drawer>
   <v-toolbar
-    color="indigo darken-2" dense
+    color="red" dense
     fixed clipped-left app >
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <!-- <v-icon class="mx-3">fab fa-youtube</v-icon> -->
@@ -52,8 +52,8 @@
         <v-icon dark>arrow_drop_down</v-icon>
       </v-toolbar-title>
       <v-list>
-        <v-list-tile v-for="title in toolbar_title_lists" :key="title" @click="changeToolbarTitle(title)">
-          <v-list-tile-title v-text="title"></v-list-tile-title>
+        <v-list-tile v-for="obj in toolbar_title_lists" :key="obj.title" @click="changeToolbar(obj)">
+          <v-list-tile-title v-text="obj.title"></v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
@@ -134,12 +134,12 @@ export default {
     items: [
         { icon: 'trending_up', text: 'Most Popular' ,routeName: 'popular'},
         { icon: 'grade', text: '나의 목록' ,routeName:'mylistbridge'},
-        { icon: 'visibility_off', text: '최소화' ,routeName:'emitSocket'},
-        { icon: 'clear', text: '끄기' ,routeName:'mostPopular'},
+        { icon: 'visibility_off', text: '최소화' ,routeName:'toggleYoutube'},
+        { icon: 'clear', text: '끄기' ,routeName:'removeYoutube'},
       ],
       toolbar_title_lists: [
-        "Youtube",
-        "Lamp"
+        {title:"Youtube", routeName: 'popular'},
+        {title:"Lamp", routeName: 'lamp'},
       ],
       toolbar_title: "Youtube",
     }
@@ -148,9 +148,6 @@ export default {
     connect: function(){
       console.log('socket connected');
     },
-    customEmit: function(val){
-      console.log('this method was fired by the socket server : ',val);
-    }
   },
   watch: {
     currentVideoId: function(){
@@ -168,10 +165,9 @@ export default {
       this.$store.dispatch(Constant.GET_CHANNEL);
       this.$store.dispatch(Constant.GET_MYLISTNAMES);
     },
-    // emitSocket: function(){
-    //   this.$store.dispatch(socket_userMessage,'socket_video')
-    //   // this.$socket.emit('video','aJOTlE1K90k');
-    // },
+    toggleYoutube: function(){
+      this.$socket.emit('toggleYoutube');
+    },
     routeFromTollBar: function(routeName,index){
       if(index < 2)
         this.$router.push({name: routeName});
@@ -202,8 +198,9 @@ export default {
     setSnackBar(){ //snackbar 끄기
       this.$store.dispatch(Constant.SET_SNACKBAR,{flag:false,text:"",time:1000,progress:false});
     },
-    changeToolbarTitle(title){
-      this.toolbar_title = title;
+    changeToolbar(obj){
+      // this.toolbar_title = obj.title;
+      this.$router.push({name: obj.routeName});
     },
   }
 }

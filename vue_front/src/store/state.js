@@ -7,6 +7,7 @@ export default {
   // Socket
   currentVideoId:"",
   videoList:{idArray:[],num:0},
+  
   // Controller.vue
     // flag는 snackbar의 나타남과 사라짐의 여부 text는 표시할 내용
     // time은 몇초간 표시할 것인지의 여부(0이면 안사라짐) progress는 loading 표시를 해줌

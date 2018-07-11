@@ -1,9 +1,9 @@
 <template lang="html">
-  <v-layout justify-center align-center row wrap id="clock">
-    <v-flex xs12>
+  <v-layout row wrap id="clock">
+    <v-flex md12>
       <div class="date bright-shadow">{{currentDate+" "+currentDay.today}}</div>
     </v-flex>
-    <v-flex xs12>
+    <v-flex md12>
       <div class="time bright-shadow">{{currentHour}}</div>
 
     </v-flex>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Constant from '../Constant.js';
+import Constant from '@/Constant.js';
 export default {
   name: "Clock",
   data: function(){

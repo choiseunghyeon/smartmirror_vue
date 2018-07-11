@@ -85,9 +85,12 @@
   - 검색, 채널, mostPopular등에서 실행 시킬 videoId들은 VIDEO_CHANGE를 통해 currentVideoId를 변경 시킨다. 이후 Controller에서 VIDEO_CHANGE를 관찰 속성을 통해 보고 있다가 바뀌면 server로 data를 보내고
     server는 해당 이벤트를 발생시켜 mirror로 data와 함께 설정된 이벤트를 발생시킨다.
   - MyList에서 videoList를 보낸 후 mirror에서 선택된 순서부터 순차적으로 list를 실행
-    
-  추가 예정사항
-  - socket을 이용하여 data 보내주기 (유트브 검색하고 나의 목록 구독중 채널 모두 mobile에서 확인 유튜브 영상 data만 보내주기(data list도))
+
+18.07.11
+  - ChannelListItem에서도 영상들을 mirror로 보낼 수 있는 기능 구현(Controller)
+  - youtube 마지막 영상 이후에 처음영상 부터 실행(mirror)
+  - Youtube 영상 끄기 최소화 기능 구현(Controller && mirror)
+
+  추가예정사항
   - 배포준비(package.json에 필요없는 package삭제)_local이 아닌 외부ip로 접근하는 경우 login을 통한 사용자 식별 등
-  - 코드의 간결함과 가독성을 위해서 controller와 mirror를 다른 폴더로 분리해 놓는게 좋겠음
   - 코드 리펙토링 front_back

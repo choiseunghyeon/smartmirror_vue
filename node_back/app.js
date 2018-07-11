@@ -108,5 +108,9 @@ io.sockets.on('connection', function(socket){
     console.log('changeVideoList 이벤트를 받았습니다.', objData);
     io.sockets.emit('changeVideoList',objData);
   });
+  socket.on('toggleYoutube', function(){
+    console.log('toggleYoutube 이벤트를 받았습니다.');
+    io.sockets.emit('toggleYoutube');
+  });
 
 });

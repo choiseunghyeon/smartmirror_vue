@@ -1,6 +1,6 @@
 <template lang="html">
-<v-layout id="weatherRow"  justify-center align-center row wrap >
-  <v-flex xs6 id="today-weather" class="img">
+<v-layout justify-center align-center row wrap id="weatherRow">
+  <v-flex md6 id="today-weather" class="img">
     <p id="stat">{{stat}}</p>
 
     <i v-if="weatherData[0].image !== true" :class="weatherData[0].data +' '+'bright-shadow'" style="font-size:90px;"></i>
@@ -8,7 +8,7 @@
     <p id="temperature-max">max - {{weatherData[0].tmax}}</p>
     <p>{{dayObject.today}}</p>
   </v-flex>
-  <v-flex xs6 class="img">
+  <v-flex md6 class="img">
     <p id="stat">{{stat}}</p>
 
     <i v-if="weatherData[1].image !== true" :class="weatherData[1].data +' '+'bright-shadow'" style="font-size:55px;"></i>
@@ -16,12 +16,13 @@
     <p id="temperature-max">max - {{weatherData[1].tmax}}</p>
     <p id="temperature-min">min - {{weatherData[1].tmin}}</p>
     <p>{{dayObject.tomorrow}}</p>
+
   </v-flex>
 </v-layout>
 </template>
 
 <script>
-import ApiKey from '../ApiKey.js'
+import ApiKey from '@/ApiKey.js'
 import {mapState} from 'vuex';
 export default {
   name: "Weather",
@@ -31,11 +32,9 @@ export default {
   computed: mapState(['dayObject']),
   created: function(){
        this.weatherGet();
-    //this.weatherGet();
-    //setInterval(this.weatherGet,3600000); // 1000ms = 1 second 1시간마다 한번씩 날씨 정보 로딩
   },
   methods: {
-    weatherGet: function(){
+    weatherGet: function(){ //날씨 정보와 온도 정보를 띄워줌
       // 시간별   url: 'http://apis.skplanetx.com/weather/current/hourly?version=1&lat=&lon=&city=%EC%84%9C%EC%9A%B8&county=%EA%B0%95%EB%82%A8%EA%B5%AC&village=%EB%8F%84%EA%B3%A1%EB%8F%99&',
       let api_url = 'https://api2.sktelecom.com/weather/summary?version=2&lat=37.565763&lon=126.7957685&appKey='+ApiKey.weather;
       this.$axios.get(api_url)
@@ -90,14 +89,14 @@ export default {
 </script>
 <style scoped>
 /* Weather */
-#weatherRow i{
+#weatherRow {
+  margin-top: 20px;
   color: #f7f7f7;
-
+  text-align: center;
 }
 #weatherRow p {
   font-size: 23px;
   margin-top: 12px;
-  color: #f7f7f7;
 }
 #today-weather {
   border-right: 1px solid rgba(255,255,255,0.3);

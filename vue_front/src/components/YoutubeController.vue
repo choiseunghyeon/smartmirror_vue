@@ -1,7 +1,7 @@
 <template lang="html">
 
   <div>
-    <youtube v-if="videoId !== '' "
+    <youtube v-if="videoId !== '' " :class="{'youtube_active':isActive}"
       :video-id="videoId" @ready="ready" @ended="ended" :player-vars="{autoplay:1}"
       :playerWidth="youtubeSize.width" :playerHeight="youtubeSize.height">
     </youtube>
@@ -29,6 +29,7 @@ export default {
         youtubeSize:{width:"840", height:"490"},
         videoId: "",
         videoList: {},
+        isActive: false,
     }
   },
   created: function(){
@@ -39,6 +40,10 @@ export default {
     this.$options.sockets.changeVideoList = (data) => {
       console.log('changeVideoList 받았다!! : ',data);
       this.videoList=data;
+    },
+    this.$options.sockets.toggleYoutube = () => {
+      console.log('toggleYoutube 받았다!! ');
+      this.isActive = !this.isActive;
     }
   },
   methods: {
@@ -49,12 +54,14 @@ export default {
       console.log('끝');
       this.change()
     },
-    addList: function(videoId){
-      console.log('list 추가완료');
-      this.youtubeListItems.myList.push(videoId);
-    },
+    // addList: function(videoId){
+    //   console.log('list 추가완료');
+    //   this.youtubeListItems.myList.push(videoId);
+    // },
     change: function(){
       this.videoList.num+=1;
+      if(this.videoList.num > this.videoList.idArray.length-1) // 마지막 영상이 종료되면 처음부터 실행
+        this.videoList.num=0;
       this.videoId=this.videoList.idArray[this.videoList.num];
     },
     /* 핸드폰 조작시 유튜브 영상으로 직접 컨트롤 할 수 있기 때문에 우선 주석처리
@@ -75,15 +82,12 @@ export default {
       this.youtubeSize.height=''+(height+100);
     },
     */
-    displayToggle: function(){
-      this.$store.dispatch(Constant.TOGGLE_YOUTUBE_ACTIVE);
-    },
-    test: function(){
-      console.log("state --- "+this.player.getPlayerState());
-      this.player.getPlayerState();
-      this.text=this.player.cuePlaylist();
-
-    }
+    // test: function(){
+    //   console.log("state --- "+this.player.getPlayerState());
+    //   this.player.getPlayerState();
+    //   this.text=this.player.cuePlaylist();
+    //
+    // }
   } // the end of methods
 }
 </script>

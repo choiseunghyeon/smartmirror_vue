@@ -1,6 +1,6 @@
 <template lang="html">
-  <v-layout justify-center align-center row wrap>
-    <v-flex xs12 id="pollution" class="bright-shadow">
+  <v-layout row wrap>
+    <v-flex md12 id="pollution" class="bright-shadow">
 
       {{info.name}}: {{info.state}}
     </v-flex>
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ApiKey from '../ApiKey.js';
+import ApiKey from '@/ApiKey.js';
 
 export default {
   name:"FineDust",

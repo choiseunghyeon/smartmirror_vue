@@ -2,13 +2,13 @@
 <v-app class="grey darken-4">
   <v-container fluid>
     <v-layout row wrap>
-      <v-flex md4 offset-md8 id="widget">
+      <v-flex md5 offset-md7 id="widget">
 
-            <weather></weather>
+        <weather></weather>
 
-            <fine-dust></fine-dust>
+        <fine-dust></fine-dust>
 
-            <clock></clock>
+        <clock></clock>
 
       </v-flex>
     </v-layout>
@@ -37,47 +37,13 @@ export default {
 
   created: function(){
     console.log('created!!!!!!!!!!!!!!!!!====');
-    // this.$options.sockets.changeVideo = (data) => {
-    //   console.log('videoData 받았다!! : ',data);
-    // }
   },
 
   sockets: {
     connect: function(){
       console.log('socket connected');
     },
-    customEmit: function(val){
-      console.log('this method was fired by the socket server : ',val);
-    }
   },
-  methods: {
-
-    emitSocket: function(){
-      this.$socket.emit('message','hello');
-    },
-    // hamburgerToggle: function(){
-    //   this.$store.dispatch(Constant.TOGGLE_HAMBURGER_ACTIVE);
-    // },
-    // channelListToggle: function(){
-    //   this.$store.dispatch(Constant.TOGGLE_CHANNEL_ACTIVE);
-    // },
-    // myListToggle: function(){
-    //   this.$store.dispatch(Constant.TOGGLE_MYLIST_ACTIVE);
-    // },
-    // youtubeToggle: function(){
-    //   this.$store.dispatch(Constant.TOGGLE_YOUTUBE_ACTIVE);
-    //   this.buttonFlag.minimization = !this.buttonFlag.minimization;
-    // },
-    // removeYoutube: function(){
-    //   this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:''});
-    // },
-    // widgetToggle: function(){
-    //   this.$store.dispatch(Constant.TOGGLE_WIDGET_ACTIVE);
-    //   this.buttonFlag.widget = !this.buttonFlag.widget;
-    // },
-
-
-  }
 }
 </script>
 
@@ -94,7 +60,7 @@ body {
   /* widget */
   #widget{
     width: 500px;
-    height: 400px;
+    height: 500px;
   }
 
 </style>

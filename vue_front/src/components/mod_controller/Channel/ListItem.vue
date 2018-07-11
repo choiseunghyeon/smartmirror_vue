@@ -2,11 +2,11 @@
 
 <div class="listItem-container" v-scroll="handleScroll" style="height: 100%;">
   <div v-for="(list,index) in playListItems">
-    <v-card tile flat v-for="(data) in list.items" @click.native="" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
+    <v-card tile flat v-for="(data) in list.items" @click.native="setVideoList(data.snippet.resourceId.videoId,index)" color="transparent" class="white--text" style="border-bottom: 1px solid white !important;">
 
       <v-card-media
       :src="data.snippet.thumbnails.medium.url"
-      :value="data.id.videoId"
+      :value="data.snippet.resourceId.videoId"
       height="200px"
       >
       <div class="number_box" @click.stop="saveVideo(data)">
@@ -76,25 +76,26 @@ export default {
       if(token == "NULL") return;
       this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:playlistId,nextPageToken:token});
     },
-    //
-    // setVideoList: function(id,index){ // 선택된 영상을 실행하고 선택된 영상이 있는 플레이 리스트의 영상을 자동실행으로 setting함
-    //   let oneArray =[];
-    //   for (var i = index; i < this.playListItems.length; i++){  // 여러개로 나뉘어 져있는 객체 속 배열들을 한 배열로 합치기
-    //     let items = this.playListItems[i].items;
-    //     items.forEach(function(x){
-    //       oneArray.push(x.snippet.resourceId.videoId);
-    //     });
-    //   }
-    //   console.log("oneArray: ",oneArray);
-    //   let selectedNum = oneArray.indexOf(id);
-    //   let payload = {
-    //     idArray:oneArray,
-    //     num:selectedNum,
-    //   };
-    //   this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
-    //   this.closeYoutubeListModal();
-    //   this.channelListToggle();
-    // },
+
+    setVideoList: function(id,index){ // 선택된 영상을 실행하고 선택된 영상이 있는 플레이 리스트의 영상을 자동실행으로 setting함
+      let oneArray =[];
+      for (var i = index; i < this.playListItems.length; i++){  // 여러개로 나뉘어 져있는 객체 속 배열들을 한 배열로 합치기
+        let items = this.playListItems[i].items;
+        items.forEach(function(x){
+          oneArray.push(x.snippet.resourceId.videoId);
+        });
+      }
+      console.log("oneArray: ",oneArray);
+      console.log(id);
+      let selectedNum = oneArray.indexOf(id);
+      let payload = {
+        idArray:oneArray,
+        num:selectedNum,
+      };
+      this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
+      // this.closeYoutubeListModal();
+      // this.channelListToggle();
+    },
     saveVideo: function(data){
       let obj = {
         saveFlag:true,
