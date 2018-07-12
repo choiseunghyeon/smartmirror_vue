@@ -50,11 +50,11 @@ export default {
   },
   computed: mapState(['mostPopularVideoLists']),
   methods: {
-    getPopularList: function(){
+    getPopularList: function(){ // mostpopular 영상들 6개 가져오기
       this.$store.dispatch(Constant.REMOVE_MOSTPOPULAR_LIST);
       this.$store.dispatch(Constant.GET_MOSTPOPULAR_VIDEOS,{});
     },
-    morePopularList: function(token){
+    morePopularList: function(token){ //추가로 6개의 영상 가져오기
       console.log("morePopularList called");
       if(token == "NULL") return;
       this.$store.dispatch(Constant.GET_MOSTPOPULAR_VIDEOS,{nextPageToken:token});
@@ -71,7 +71,7 @@ export default {
       this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:data.id.videoId});
       // this.removeSearchedList();
     },
-    saveVideo: function(data){
+    saveVideo: function(data){  // 나의목록을 modal로 키고 목록 클릭시 저장
       let obj = {
         saveFlag:true,
         data:{

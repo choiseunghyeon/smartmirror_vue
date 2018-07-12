@@ -35,13 +35,9 @@ export default {
   computed: mapState(['myListNavVal']),
   created: function(){
     console.log("myListBridge created")
-    // if(localStorage.listNames == undefined)
-    //   localStorage.listNames=JSON.stringify([]);
-    //
-    // this.myLists = this.retunMyListValue();
   },
   watch: {
-    myListNavVal: function(){
+    myListNavVal: function(){ // bottom navigation의 값을 조절
       return this.localNavVal = this.myListNavVal;
     }
   },
@@ -49,10 +45,10 @@ export default {
     return {localNavVal:'mylist'}
   },
   methods: {
-    setNavValToMyList: function(){
+    setNavValToMyList: function(){ // bottom navigation의 값을 mylist로 바꿈
       this.$store.dispatch(Constant.SYNC_MYLIST_NAVIGATION,"mylist");
     },
-    setNavValToMyListItem: function(){
+    setNavValToMyListItem: function(){ // bottom navigation의 값을 mylistitem로 바꿈
       this.$store.dispatch(Constant.SYNC_MYLIST_NAVIGATION,"mylistitem");
     },
   },

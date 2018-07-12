@@ -45,7 +45,6 @@
     color="red" dense
     fixed clipped-left app >
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-    <!-- <v-icon class="mx-3">fab fa-youtube</v-icon> -->
     <v-menu :nedge-width="100">
       <v-toolbar-title slot="activator" class="mr-3">
         <span class="title">{{ toolbar_title }}</span>
@@ -144,12 +143,12 @@ export default {
       toolbar_title: "Youtube",
     }
   },
-  sockets: {
-    connect: function(){
-      console.log('socket connected');
-    },
-  },
-  watch: {
+  // sockets: {
+  //   connect: function(){ //server와 socket연결 맺음
+  //     console.log('socket connected');
+  //   },
+  // },
+  watch: { // state의 값이 바뀌면 바뀐 값을 server로 넘겨줌
     currentVideoId: function(){
       console.log('Im watching videoId');
       this.$socket.emit('changeVideo',this.currentVideoId);
@@ -161,31 +160,32 @@ export default {
   },
   methods: {
     sync: function(){
-      // server db에 있는 channel 정보를 가져옴
+      // server db에 있는 channel과 mylist 정보를 가져옴
       this.$store.dispatch(Constant.GET_CHANNEL);
       this.$store.dispatch(Constant.GET_MYLISTNAMES);
     },
     toggleYoutube: function(){
+      // server에 toggleYoutube event 발생
       this.$socket.emit('toggleYoutube');
     },
-    routeFromTollBar: function(routeName,index){
+    routeFromTollBar: function(routeName,index){ // 3,4번째는 함수를 실행
       if(index < 2)
         this.$router.push({name: routeName});
       else {
         this[routeName]();
       }
     },
-    removeYoutube: function(){
+    removeYoutube: function(){ // server로 이벤트 발생과 값 전달
       this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:''});
     },
-    youtubeSearch(){
+    youtubeSearch(){ // routing 및 검색된 정보 보여주기
       console.log("this is keword ",this.keyword);
       this.$store.dispatch(Constant.REMOVE_SEARCHED_LIST);
       this.$store.dispatch(Constant.CHANGE_KEYWORD,{keyword:this.keyword}); // 검색명 저장
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keyword:this.keyword}); // 검색명을 통해 유튜브 영상 불러오기
       this.$router.push({name: 'search'});
     },
-    showPlayList(channelInfo){
+    showPlayList(channelInfo){ // routing 및 채널이 가진 playList 보여주기
       console.log('channelInfo: ');
       console.dir(channelInfo);
       // this.$store.dispatch(Constant.REMOVE_PLAY_LIST);

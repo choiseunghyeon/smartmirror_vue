@@ -91,6 +91,10 @@
   - youtube 마지막 영상 이후에 처음영상 부터 실행(mirror)
   - Youtube 영상 끄기 최소화 기능 구현(Controller && mirror)
 
+18.07.12
+  - Channel, MyList 관련 컴포넌트 필요없는 기능과 주석들 삭제 및 설명주석 추가
+
   추가예정사항
   - 배포준비(package.json에 필요없는 package삭제)_local이 아닌 외부ip로 접근하는 경우 login을 통한 사용자 식별 등
   - 코드 리펙토링 front_back
+  - README.md, README_ENG.md 수정

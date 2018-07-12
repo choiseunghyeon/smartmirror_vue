@@ -41,7 +41,7 @@ export default {
   created: function(){
     console.log("created!!");
     let listId = this.$route.params.listId
-    if (listId != undefined) {
+    if (listId != undefined) { // 선택된 playlist ID로 해당 palylist의 영상들을 가져옴
       this.getListItems(this.$route.params.listId);
     }
   },
@@ -71,7 +71,7 @@ export default {
       this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:id});
     },
 
-    moreListItems: function(playlistId,token){ // 스크롤이 바닥을 찍으면 PlayList의 영상 9개를 추가적으로 가져옴
+    moreListItems: function(playlistId,token){ // 스크롤이 거의 바닥을 찍으면 PlayList의 영상 9개를 추가적으로 가져옴
       console.log("moreListItems called");
       if(token == "NULL") return;
       this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:playlistId,nextPageToken:token});
@@ -93,10 +93,8 @@ export default {
         num:selectedNum,
       };
       this.$store.dispatch(Constant.SET_VIDEO_LIST,payload);
-      // this.closeYoutubeListModal();
-      // this.channelListToggle();
     },
-    saveVideo: function(data){
+    saveVideo: function(data){ // 나의목록을 modal로 키고 목록 클릭시 저장
       let obj = {
         saveFlag:true,
         data:{

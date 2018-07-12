@@ -39,7 +39,7 @@ export default {
   },
   created: function(){
     console.log("playlist created!!");
-    this.getPlayList(this.$route.params.id);
+    this.getPlayList(this.$route.params.id); // Channel ID를 받아 playList 목록들 보여줌
   },
   mounted: function(){
     console.log("playlist mounted");

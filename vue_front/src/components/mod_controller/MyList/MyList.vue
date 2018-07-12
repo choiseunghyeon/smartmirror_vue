@@ -41,9 +41,6 @@
 
     </v-card-title>
   </v-card>
-  <!-- the end of myList -->
-
-
 
 </div> <!-- the end of mylist -->
 </template>
@@ -54,6 +51,9 @@ import {mapState} from 'vuex';
 export default {
   name: "MyList",
   computed: mapState(['videoDataSave','myListDialog','myListNames']),
+  data: function(){
+    return {dialog:false ,myListName:'' }
+  },
   created: function(){
     console.log("myList created")
   },
@@ -72,12 +72,8 @@ export default {
     // console.log("data mounted Height: ",this.scrollHeight);
 
   },
-  data: function(){
-    return {scrollHeight:0,myLists:'',fab:false,bottom:true, left:true,dialog:false
-    ,myListName:'' }
-  },
   methods: {
-    makeMyList: function(){
+    makeMyList: function(){ //server와 통신하여 나의목록 생성
       let names = this.myListNames
       let name = this.myListName;
       if( names.some((val) => val == name) ){ // 하나라도 같으면 참
@@ -98,14 +94,14 @@ export default {
       };
       this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
     },
-    removeList: function(id){
+    removeList: function(id){ //server와 통신하여 해당목록 삭제
       if(!confirm('해당 목록을 삭제하시겠습니까??')) // 아니오를 누르면 함수 실행 안함
           return;
       this.$store.dispatch(Constant.DELETE_MYLIST,id);
 
     },
 
-    setMyListName: function(id, index){
+    setMyListName: function(id, index){ // 다른 영상 저장이 켜져 있을때는 목록 클릭시 해당 영상 저장 아니면 목록리스트 보여줌
       if(this.videoDataSave.saveFlag == true){
         this.$store.dispatch(Constant.PUT_MYLIST,{id:id, content:this.videoDataSave.data});
         this.$store.dispatch(Constant.SET_SNACKBAR,{flag:true,text:"저장되었습니다.",time:1000,progress:false});
