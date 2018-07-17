@@ -79,48 +79,23 @@
       </v-layout>
     </v-container>
   </v-content>
-<v-layout row justify-center >
-  <v-dialog
-  v-model="videoDataSave.saveFlag"
-  fullscreen hide-overlay
-  transition="dialog-bottom-transition"
-  scrollable
-  content-class="grey darken-4"
-  >
-    <my-list></my-list>
-  </v-dialog>
-</v-layout>
-<v-snackbar
-  v-model="snackbar.flag"
-  :timeout="snackbar.time"
-  top="top"
->
-  {{ snackbar.text }}
-  <v-progress-circular v-if="snackbar.progress == true"
-      indeterminate
-      color="red"
-    ></v-progress-circular>
-  <v-btn
-    color="pink"
-    flat
-    @click="setSnackBar"
-  >
-    Close
-  </v-btn>
-</v-snackbar>
+
+<sub-component></sub-component>
+
 </v-app>
 </template>
 
 <script>
 import MyList from './MyList/MyList';
+import SubComponent from './SubComponent';
 import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
 
 
 export default {
   name: 'Controller',
-  components: {MyList},
-  computed: mapState(['channelLists','videoDataSave','snackbar','currentVideoId','videoList']),
+  components: {SubComponent},
+  computed: mapState(['channelLists','currentVideoId','videoList']),
 
   created: function(){
     console.log('created!!!!!!!!!!!!!!!!!====');
@@ -133,8 +108,9 @@ export default {
     items: [
         { icon: 'trending_up', text: 'Most Popular' ,routeName: 'popular'},
         { icon: 'grade', text: '나의 목록' ,routeName:'mylistbridge'},
-        { icon: 'visibility_off', text: '최소화' ,routeName:'toggleYoutube'},
-        { icon: 'clear', text: '끄기' ,routeName:'removeYoutube'},
+        { icon: 'gamepad', text: '유튜브 컨트롤러' ,routeName:'toggleYoutubeController'},
+        // { icon: 'visibility_off', text: '최소화' ,routeName:'toggleYoutube'},
+        // { icon: 'clear', text: '끄기' ,routeName:'removeYoutube'},
       ],
       toolbar_title_lists: [
         {title:"Youtube", routeName: 'popular'},
@@ -164,9 +140,10 @@ export default {
       this.$store.dispatch(Constant.GET_CHANNEL);
       this.$store.dispatch(Constant.GET_MYLISTNAMES);
     },
-    toggleYoutube: function(){
+    toggleYoutubeController: function(){
       // server에 toggleYoutube event 발생
-      this.$socket.emit('toggleYoutube');
+      // this.$socket.emit('toggleYoutube');
+      this.youtubeSheet = !this.youtubeSheet;
     },
     routeFromTollBar: function(routeName,index){ // 3,4번째는 함수를 실행
       if(index < 2)

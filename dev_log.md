@@ -94,7 +94,14 @@
 18.07.12
   - Channel, MyList 관련 컴포넌트 필요없는 기능과 주석들 삭제 및 설명주석 추가
 
+18.07.17
+  - Controller에 있던 추가적인 Component들을 SubComponent로 이동시킴(snackbar, dialog, bottomSheet(이번에추가))
+  - bottomSheet에 기본적인 ui 추가
+  - vue-youtube-embed module 사용범위 확인(youtube 영상 조작을 거의 전부다 가능(품질, 자막 영상 앞,뒤로 몇초 등등))
+
   추가예정사항
+  - bottomSheet에 settings 설정하기
+  - Youtube 영상 관련 조작 제공(10초 앞,뒤 볼륨설정 등)
   - 배포준비(package.json에 필요없는 package삭제)_local이 아닌 외부ip로 접근하는 경우 login을 통한 사용자 식별 등
   - 코드 리펙토링 front_back
   - README.md, README_ENG.md 수정
