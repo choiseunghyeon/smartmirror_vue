@@ -24,7 +24,9 @@ export default {
   [Constant.SET_SNACKBAR] : (store,payload) => {
     store.commit(Constant.SET_SNACKBAR,payload);
   },
-
+  [Constant.TOGGLE_YOUTUBESHEET] : (store) => {
+    store.commit(Constant.TOGGLE_YOUTUBESHEET);
+  },
   // YoutubeChannel.vue
   [Constant.GET_PLAY_LISTS] : async (store,payload) => {
     store.dispatch(Constant.SET_SNACKBAR, {flag:true,text:"목록을 불러오는 중입니다.",time:0,progress:true})

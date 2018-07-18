@@ -81,20 +81,21 @@
   </v-content>
 
 <sub-component></sub-component>
-
+<video-controller></video-controller>
 </v-app>
 </template>
 
 <script>
 import MyList from './MyList/MyList';
 import SubComponent from './SubComponent';
+import VideoController from './VideoController';
 import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
 
 
 export default {
   name: 'Controller',
-  components: {SubComponent},
+  components: {SubComponent, VideoController},
   computed: mapState(['channelLists','currentVideoId','videoList']),
 
   created: function(){
@@ -108,7 +109,7 @@ export default {
     items: [
         { icon: 'trending_up', text: 'Most Popular' ,routeName: 'popular'},
         { icon: 'grade', text: '나의 목록' ,routeName:'mylistbridge'},
-        { icon: 'gamepad', text: '유튜브 컨트롤러' ,routeName:'toggleYoutubeController'},
+        { icon: 'gamepad', text: '유튜브 컨트롤러' ,routeName:'toggleVideoController'},
         // { icon: 'visibility_off', text: '최소화' ,routeName:'toggleYoutube'},
         // { icon: 'clear', text: '끄기' ,routeName:'removeYoutube'},
       ],
@@ -140,10 +141,9 @@ export default {
       this.$store.dispatch(Constant.GET_CHANNEL);
       this.$store.dispatch(Constant.GET_MYLISTNAMES);
     },
-    toggleYoutubeController: function(){
-      // server에 toggleYoutube event 발생
-      // this.$socket.emit('toggleYoutube');
-      this.youtubeSheet = !this.youtubeSheet;
+    toggleVideoController: function(){
+      console.log('toggleVideoController');
+      this.$store.dispatch(Constant.TOGGLE_YOUTUBESHEET);
     },
     routeFromTollBar: function(routeName,index){ // 3,4번째는 함수를 실행
       if(index < 2)
@@ -171,9 +171,6 @@ export default {
     },
     removeChannel(id){ //채널 삭제
       this.$store.dispatch(Constant.DELETE_CHANNEL,id);
-    },
-    setSnackBar(){ //snackbar 끄기
-      this.$store.dispatch(Constant.SET_SNACKBAR,{flag:false,text:"",time:1000,progress:false});
     },
     changeToolbar(obj){
       // this.toolbar_title = obj.title;

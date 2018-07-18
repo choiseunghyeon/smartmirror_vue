@@ -1,5 +1,5 @@
 export default {
-  
+
   // Mirror
   SET_DAY: "setDay",
 
@@ -8,6 +8,7 @@ export default {
   SET_VIDEO_LIST: "videoList",
   PLAY_VIDEO_LIST: "playVideoList",
   SET_SNACKBAR : "setSnackBar",
+  TOGGLE_YOUTUBESHEET: "toggleYoutubeSheet",
 
   ADD_SEARCHED_LIST: "addSearchedList",
   ADD_MOSTPOPULAR_LIST: "addMostPopularList",

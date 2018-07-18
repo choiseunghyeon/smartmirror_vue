@@ -21,6 +21,9 @@ export default {
   [Constant.SET_SNACKBAR] : (state, payload) => {
     state.snackbar = payload;
   },
+  [Constant.TOGGLE_YOUTUBESHEET] : (state) => {
+    state.youtubeSheet = !state.youtubeSheet;
+  },
 
   // YoutubeChannel.vue
   [Constant.ADD_PLAY_LIST] : (state, payload) => {
