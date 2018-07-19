@@ -112,5 +112,12 @@ io.sockets.on('connection', function(socket){
     console.log('toggleYoutube 이벤트를 받았습니다.');
     io.sockets.emit('toggleYoutube');
   });
-
+  socket.on('getVideoInfo', function(videoInfo){
+    console.log('getVideoInfo 이벤트를 받았습니다.');
+    io.sockets.emit('getVideoInfo',videoInfo);
+  });
+  socket.on('changeQuality', function(quality){
+    console.log('changeQuality 이벤트를 받았습니다.');
+    io.sockets.emit('changeQuality',quality);
+  });
 });

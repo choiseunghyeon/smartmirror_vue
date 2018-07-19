@@ -105,7 +105,7 @@ export default {
   },
 
   data: function(){
-    return { keyword:'',drawer: true,
+    return { keyword:'',drawer: true, 
     items: [
         { icon: 'trending_up', text: 'Most Popular' ,routeName: 'popular'},
         { icon: 'grade', text: '나의 목록' ,routeName:'mylistbridge'},
@@ -120,11 +120,7 @@ export default {
       toolbar_title: "Youtube",
     }
   },
-  // sockets: {
-  //   connect: function(){ //server와 socket연결 맺음
-  //     console.log('socket connected');
-  //   },
-  // },
+
   watch: { // state의 값이 바뀌면 바뀐 값을 server로 넘겨줌
     currentVideoId: function(){
       console.log('Im watching videoId');
@@ -176,6 +172,7 @@ export default {
       // this.toolbar_title = obj.title;
       this.$router.push({name: obj.routeName});
     },
+
   }
 }
 </script>

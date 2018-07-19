@@ -102,9 +102,14 @@
 18.07.18
   - BottomSheet 부분만 따로 VideoController component로 분리시킴
   - list에 추가할 ui들 적용(미완성)
-  
+
+18.07.19
+  - Settings에서 품질, 자막, 영상 토글, 볼륨 조절 UI 끝
+  - mirror에서 데이터 가공하여 필요한 데이터 Controller로 전송(이벤트 등록 및 함수 구현)
+  - Controller에서 전달받은 mirrorVideoData를 바탕으로 VideoController 리스트 작성
+  - 품질 조작 함수 구현(mirror, controller)
   추가예정사항
-  - bottomSheet에 settings 설정하기
+  - setPlaybackQuality 파라미터가 맞으면 품질 조절 가능할 거 같음
   - Youtube 영상 관련 조작 제공(10초 앞,뒤 볼륨설정 등)
   - 배포준비(package.json에 필요없는 package삭제)_local이 아닌 외부ip로 접근하는 경우 login을 통한 사용자 식별 등
   - 코드 리펙토링 front_back
