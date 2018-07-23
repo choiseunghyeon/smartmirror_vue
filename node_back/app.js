@@ -100,6 +100,7 @@ io.sockets.on('connection', function(socket){
   socket.remoteAddress = socket.request.connection._peername.address;
   socket.remotePort = socket.request.connection._peername.port;
 
+  // VIDEO
   socket.on('changeVideo', function(videoId){
     console.log('changeVideo 이벤트를 받았습니다.', videoId);
     io.sockets.emit('changeVideo',videoId);
@@ -108,9 +109,19 @@ io.sockets.on('connection', function(socket){
     console.log('changeVideoList 이벤트를 받았습니다.', objData);
     io.sockets.emit('changeVideoList',objData);
   });
-  socket.on('toggleYoutube', function(){
-    console.log('toggleYoutube 이벤트를 받았습니다.');
-    io.sockets.emit('toggleYoutube');
+
+  // CONTROLLER
+  socket.on('pauseOrPlay', function(data){
+    console.log('pauseOrPlay 이벤트를 받았습니다.');
+    io.sockets.emit('pauseOrPlay',data);
+  });
+  socket.on('forward', function(){
+    console.log('forward 이벤트를 받았습니다.');
+    io.sockets.emit('forward');
+  });
+  socket.on('rewind', function(){
+    console.log('rewind 이벤트를 받았습니다.');
+    io.sockets.emit('rewind');
   });
   socket.on('getVideoInfo', function(videoInfo){
     console.log('getVideoInfo 이벤트를 받았습니다.');

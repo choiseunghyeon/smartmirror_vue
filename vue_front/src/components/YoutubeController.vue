@@ -36,18 +36,35 @@ export default {
     }
   },
   created: function(){
+    // VIDEO
     this.$options.sockets.changeVideo = (data) => {
       console.log('videoData 받았다!! : ',data);
       this.videoId=data;
+      this.videoInfoFlag=0;
     },
     this.$options.sockets.changeVideoList = (data) => {
       console.log('changeVideoList 받았다!! : ',data);
       this.videoList=data;
     },
+
+    // Controller
+    this.$options.sockets.pauseOrPlay = (data) => {
+      console.log('pauseOrPlay 받았다!! : ',data);
+      data == "pause" ? this.player.pauseVideo() : this.player.playVideo();
+    },
+    this.$options.sockets.forward = () => { // 영상 10초 앞으로
+      console.log('forward 받았다!! : ');
+      this.player.seekTo(this.player.getMediaReferenceTime() + 10);
+    },
+    this.$options.sockets.rewind = () => { // 영상 10초 뒤로
+      console.log('rewind 받았다!! : ');
+      this.player.seekTo(this.player.getMediaReferenceTime() - 10);
+    },
     this.$options.sockets.toggleYoutube = () => {
       console.log('toggleYoutube 받았다!! ');
       this.isActive = !this.isActive;
     },
+
     this.$options.sockets.changeQuality = (quality) => {
       console.log('changeQuality 받았다!! ');
       // this.isActive = !this.isActive;
@@ -56,9 +73,8 @@ export default {
   },
   methods: {
     ready: function(player){
-
+      console.log('video ready');
       this.player=player;
-      this.videoInfoFlag=0;
     },
     ended: function(){ // 끝나면 저장 되어 있는 다음 비디오 실행
       console.log('끝');
@@ -69,7 +85,6 @@ export default {
         this.sendVideoInfoToController();
         this.videoInfoFlag=1;
       } else {
-
       }
       // console.log("playing 중");
       // this.player.playVideo();
@@ -82,13 +97,14 @@ export default {
     //   this.youtubeListItems.myList.push(videoId);
     // },
     change: function(){
+      this.videoInfoFlag=0;
       this.videoList.num+=1;
       if(this.videoList.num > this.videoList.idArray.length-1) // 마지막 영상이 종료되면 처음부터 실행
         this.videoList.num=0;
       this.videoId=this.videoList.idArray[this.videoList.num];
     },
     buffering:function(event){
-      console.log(event);
+      // console.log(event);
     },
     sendVideoInfoToController: function(){
       console.log("sendVideoInfoToController 실행");
@@ -125,7 +141,9 @@ export default {
       // console.log(this.player.getVideoData());
       // console.log(this.player.getAvailableQualityLevels());
       // console.log(this.player.getPlaybackQuality());
-      console.log(this.player.setPlaybackQuality);
+      console.log(this.player.getMediaReferenceTime());
+      // console.log(this.player.seekTo);
+
     }
   } // the end of methods
 }

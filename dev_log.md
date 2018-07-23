@@ -108,9 +108,14 @@
   - mirror에서 데이터 가공하여 필요한 데이터 Controller로 전송(이벤트 등록 및 함수 구현)
   - Controller에서 전달받은 mirrorVideoData를 바탕으로 VideoController 리스트 작성
   - 품질 조작 함수 구현(mirror, controller)
+
+18.07.23
+  - VIDEO pause, play, 10초 앞으로, 10초 뒤로 기능 추가
+  - VideoController UI 변경
+  - 영상에 대한 싱크로율 맞추는 작업 거의 완성
+
   추가예정사항
   - setPlaybackQuality 파라미터가 맞으면 품질 조절 가능할 거 같음
-  - Youtube 영상 관련 조작 제공(10초 앞,뒤 볼륨설정 등)
   - 배포준비(package.json에 필요없는 package삭제)_local이 아닌 외부ip로 접근하는 경우 login을 통한 사용자 식별 등
   - 코드 리펙토링 front_back
   - README.md, README_ENG.md 수정
