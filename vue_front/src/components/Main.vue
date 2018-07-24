@@ -39,11 +39,11 @@ export default {
     console.log('created!!!!!!!!!!!!!!!!!====');
   },
 
-  sockets: {
-    connect: function(){
-      console.log('socket connected');
-    },
-  },
+  // sockets: {
+  //   connect: function(){
+  //     console.log('socket connected');
+  //   },
+  // },
 }
 </script>
 

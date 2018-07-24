@@ -115,6 +115,10 @@ io.sockets.on('connection', function(socket){
     console.log('pauseOrPlay 이벤트를 받았습니다.');
     io.sockets.emit('pauseOrPlay',data);
   });
+  socket.on('playAt', function(seconds){
+    console.log('playAt 이벤트를 받았습니다.', seconds);
+    io.sockets.emit('playAt',seconds);
+  });
   socket.on('forward', function(){
     console.log('forward 이벤트를 받았습니다.');
     io.sockets.emit('forward');
@@ -123,9 +127,25 @@ io.sockets.on('connection', function(socket){
     console.log('rewind 이벤트를 받았습니다.');
     io.sockets.emit('rewind');
   });
+  socket.on('syncVideoTime', function(seconds){
+    console.log('syncVideoTime 이벤트를 받았습니다.');
+    io.sockets.emit('syncVideoTime',seconds);
+  });
+  socket.on('videoVolume', function(volume){
+    console.log('videoVolume 이벤트를 받았습니다.');
+    io.sockets.emit('videoVolume',volume);
+  });
   socket.on('getVideoInfo', function(videoInfo){
     console.log('getVideoInfo 이벤트를 받았습니다.');
     io.sockets.emit('getVideoInfo',videoInfo);
+  });
+  socket.on('toggleYoutube', function(){
+    console.log('toggleYoutube 이벤트를 받았습니다.');
+    io.sockets.emit('toggleYoutube');
+  });
+  socket.on('syncInfo', function(){
+    console.log('syncInfo 이벤트를 받았습니다.');
+    io.sockets.emit('syncInfo');
   });
   socket.on('changeQuality', function(quality){
     console.log('changeQuality 이벤트를 받았습니다.');

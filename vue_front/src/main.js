@@ -8,13 +8,11 @@ import router from './router'
 import store from './store';
 import axios from 'axios';
 import VueYouTubeEmbed from 'vue-youtube-embed';
-import ToggleButton from 'vue-js-toggle-button';
 import VueSocketio from 'vue-socket.io';
 
 Vue.prototype.$axios=axios;
 Vue.use(Vuetify)
 Vue.use(VueSocketio, 'http://localhost:3000');
-Vue.use(ToggleButton)
 Vue.use(VueYouTubeEmbed)
 Vue.use(VueYouTubeEmbed, { global: true })
 Vue.config.productionTip = false

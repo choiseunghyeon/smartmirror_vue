@@ -7,6 +7,7 @@
     app
   >
     <v-list dense>
+      <v-subheader class="mt-3 grey--text text--darken-1">FUNCTIONS</v-subheader>
       <v-list-tile v-for="(item,index) in items" :key="item.text" @click="routeFromTollBar(item.routeName,index)">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
@@ -17,6 +18,7 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
+
       <v-subheader class="mt-3 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader>
       <v-list>
         <v-list-tile v-for="(item,index) in channelLists" :key="item._id" avatar @click="showPlayList(item)">
@@ -27,18 +29,6 @@
           <v-icon color="red lighten-2" @click.stop="removeChannel(item._id)">clear</v-icon>
         </v-list-tile>
       </v-list>
-      <v-list-tile class="mt-3" @click="">
-        <v-list-tile-action>
-          <v-icon color="grey darken-1">add_circle_outline</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-title class="grey--text text--darken-1">Browse Channels</v-list-tile-title>
-      </v-list-tile>
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon color="grey darken-1">settings</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-title class="grey--text text--darken-1">Manage Subscriptions</v-list-tile-title>
-      </v-list-tile>
     </v-list>
   </v-navigation-drawer>
   <v-toolbar
@@ -97,7 +87,6 @@ export default {
   name: 'Controller',
   components: {SubComponent, VideoController},
   computed: mapState(['channelLists','currentVideoId','videoList']),
-
   created: function(){
     console.log('created!!!!!!!!!!!!!!!!!====');
     this.sync();
@@ -105,7 +94,7 @@ export default {
   },
 
   data: function(){
-    return { keyword:'',drawer: true, 
+    return { keyword:'',drawer: true,
     items: [
         { icon: 'trending_up', text: 'Most Popular' ,routeName: 'popular'},
         { icon: 'grade', text: '나의 목록' ,routeName:'mylistbridge'},
@@ -179,6 +168,14 @@ export default {
 <style lang="css">
 #inspire{
 background-color: #212121 !important;
+}
+/*  video Controller style */
+#slider .v-input__slot + .v-messages {
+  display: none;
+  margin-bottom: 0px;
+}
+.v-list__tile__title{
+  font-size: 15px;
 }
 .number_box {
   display: flex;

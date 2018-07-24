@@ -7,8 +7,8 @@
           <v-flex xs12 class="videoTitle">
             {{ mirrorVideoInfo.data.title}}
           </v-flex>
-          <v-flex xs12>
-            <v-slider style="padding: 0px 10px 0px 10px"
+          <v-flex id="slider" xs12>
+            <v-slider style="padding: 0px 10px 0px 10px" @click.stop="playAt"
              v-model="videoCurrentSeconds" :max="mirrorVideoInfo.duration">
             </v-slider>
           </v-flex>
@@ -64,11 +64,11 @@
                       </v-menu>
                     </v-list-tile>
                     <v-list-tile>
-                      <v-list-tile-content>토글
+                      <v-list-tile-content> 영상 숨기기
                       </v-list-tile-content>
                       <v-list-tile-avatar>
-                        <v-switch v-model="videoToggle" large
-                        color="indigo darken-3" value="indigo darken-3" hide-details>
+                        <v-switch v-model="mirrorVideoInfo.videoToggle" large @change="toggleYoutube"
+                        color="indigo darken-3" hide-details>
                         </v-switch>
                       </v-list-tile-avatar>
                     </v-list-tile>
@@ -100,14 +100,18 @@ export default {
   computed: mapState(['youtubeSheet']),
   created: function(){
     console.log("VideoController Created");
+    this.$socket.emit('syncInfo'); // mirror가 가진 정보들을 가져옴 ex)유튜브가 실행중, 유튜브토글 활성화 등
     this.$options.sockets.getVideoInfo = (videoInfo) => {
       console.log('getVideoInfo 받았다!! ');
       this.initVideoController(videoInfo); // 품질 단어들 수정
     };
+    this.$options.sockets.syncVideoTime = (seconds) => {
+      console.log('syncVideoTime 받았다!! ');
+      this.videoCurrentSeconds = seconds // 싱크 맞추기
+    };
   },
   data: function(){
-    return {  mirrorVideoInfo: {data:{title:"재생중인 영상이 없습니다."}}, // mirror에서 보내주는 실행중인 video 정보
-              videoToggle: false, // mirror에서 보여지는 영상 숨기기, 보여주기
+    return {  mirrorVideoInfo: {data:{title:"재생중인 영상이 없습니다."}, videoToggle:false}, // mirror에서 보내주는 실행중인 video 정보
               videoVolume: 0, // mirror에서 보여지는 영상의 볼륨
               videoDuration:"00:00", // 포맷팅된 영상의 총시간
               videoCurrentSeconds: 0, //영상의 현재 시간
@@ -115,7 +119,7 @@ export default {
               volumeIcon: "volume_up", // 볼륨 크기에 따라 아이콘을 다르게 지정
               qualityLevels:[], // 품질을 보기좋게 변경한 배열
               pausePlayIcon: "pause", // pause / play
-
+              intervalTimer:"",
           }
   },
   watch: {
@@ -126,6 +130,7 @@ export default {
         this.volumeIcon = "volume_down";
       else
         this.volumeIcon = "volume_up";
+      this.$socket.emit('videoVolume',this.videoVolume);
     }
   },
   methods:{
@@ -133,6 +138,7 @@ export default {
       this.$socket.emit('changeQuality',this.mirrorVideoInfo.qualityLevels[index]);
     },
     initVideoController: function(videoInfo){
+      clearInterval(this.intervalTimer); // 이전 영상에서 설정된 타이머가 있다면 초기화
       this.mirrorVideoInfo = videoInfo; // 로컬 변수에 저장
       this.videoVolume = this.mirrorVideoInfo.volume; //볼륨 설정
       this.qualityLevels = this.mirrorVideoInfo.qualityLevels.map((val) => { // 품질 설정
@@ -151,20 +157,39 @@ export default {
           return val
       });
       this.videoDuration = this.timeTransformation(this.mirrorVideoInfo.duration) // // 영상 길이 설정 및 시,분,초로 나눔
-      this.videoCurrentSeconds=0;
-      setInterval(() => { this.videoCurrentTime = this.timeTransformation(++this.videoCurrentSeconds)}, 1000);
-
+      this.videoCurrentSeconds = Math.floor(this.mirrorVideoInfo.currentTime); // 재생이 진행된 시간 가져옴(처음 실행한다면 0)
+      this.videoTimeCount(); // Interval 설정
     },
+
     timeTransformation: function(seconds){ // 초를 넣어서 시/분/초로 포맷함
-      console.log("timeTransformation 실행");
       let floorSeconds = Math.floor(seconds);
+      console.log("timeTransformation 실행");
+      if(floorSeconds < 60){ //포맷적용
+        if(floorSeconds<10)
+          return "00:0"+floorSeconds;
+        else
+          return "00:"+floorSeconds;
+      }
       let duration = moment.duration(floorSeconds, 'seconds');
       return duration.format("hh:mm:ss");
+    },
+    videoTimeCount: function(flag){
+      if(flag == "play_arrow"){ // 멈춤이면 보여지는 Icon은 play_arrow
+        clearInterval(this.intervalTimer);
+      } else {
+        // 1초 마다 videoCurrentSeconds를 1씩 올림 duration보다 크거나 같으면 이벤트 삭제
+        this.intervalTimer = setInterval(() => {
+          if (this.videoCurrentSeconds >= Math.floor(this.mirrorVideoInfo.duration))
+          clearInterval(this.intervalTimer);
+          this.videoCurrentTime = this.timeTransformation(++this.videoCurrentSeconds)
+        }, 1000);
+      }
     },
     pauseOrPlay: function(){
       console.log("pauseOrPlay 실행됨");
       this.$socket.emit('pauseOrPlay',this.pausePlayIcon);
       this.pausePlayIcon = this.pausePlayIcon == "pause" ? "play_arrow" : "pause";
+      this.videoTimeCount(this.pausePlayIcon);
     },
     forward: function(){
       this.$socket.emit('forward');
@@ -172,14 +197,20 @@ export default {
     rewind: function(){
       this.$socket.emit('rewind');
     },
+    playAt: function(){
+      this.$socket.emit('playAt',this.videoCurrentSeconds);
+    },
+    toggleYoutube: function(){
+      console.log("toggleYoutube");
+      this.$socket.emit('toggleYoutube');
+    },
   }
 }
 </script>
 
 <style lang="css">
-.input-group__details {
-  display: none;
-}
+
+
 .videoTime {
   text-align: center;
   font-size:16px;
@@ -189,8 +220,7 @@ export default {
 .videoTitle{
   text-align: center;
   font-size:18px;
-  font-weight: bold;
-  margin-top: 5px;
+  margin: 5px 2px 0px 2px;
 }
 .inlineBlock{
   display: inline-block;

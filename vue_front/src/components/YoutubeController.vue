@@ -6,15 +6,7 @@
       :playerWidth="youtubeSize.width" :playerHeight="youtubeSize.height"
       @buffering="buffering" @playing="playing">
     </youtube>
-    <!-- <button @click="skip" type="button" name="button">10초앞으로</button> -->
-    <button @click="pause" type="button" name="button">스탑</button>
-    <button @click="playing" type="button" name="button">시작</button>
     <button @click="test" type="button" name="button">test</button>
-    <!--
-    <button @click="change" type="button" name="button">바꾸기</button>
-    <button @click="displayToggle" type="button" name="button">최소화</button>
-    <button @click="sizeUp" type="button" name="button">크게</button>
-  -->
   </div>
 </template>
 
@@ -50,25 +42,35 @@ export default {
     // Controller
     this.$options.sockets.pauseOrPlay = (data) => {
       console.log('pauseOrPlay 받았다!! : ',data);
-      data == "pause" ? this.player.pauseVideo() : this.player.playVideo();
+      data == "pause" ? this.player.target.pauseVideo() : this.player.target.playVideo();
+    },
+    this.$options.sockets.playAt = (seconds) => { // 영상 10초 뒤로
+      console.log('playAt 받았다!! : ',seconds);
+      this.player.target.seekTo(seconds);
     },
     this.$options.sockets.forward = () => { // 영상 10초 앞으로
       console.log('forward 받았다!! : ');
-      this.player.seekTo(this.player.getMediaReferenceTime() + 10);
+      this.player.target.seekTo(this.player.target.getMediaReferenceTime() + 10);
     },
     this.$options.sockets.rewind = () => { // 영상 10초 뒤로
       console.log('rewind 받았다!! : ');
-      this.player.seekTo(this.player.getMediaReferenceTime() - 10);
+      this.player.target.seekTo(this.player.target.getMediaReferenceTime() - 10);
+    },
+    this.$options.sockets.videoVolume = (volume) => {
+      this.player.target.setVolume(volume);
     },
     this.$options.sockets.toggleYoutube = () => {
       console.log('toggleYoutube 받았다!! ');
       this.isActive = !this.isActive;
     },
-
+    this.$options.sockets.syncInfo = () => {
+      console.log('syncInfo 받았다!! ');
+      this.sendVideoInfoToController();
+    },
     this.$options.sockets.changeQuality = (quality) => {
       console.log('changeQuality 받았다!! ');
       // this.isActive = !this.isActive;
-      this.player.setPlaybackQuality("small");
+      this.player.target.setPlaybackQuality("small");
     }
   },
   methods: {
@@ -85,17 +87,12 @@ export default {
         this.sendVideoInfoToController();
         this.videoInfoFlag=1;
       } else {
+        // 현재 영상 시각을 소숫점 버리고 보냄
+        this.$socket.emit('syncVideoTime',this.player.target.getMediaReferenceTime());
       }
       // console.log("playing 중");
-      // this.player.playVideo();
+      // this.player.target.playVideo();
     },
-    pause: function(){
-      this.player.pauseVideo();
-    },
-    // addList: function(videoId){
-    //   console.log('list 추가완료');
-    //   this.youtubeListItems.myList.push(videoId);
-    // },
     change: function(){
       this.videoInfoFlag=0;
       this.videoList.num+=1;
@@ -109,41 +106,33 @@ export default {
     sendVideoInfoToController: function(){
       console.log("sendVideoInfoToController 실행");
       let videoInfo = {
-        qualityLevels: this.player.getAvailableQualityLevels(),
-        duration: this.player.getDuration(),
-        quality: this.player.getPlaybackQuality(),
-        data: this.player.getVideoData(),
-        volume: this.player.getVolume(),
+        qualityLevels: this.player.target.getAvailableQualityLevels(),
+        duration: this.player.target.getDuration(),
+        currentTime: this.player.target.getMediaReferenceTime(),
+        quality: this.player.target.getPlaybackQuality(),
+        data: this.player.target.getVideoData(),
+        volume: this.player.target.getVolume(),
+        videoToggle: this.isActive,
       }
       this.$socket.emit('getVideoInfo',videoInfo);
     },
-    /* 핸드폰 조작시 유튜브 영상으로 직접 컨트롤 할 수 있기 때문에 우선 주석처리
-    pause: function(){
-      this.player.pauseVideo()
-    },
-    stop: function(){
-      this.player.stopVideo()
-    },
-    play: function(){
-      this.player.playVideo()
-    },
-    sizeUp: function(){
-      let width = parseInt(this.youtubeSize.width)
-      let height = parseInt(this.youtubeSize.height);
 
-      this.youtubeSize.width=''+(width+100);
-      this.youtubeSize.height=''+(height+100);
-    },
-    */
     test: function(){
       console.log("test");
-      // this.player.seekTo(287.548141);
-      // console.log(this.player.getVideoData());
-      // console.log(this.player.getAvailableQualityLevels());
-      // console.log(this.player.getPlaybackQuality());
-      console.log(this.player.getMediaReferenceTime());
-      // console.log(this.player.seekTo);
-
+       this.player.target.stopVideo()
+       this.player.target.setPlaybackQuality("small");
+       this.player.target.playVideo();
+       this.player.target.seekTo(100, false);
+      // this.player.target.setOption(480);
+      // this.player.target.setPlaybackRate(1.5);
+      // this.player.target.setShuffle(480);
+      // this.player.target.setSphericalProperties(480);
+      // console.dir(this.player.target.seekTo);
+      // console.log(this.player.target.getApiInterface());
+      // console.log(this.player.target.getPlaybackQuality());
+      // console.log(this.player.target.getPlaybackQuality());
+      // console.log(this.player.target.getMediaReferenceTime());
+      // console.log(this.player.target.seekTo);
     }
   } // the end of methods
 }

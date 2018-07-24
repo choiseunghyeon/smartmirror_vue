@@ -114,6 +114,15 @@
   - VideoController UI 변경
   - 영상에 대한 싱크로율 맞추는 작업 거의 완성
 
+18.07.24
+  -Video 영상 시간 싱크 맞춰주기 영상의 어느 한지점부터 틀기 기능 추가(slider 어느 한부분을 누르면 mirror의 video도 동기화됌)
+  - Controller 페이지가 초기화 되더라도 mirror에서 현재 진행중인 영상 정보들을 받아와서 컨트롤 할 수 있게 설정
+  - 영상 숨기기 기능 구현, 소리 조절 기능 구현
+
+  문제사항
+  - setPlaybackQuality가 적용되지 않음 현재 이용하는 모듈도 YTPlayer를 wrapping 해서 사용하는 것 같아서 모듈의 문제가 아니라 youtube에서 제공해주는 API 문제인듯 함 (google에서도 이슈가 되고 있는 문제)
+  - socket connect가 늦게 맺어지면 mirror에서 비디오 정보를 가져와도 적용하지 못함.
+
   추가예정사항
   - setPlaybackQuality 파라미터가 맞으면 품질 조절 가능할 거 같음
   - 배포준비(package.json에 필요없는 package삭제)_local이 아닌 외부ip로 접근하는 경우 login을 통한 사용자 식별 등
