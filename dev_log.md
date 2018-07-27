@@ -119,12 +119,15 @@
   - Controller 페이지가 초기화 되더라도 mirror에서 현재 진행중인 영상 정보들을 받아와서 컨트롤 할 수 있게 설정
   - 영상 숨기기 기능 구현, 소리 조절 기능 구현
 
+18.07.27
+  - Video 영상 끄기 기능 추가 및 리펙토링
+  - 오류 수정(영상이 없을 때 pause후 play를 누르면 setInterval설정되던 오류);
+
   문제사항
   - setPlaybackQuality가 적용되지 않음 현재 이용하는 모듈도 YTPlayer를 wrapping 해서 사용하는 것 같아서 모듈의 문제가 아니라 youtube에서 제공해주는 API 문제인듯 함 (google에서도 이슈가 되고 있는 문제)
-  - socket connect가 늦게 맺어지면 mirror에서 비디오 정보를 가져와도 적용하지 못함.
+  - https://developers.google.com/youtube/youtube_player_demo youtube api에서도 지원을 안함(loadVideoById(선택한 옵션으로 플레이어 업데이트)로 다시 영상을 시작할때 품질을 설정해도 그대로임.)
 
   추가예정사항
-  - setPlaybackQuality 파라미터가 맞으면 품질 조절 가능할 거 같음
   - 배포준비(package.json에 필요없는 package삭제)_local이 아닌 외부ip로 접근하는 경우 login을 통한 사용자 식별 등
   - 코드 리펙토링 front_back
   - README.md, README_ENG.md 수정

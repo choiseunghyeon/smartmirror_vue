@@ -143,6 +143,10 @@ io.sockets.on('connection', function(socket){
     console.log('toggleYoutube 이벤트를 받았습니다.');
     io.sockets.emit('toggleYoutube');
   });
+  socket.on('removeYoutube', function(){
+    console.log('removeYoutube 이벤트를 받았습니다.');
+    io.sockets.emit('removeYoutube');
+  });
   socket.on('syncInfo', function(){
     console.log('syncInfo 이벤트를 받았습니다.');
     io.sockets.emit('syncInfo');

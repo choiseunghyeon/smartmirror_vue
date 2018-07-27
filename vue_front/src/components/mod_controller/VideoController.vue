@@ -2,18 +2,18 @@
   <!-- 유튜브 컨트롤러 -->
   <v-bottom-sheet inset :hide-overlay="true" :persistent="true" :value="youtubeSheet">
 
-    <v-card tile>
+    <v-card tile color="blue-grey darken-3">
         <v-layout row wrap>
           <v-flex xs12 class="videoTitle">
             {{ mirrorVideoInfo.data.title}}
           </v-flex>
           <v-flex id="slider" xs12>
             <v-slider style="padding: 0px 10px 0px 10px" @click.stop="playAt"
-             v-model="videoCurrentSeconds" :max="mirrorVideoInfo.duration">
+             v-model="videoTime.currentSeconds" :max="mirrorVideoInfo.duration">
             </v-slider>
           </v-flex>
           <v-flex xs12 class="videoTime">
-            <span> {{ videoCurrentTime }} / {{ videoDuration }} </span>
+            <span> {{ videoTime.currentTime }} / {{ videoTime.duration }} </span>
           </v-flex>
           <v-flex xs12 class="textCenter">
               <div class="inlineBlock">
@@ -42,7 +42,7 @@
 
                   <v-list>
 
-                    <v-list-tile>
+                    <!-- <v-list-tile>
                       <v-list-tile-content>
                         품질
                       </v-list-tile-content>
@@ -62,7 +62,7 @@
                           </v-list-tile>
                         </v-list>
                       </v-menu>
-                    </v-list-tile>
+                    </v-list-tile> -->
                     <v-list-tile>
                       <v-list-tile-content> 영상 숨기기
                       </v-list-tile-content>
@@ -71,6 +71,14 @@
                         color="indigo darken-3" hide-details>
                         </v-switch>
                       </v-list-tile-avatar>
+                    </v-list-tile>
+                    <v-list-tile>
+                      <v-list-tile-content> 영상 끄기
+                      </v-list-tile-content>
+                        <v-btn flat icon color="pink">
+                          <v-icon @click.stop="removeYoutube" medium>clear</v-icon>
+                        </v-btn>
+
                     </v-list-tile>
                     <v-list-tile>
                       <v-slider v-model="videoVolume" :prepend-icon="volumeIcon"
@@ -107,18 +115,20 @@ export default {
     };
     this.$options.sockets.syncVideoTime = (seconds) => {
       console.log('syncVideoTime 받았다!! ');
-      this.videoCurrentSeconds = seconds // 싱크 맞추기
+      this.mirrorVideoInfo.currentTime = seconds // 싱크 맞추기
     };
   },
   data: function(){
     return {  mirrorVideoInfo: {data:{title:"재생중인 영상이 없습니다."}, videoToggle:false}, // mirror에서 보내주는 실행중인 video 정보
               videoVolume: 0, // mirror에서 보여지는 영상의 볼륨
-              videoDuration:"00:00", // 포맷팅된 영상의 총시간
-              videoCurrentSeconds: 0, //영상의 현재 시간
-              videoCurrentTime: "00:00", //포맷팅된 현재 시간
+              videoTime: {
+                duration:"00:00", // 포맷팅된 영상의 총시간
+                currentSeconds: 0, //영상의 현재 시간
+                currentTime: "00:00", //포맷팅된 현재 시간
+              },
+              pausePlayIcon: "pause", // pause / play
               volumeIcon: "volume_up", // 볼륨 크기에 따라 아이콘을 다르게 지정
               qualityLevels:[], // 품질을 보기좋게 변경한 배열
-              pausePlayIcon: "pause", // pause / play
               intervalTimer:"",
           }
   },
@@ -131,7 +141,11 @@ export default {
       else
         this.volumeIcon = "volume_up";
       this.$socket.emit('videoVolume',this.videoVolume);
-    }
+    },
+    'mirrorVideoInfo.currentTime': function(){ // mirror에서 playing이 실행되면 시간 동기화(보통 youtube영상에 변화가 생기면 실행)
+      // object child를 watch로 설정하려면 쿼터('' || "") 안에 넣으면됌
+      this.videoTime.currentSeconds = this.mirrorVideoInfo.currentTime
+    },
   },
   methods:{
     changeQuality: function(index){
@@ -156,8 +170,8 @@ export default {
         else
           return val
       });
-      this.videoDuration = this.timeTransformation(this.mirrorVideoInfo.duration) // // 영상 길이 설정 및 시,분,초로 나눔
-      this.videoCurrentSeconds = Math.floor(this.mirrorVideoInfo.currentTime); // 재생이 진행된 시간 가져옴(처음 실행한다면 0)
+      this.videoTime.duration = this.timeTransformation(this.mirrorVideoInfo.duration) // // 영상 길이 설정 및 시,분,초로 나눔
+      this.videoTime.currentSeconds = Math.floor(this.mirrorVideoInfo.currentTime); // 재생이 진행된 시간 가져옴(처음 실행한다면 0)
       this.videoTimeCount(); // Interval 설정
     },
 
@@ -176,12 +190,12 @@ export default {
     videoTimeCount: function(flag){
       if(flag == "play_arrow"){ // 멈춤이면 보여지는 Icon은 play_arrow
         clearInterval(this.intervalTimer);
-      } else {
-        // 1초 마다 videoCurrentSeconds를 1씩 올림 duration보다 크거나 같으면 이벤트 삭제
+      } else if(this.videoTime.duration !== "00:00"){
+        // 1초 마다 videoTime.currentSeconds를 1씩 올림 duration보다 크거나 같으면 이벤트 삭제
         this.intervalTimer = setInterval(() => {
-          if (this.videoCurrentSeconds >= Math.floor(this.mirrorVideoInfo.duration))
+          if (this.videoTime.currentSeconds >= Math.floor(this.mirrorVideoInfo.duration))
           clearInterval(this.intervalTimer);
-          this.videoCurrentTime = this.timeTransformation(++this.videoCurrentSeconds)
+          this.videoTime.currentTime = this.timeTransformation(++this.videoTime.currentSeconds)
         }, 1000);
       }
     },
@@ -198,12 +212,24 @@ export default {
       this.$socket.emit('rewind');
     },
     playAt: function(){
-      this.$socket.emit('playAt',this.videoCurrentSeconds);
+      this.$socket.emit('playAt',this.videoTime.currentSeconds);
     },
     toggleYoutube: function(){
       console.log("toggleYoutube");
       this.$socket.emit('toggleYoutube');
     },
+    removeYoutube: function(){
+      console.log("removeYoutube");
+      this.$socket.emit("removeYoutube");
+      this.mirrorVideoInfo = {data:{title:"재생중인 영상이 없습니다."}, videoToggle:false};
+      clearInterval(this.intervalTimer);
+      this.videoTime = {
+        duration:"00:00", // 포맷팅된 영상의 총시간
+        currentSeconds: 0, //영상의 현재 시간
+        currentTime: "00:00", //포맷팅된 현재 시간
+      };
+      this.pausePlayIcon= "pause"; // pause / play
+    }
   }
 }
 </script>
@@ -221,6 +247,7 @@ export default {
   text-align: center;
   font-size:18px;
   margin: 5px 2px 0px 2px;
+  padding: 3px 5px 0px 5px;
 }
 .inlineBlock{
   display: inline-block;

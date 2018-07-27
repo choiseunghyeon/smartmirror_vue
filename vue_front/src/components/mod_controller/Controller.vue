@@ -32,7 +32,7 @@
     </v-list>
   </v-navigation-drawer>
   <v-toolbar
-    color="red" dense
+    color="blue-grey darken-4" dense
     fixed clipped-left app >
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-menu :nedge-width="100">
@@ -88,7 +88,7 @@ export default {
   components: {SubComponent, VideoController},
   computed: mapState(['channelLists','currentVideoId','videoList']),
   created: function(){
-    console.log('created!!!!!!!!!!!!!!!!!====');
+    console.log('Controller created!!!!!!!!!!!!!====');
     this.sync();
     this.$router.push({name:'popular'});
   },

@@ -20,7 +20,7 @@ export default {
   data: function(){
     return {
         youtubeSize:{width:"840", height:"490"},
-        videoId: "",
+        videoId: "0VKr7VCJmDo",
         videoList: {},
         isActive: false,
         player:{},
@@ -28,6 +28,7 @@ export default {
     }
   },
   created: function(){
+    console.log("YoutubeController Created!!");
     // VIDEO
     this.$options.sockets.changeVideo = (data) => {
       console.log('videoData 받았다!! : ',data);
@@ -62,6 +63,11 @@ export default {
     this.$options.sockets.toggleYoutube = () => {
       console.log('toggleYoutube 받았다!! ');
       this.isActive = !this.isActive;
+    },
+    this.$options.sockets.removeYoutube = () => {
+      console.log('removeYoutube 받았다!! ');
+      this.videoId = '';
+      this.videoList =  {};
     },
     this.$options.sockets.syncInfo = () => {
       console.log('syncInfo 받았다!! ');
@@ -119,11 +125,12 @@ export default {
 
     test: function(){
       console.log("test");
-       this.player.target.stopVideo()
-       this.player.target.setPlaybackQuality("small");
-       this.player.target.playVideo();
-       this.player.target.seekTo(100, false);
-      // this.player.target.setOption(480);
+       // this.player.target.stopVideo()
+       // this.player.target.setPlaybackQuality("medium");
+       // this.player.target.loadVideoById("0VKr7VCJmDo",0,"medium"); // 적용 안됌
+       // this.player.target.playVideo();
+       // this.player.target.seekTo(100, false);
+      // this.player.target.destroy();
       // this.player.target.setPlaybackRate(1.5);
       // this.player.target.setShuffle(480);
       // this.player.target.setSphericalProperties(480);

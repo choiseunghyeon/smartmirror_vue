@@ -22,6 +22,11 @@ new Vue({
   el: '#app',
   router,
   store,
+  sockets: {
+    connect: function(){ //server와 socket연결 맺음
+      console.log('socket connected');
+    },
+  },
   components: { App },
   template: '<App/>'
 })

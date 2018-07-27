@@ -36,7 +36,7 @@ export default {
   components: {Clock,Weather,FineDust,YoutubeController},
 
   created: function(){
-    console.log('created!!!!!!!!!!!!!!!!!====');
+    console.log('Main created!!!!!!!!!!====');
   },
 
   // sockets: {
