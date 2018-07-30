@@ -95,18 +95,16 @@ export default {
 
   data: function(){
     return { keyword:'',drawer: true,
-    items: [
+    items: [ // routing 해주거나 함수 실행
         { icon: 'trending_up', text: 'Most Popular' ,routeName: 'popular'},
         { icon: 'grade', text: '나의 목록' ,routeName:'mylistbridge'},
         { icon: 'gamepad', text: '유튜브 컨트롤러' ,routeName:'toggleVideoController'},
-        // { icon: 'visibility_off', text: '최소화' ,routeName:'toggleYoutube'},
-        // { icon: 'clear', text: '끄기' ,routeName:'removeYoutube'},
       ],
-      toolbar_title_lists: [
+      toolbar_title_lists: [ // youtube 또는 lamp
         {title:"Youtube", routeName: 'popular'},
         {title:"Lamp", routeName: 'lamp'},
       ],
-      toolbar_title: "Youtube",
+      toolbar_title: "Youtube", 
     }
   },
 

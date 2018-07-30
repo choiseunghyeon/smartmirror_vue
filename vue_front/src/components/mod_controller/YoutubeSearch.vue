@@ -67,10 +67,6 @@ export default {
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keyword:keyword,nextPageToken:token});
 
     },
-    // closeYoutubeListModal: function(){
-    //   this.$store.dispatch(Constant.MODAL_FLAG,'');
-    //   this.$store.dispatch(Constant.REMOVE_SEARCHED_LIST);
-    // },
     saveVideo: function(data){ // 나의목록을 modal로 키고 목록 클릭시 저장
       let obj = {
         saveFlag:true,

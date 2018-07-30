@@ -1,10 +1,12 @@
 # Funcitons Explanation - ENG
 
+**Smart Home**
+
 - **How to make hardware, API Setting, Demo Video**
 
   blog: http://webigotr.tistory.com/228
 
-- Let's get started
+- **Let's get started**
 
       // you have to install node and npm at first
       $ sudo npm install // hit this commend in the smartmirror folder
@@ -13,49 +15,47 @@
 
   - **Control**
 
-    1. Install TeamViewer on rasberry pi and cellphone.
+    1. Start Node.js server
 
-    2. Run sudo npm run dev and browser(you have to know Let's get started section)
+    2. Hit the url(localhost:3000) and then Use Youtube Functions
 
-    3. Control browser which rasberry pi shows with cellphone.
+    3. Controller is the browser on your cellphone in this document
 
-       Tip. lowering down the screen with two fingers is scroll down
+ - **Basic features**
+  you can use a few functions in Controller
+  you can change from Youtube to Lamp on the top tollbar
 
-- Introduction
 
-  You can controll Widget, Hamburger Menu, Channel List and Youtube with your mouse
+- **Hamburger Menu**
 
-- Hamburger Menu
+  a. MostPopular: it shows you popular videos on youtube
 
-  a. searching youtube
+  b. My List: it shows you lists you have saved
 
-  b. displaying channels that you added
+  c. Youtube Controller: you can controller youtube video with it. it shows you video Time, Title, etc.
 
-  c. youtube(minimization): when you click it, youtube video will disappear but sound keep playing
+  d. SUBSCRIPTIONS: it shows you channel you have saved
 
-  d. youtube(removal): it will remove youtube video perfectly
 
-  e. widget: when you click it, widget(weather, fineDust, Clock) will disappear
-
-- Weather
+- **Weather (Mirror)**
 
   it shows today and tomorrow weather summary such as min temperature and max temperature
   and you will know weather outside with image
 
-- Clock
+- **Clock (Mirror)**
 
   it shows Year, month, day and Time
 
-- FineDust
+- **FineDust (Mirror)**
 
   it shows you a state of finedust like good, moderate, unhealthy for sensitive groups, unhealthy
 
-- Youtube
+- **Youtube**
   - Search Function
 
     a. youtube list that you searched
 
-    b. if list's scroll hit the bottom then it will show additional youtube list
+    b. if list's scroll almost hit the bottom then it will show additional youtube list
 
     c. if you click a video of youtube list then the video will display
 
@@ -71,21 +71,18 @@
 
     a. Play List will display when you click one of Channels
 
-    b. if Play List scroll hit the bottom then it will show additional Play List
+    b. if Play List scroll almost hit the bottom then it will show additional Play List
 
-    c. MOVE - (if you don't choose Play List then It shows you a X sign) it moves on what you choose
+    c. if you click playlist then display shows you lists playlist have. if you click video then display shows you lists you have clicked
+
 
   - Video List that Play List have
 
-    a. video list that Play List have will display on screen
+    a. if you choose one of viedo list then the video play on screen and will show you a next video in video list
 
-    b. if you choose one of viedo list then the video play on screen and will show you a next video in video list
 
-    c. MOVE - PLAY LISTS( move to PLAY LISTS)
 
-    d. if Video List scroll hit the bottom then it will show additional Video List
-
-- My List
+- **My List**
 
    a. you can make or remove your own list(No image at the first time)
 
@@ -96,7 +93,7 @@
    c. whenever you click 저장(save) in video, My List display on screen -> if you click your own list then the list save the video
 
 
-API SETTING
+**API SETTING**
  - you need a few API key about Weather, FineDust and Youtube
  - you have to make ApiKey.js file in src folder and then you have to set ApiKey.js with your API key
  - Weather: https://developers.sktelecom.com/content/sktApi/view/?svcId=10113
@@ -112,8 +109,3 @@ API SETTING
          weather: "YOUR WEATHER API KEY",
          finedust: "YOUR FINEDUST API KEY",
        }
-
-
-No server setting
-
-No database

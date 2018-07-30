@@ -12,7 +12,6 @@
       <div class="number_box" @click.stop="saveVideo(data)">
         <span class="show_number">저장</span>
         <v-icon x-large >list</v-icon>
-        <!-- <img class="number_image" src="../../../static/images/listing-option.svg" alt=""> -->
       </div>
       </v-card-media>
       <v-card-title>

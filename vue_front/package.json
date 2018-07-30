@@ -15,7 +15,6 @@
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",
     "vue": "^2.5.16",
-    "vue-js-toggle-button": "^1.2.3",
     "vue-router": "^3.0.1",
     "vue-socket.io": "^2.1.1",
     "vue-youtube-embed": "^2.2.1",

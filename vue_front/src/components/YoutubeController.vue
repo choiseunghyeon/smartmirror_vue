@@ -6,7 +6,6 @@
       :playerWidth="youtubeSize.width" :playerHeight="youtubeSize.height"
       @buffering="buffering" @playing="playing">
     </youtube>
-    <button @click="test" type="button" name="button">test</button>
   </div>
 </template>
 
@@ -20,7 +19,7 @@ export default {
   data: function(){
     return {
         youtubeSize:{width:"840", height:"490"},
-        videoId: "0VKr7VCJmDo",
+        videoId: "",
         videoList: {},
         isActive: false,
         player:{},
@@ -125,21 +124,7 @@ export default {
 
     test: function(){
       console.log("test");
-       // this.player.target.stopVideo()
-       // this.player.target.setPlaybackQuality("medium");
-       // this.player.target.loadVideoById("0VKr7VCJmDo",0,"medium"); // 적용 안됌
-       // this.player.target.playVideo();
-       // this.player.target.seekTo(100, false);
-      // this.player.target.destroy();
-      // this.player.target.setPlaybackRate(1.5);
-      // this.player.target.setShuffle(480);
-      // this.player.target.setSphericalProperties(480);
-      // console.dir(this.player.target.seekTo);
-      // console.log(this.player.target.getApiInterface());
-      // console.log(this.player.target.getPlaybackQuality());
-      // console.log(this.player.target.getPlaybackQuality());
-      // console.log(this.player.target.getMediaReferenceTime());
-      // console.log(this.player.target.seekTo);
+
     }
   } // the end of methods
 }

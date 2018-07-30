@@ -128,6 +128,4 @@
   - https://developers.google.com/youtube/youtube_player_demo youtube api에서도 지원을 안함(loadVideoById(선택한 옵션으로 플레이어 업데이트)로 다시 영상을 시작할때 품질을 설정해도 그대로임.)
 
   추가예정사항
-  - 배포준비(package.json에 필요없는 package삭제)_local이 아닌 외부ip로 접근하는 경우 login을 통한 사용자 식별 등
-  - 코드 리펙토링 front_back
   - README.md, README_ENG.md 수정
