@@ -5,7 +5,7 @@
     <div class="">
 
       <v-icon x-large color="blue" @click="toggleDialog" >add</v-icon>
-      <span>목록추가</span>
+      <span style="position: absolute; top:10px;">목록추가</span>
     </div>
 
     <v-dialog v-model="dialog" full-width persistent>

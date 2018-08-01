@@ -31,24 +31,13 @@
 <script>
 import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
-
+import ScrollHeight from '@/mixin/ScrollHeight.js';
 export default {
   name: "PlayList",
-  data: function(){
-    return {scrollHeight:0};
-  },
+
   created: function(){
     console.log("playlist created!!");
     this.getPlayList(this.$route.params.id); // Channel ID를 받아 playList 목록들 보여줌
-  },
-  mounted: function(){
-    console.log("playlist mounted");
-    this.scrollHeight = document.body.scrollHeight - 100; // 바닥을 찍고 데이터를 요청하면 늦어져서 100px 정도 조절함
-
-  },
-  updated: function(){ // 데이터가 변경되면 scroll의 길이를 구함
-    console.log("playlist updated");
-    this.scrollHeight = document.body.scrollHeight - 100 //- searchContainer.clientHeight;
   },
   computed: mapState(['selectedChannel','selectedPlayLists']),
   methods: {

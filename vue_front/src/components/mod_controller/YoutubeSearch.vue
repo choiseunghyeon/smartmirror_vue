@@ -30,23 +30,14 @@
 <script>
 import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
-
+import ScrollHeight from '@/mixin/ScrollHeight.js';
+import SaveVideo from '@/mixin/SaveVideo';
 export default {
   name: "YoutubeSearch",
   computed: mapState(['searchedLists','searchKeyword']),
+  mixins: [ScrollHeight, SaveVideo],
   created: function(){
     console.log("SearchedList created!!");
-  },
-  mounted: function(){
-    console.log("data mounted");
-    this.scrollHeight = document.body.scrollHeight - 100; // 바닥을 찍고 데이터를 요청하면 늦어져서 100px 정도 조절함
-  },
-  updated: function(){ // 데이터가 변경되면 scroll의 길이를 구함
-    console.log("upgrade complete");
-    this.scrollHeight = document.body.scrollHeight - 100 //- searchContainer.clientHeight;
-  },
-  data: function(){
-    return {scrollHeight:0, }
   },
   methods: {
     changeYoutube: function(data){
@@ -66,15 +57,6 @@ export default {
       let keyword = this.searchKeyword;
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keyword:keyword,nextPageToken:token});
 
-    },
-    saveVideo: function(data){ // 나의목록을 modal로 키고 목록 클릭시 저장
-      let obj = {
-        saveFlag:true,
-        data:{
-          title: data.snippet.title, videoId: data.id.videoId, imgUrl: data.snippet.thumbnails.medium.url
-        }
-      };
-      this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
     },
 
   }

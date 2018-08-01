@@ -191,7 +191,7 @@ export default {
     AxiosAPI.postMyListName(payload)
     .then((response) => {
       store.dispatch(Constant.GET_MYLISTNAMES);
-      let text = payload.name + "이 저장되었습니다."
+      let text = payload.name + "목록이 생성되었습니다."
       store.dispatch(Constant.SET_SNACKBAR, {flag:true,text:text,time:1000,progress:false})
     })
   },

@@ -28,7 +28,7 @@ import {mapState} from 'vuex';
 export default {
   name: "myListItem",
   data: function(){
-    return {scrollHeight:0,myListItems:[]}
+    return {myListItems:[]}
   },
   created: function(){
     console.log("myListItem created!!");

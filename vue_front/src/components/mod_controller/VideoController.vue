@@ -133,7 +133,7 @@ export default {
           }
   },
   watch: {
-    videoVolume: function(){
+    videoVolume: function(){ //볼륨 실시간으로 변경
       if (this.videoVolume == 0)
         this.volumeIcon = "volume_off";
       else if(this.videoVolume < 40)
@@ -148,10 +148,10 @@ export default {
     },
   },
   methods:{
-    changeQuality: function(index){
-      this.$socket.emit('changeQuality',this.mirrorVideoInfo.qualityLevels[index]);
-    },
-    initVideoController: function(videoInfo){
+    // changeQuality: function(index){ // youtube에서 제공하는 api에서도 기능이 적용되지 않는중
+    //   this.$socket.emit('changeQuality',this.mirrorVideoInfo.qualityLevels[index]);
+    // },
+    initVideoController: function(videoInfo){ // 비디오 시작시 관련 정보 설정
       clearInterval(this.intervalTimer); // 이전 영상에서 설정된 타이머가 있다면 초기화
       this.mirrorVideoInfo = videoInfo; // 로컬 변수에 저장
       this.videoVolume = this.mirrorVideoInfo.volume; //볼륨 설정
