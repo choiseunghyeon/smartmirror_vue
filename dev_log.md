@@ -128,10 +128,14 @@
   - 중복되는 코드들 mixin을 이용하여 제거(코드 간결화)
   - ScrollHeight 관련 mixin 추가
   - saveVideo 함수 mixin으로 이동
-  
+
   문제사항
   - setPlaybackQuality가 적용되지 않음 현재 이용하는 모듈도 YTPlayer를 wrapping 해서 사용하는 것 같아서 모듈의 문제가 아니라 youtube에서 제공해주는 API 문제인듯 함 (google에서도 이슈가 되고 있는 문제)
   - https://developers.google.com/youtube/youtube_player_demo youtube api에서도 지원을 안함(loadVideoById(선택한 옵션으로 플레이어 업데이트)로 다시 영상을 시작할때 품질을 설정해도 그대로임.)
+
+18.09.05
+  - VideoController에서 slider 클릭 되지 않던 문제 해결
+  - 필요없는 코드 및 파일들 삭제
 
   추가예정사항
   - README.md, README_ENG.md 수정

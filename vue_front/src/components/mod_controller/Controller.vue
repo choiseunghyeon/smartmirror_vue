@@ -36,7 +36,7 @@
     fixed clipped-left app >
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-menu :nedge-width="100">
-      <v-toolbar-title slot="activator" class="mr-3">
+      <v-toolbar-title slot="activator" class="mr-1">
         <span class="title">{{ toolbar_title }}</span>
         <v-icon dark>arrow_drop_down</v-icon>
       </v-toolbar-title>
@@ -47,8 +47,9 @@
       </v-list>
     </v-menu>
     <v-spacer></v-spacer>
-    <v-layout row align-center style="max-width: 650px">
+    <v-layout row align-center style="max-width: 650px;">
       <v-text-field
+        style="padding: 0px !important;"
         placeholder="Search..."
         single-line
         append-icon="search"
@@ -104,7 +105,7 @@ export default {
         {title:"Youtube", routeName: 'popular'},
         {title:"Lamp", routeName: 'lamp'},
       ],
-      toolbar_title: "Youtube", 
+      toolbar_title: "Youtube",
     }
   },
 
@@ -166,6 +167,7 @@ export default {
 <style lang="css">
 #inspire{
 background-color: #212121 !important;
+font-size: 16px;
 }
 /*  video Controller style */
 #slider .v-input__slot + .v-messages {

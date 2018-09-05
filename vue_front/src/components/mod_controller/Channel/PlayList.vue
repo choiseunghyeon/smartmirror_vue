@@ -34,7 +34,7 @@ import {mapState} from 'vuex';
 import ScrollHeight from '@/mixin/ScrollHeight.js';
 export default {
   name: "PlayList",
-
+  mixins: [ScrollHeight],
   created: function(){
     console.log("playlist created!!");
     this.getPlayList(this.$route.params.id); // Channel ID를 받아 playList 목록들 보여줌

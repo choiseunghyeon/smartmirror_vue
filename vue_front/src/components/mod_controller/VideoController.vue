@@ -11,6 +11,7 @@
             <v-slider style="padding: 0px 10px 0px 10px" @click.stop="playAt"
              v-model="videoTime.currentSeconds" :max="mirrorVideoInfo.duration">
             </v-slider>
+
           </v-flex>
           <v-flex xs12 class="videoTime">
             <span> {{ videoTime.currentTime }} / {{ videoTime.duration }} </span>
@@ -212,6 +213,7 @@ export default {
       this.$socket.emit('rewind');
     },
     playAt: function(){
+      console.log("palyAt");
       this.$socket.emit('playAt',this.videoTime.currentSeconds);
     },
     toggleYoutube: function(){
