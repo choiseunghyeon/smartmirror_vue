@@ -59,20 +59,23 @@ export default {
 
     },
 
-    getListItems: function(id){ // PlayList의 영상 6개를 긁어옴
+    // PlayList의 영상 6개를 긁어옴
+    getListItems: function(id){
       console.log("get items!!", id);
       this.selectedListId = id;
       this.$store.dispatch(Constant.REMOVE_PLAY_LIST_ITEMS);
       this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:id});
     },
 
-    moreListItems: function(playlistId,token){ // 스크롤이 거의 바닥을 찍으면 PlayList의 영상 9개를 추가적으로 가져옴
+    // 스크롤이 거의 바닥을 찍으면 PlayList의 영상 6개를 추가적으로 가져옴
+    moreListItems: function(playlistId,token){
       console.log("moreListItems called");
       if(token == "NULL") return;
       this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:playlistId,nextPageToken:token});
     },
 
-    setVideoList: function(id,index){ // 선택된 영상을 실행하고 선택된 영상이 있는 플레이 리스트의 영상을 자동실행으로 setting함
+    // 영상 목록을 만들어 mirror에 영상 목록들과 어느 영상부터 실행할지 전달
+    setVideoList: function(id,index){
       let oneArray =[];
       for (var i = index; i < this.playListItems.length; i++){  // 여러개로 나뉘어 져있는 객체 속 배열들을 한 배열로 합치기
         let items = this.playListItems[i].items;

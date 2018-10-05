@@ -2,7 +2,7 @@
 <div id="mylist">
 <v-layout v-if="videoDataSave.saveFlag == true">
   <v-flex xs6>
-    <div class="">
+    <div>
 
       <v-icon x-large color="blue" @click="toggleDialog" >add</v-icon>
       <span style="position: absolute; top:10px;">목록추가</span>
@@ -73,7 +73,8 @@ export default {
 
   },
   methods: {
-    makeMyList: function(){ //server와 통신하여 나의목록 생성
+    //server와 통신하여 나의목록 생성
+    makeMyList: function(){
       let names = this.myListNames
       let name = this.myListName;
       if( names.some((val) => val == name) ){ // 하나라도 같으면 참
@@ -84,24 +85,29 @@ export default {
 
       this.dialog = false;
     },
-    toggleDialog: function(){ // MyList 내부에서 쓰는 목록 추가용 Dialog
+
+    // MyList 내부에서 쓰는 목록 추가용 Dialog
+    toggleDialog: function(){
       this.dialog = !this.dialog;
     },
-    setVideoDataSaveFalse: function(){ // Controller.vue에서 지정한 myListDialog
+    // Controller.vue에서 지정한 myListDialog
+    setVideoDataSaveFalse: function(){
       let obj = {
         saveFlag:false,
         data:{}
       };
       this.$store.dispatch(Constant.VIDEO_DATA_SAVE,obj);
     },
-    removeList: function(id){ //server와 통신하여 해당목록 삭제
+    //server와 통신하여 해당목록 삭제
+    removeList: function(id){
       if(!confirm('해당 목록을 삭제하시겠습니까??')) // 아니오를 누르면 함수 실행 안함
           return;
       this.$store.dispatch(Constant.DELETE_MYLIST,id);
 
     },
 
-    setMyListName: function(id, index){ // 다른 영상 저장이 켜져 있을때는 목록 클릭시 해당 영상 저장 아니면 목록리스트 보여줌
+    // 영상 저장 상태가 켜져 있을때는 목록 클릭시 해당 영상을 목록에 저장 아니면 목록리스트 보여줌
+    setMyListName: function(id, index){
       if(this.videoDataSave.saveFlag == true){
         this.$store.dispatch(Constant.PUT_MYLIST,{id:id, content:this.videoDataSave.data});
         this.$store.dispatch(Constant.SET_SNACKBAR,{flag:true,text:"저장되었습니다.",time:1000,progress:false});
@@ -111,7 +117,6 @@ export default {
         this.$store.dispatch(Constant.SYNC_MYLIST_NAVIGATION,"mylistitem");
       }
     },
-
 
   }
 }

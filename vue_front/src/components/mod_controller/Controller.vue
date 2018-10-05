@@ -90,7 +90,8 @@ export default {
   computed: mapState(['channelLists','currentVideoId','videoList']),
   created: function(){
     console.log('Controller created!!!!!!!!!!!!!====');
-    this.sync();
+
+    this.GetMyListAndChannelInfo();
     this.$router.push({name:'popular'});
   },
 
@@ -120,15 +121,17 @@ export default {
     }
   },
   methods: {
-    sync: function(){
-      // server db에 있는 channel과 mylist 정보를 가져옴
+    // server db에 있는 channel과 mylist 정보를 가져옴
+    GetMyListAndChannelInfo: function(){
       this.$store.dispatch(Constant.GET_CHANNEL);
       this.$store.dispatch(Constant.GET_MYLISTNAMES);
     },
+    // VideoController 숨기기 및 보이기
     toggleVideoController: function(){
       console.log('toggleVideoController');
       this.$store.dispatch(Constant.TOGGLE_YOUTUBESHEET);
     },
+    // Tollbar 클릭시 조건에 따라 라우팅 및 함수 실행
     routeFromTollBar: function(routeName,index){ // 3,4번째는 함수를 실행
       if(index < 2)
         this.$router.push({name: routeName});
@@ -136,26 +139,33 @@ export default {
         this[routeName]();
       }
     },
-    removeYoutube: function(){ // server로 이벤트 발생과 값 전달
+    // server로 이벤트 발생 및 유튜브 영상 끄기
+    removeYoutube: function(){
       this.$store.dispatch(Constant.VIDEO_CHANGE,{videoId:''});
     },
-    youtubeSearch(){ // routing 및 검색된 정보 보여주기
+    // routing 및 검색된 정보 보여주기
+    youtubeSearch(){
       console.log("this is keword ",this.keyword);
       this.$store.dispatch(Constant.REMOVE_SEARCHED_LIST);
       this.$store.dispatch(Constant.CHANGE_KEYWORD,{keyword:this.keyword}); // 검색명 저장
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keyword:this.keyword}); // 검색명을 통해 유튜브 영상 불러오기
       this.$router.push({name: 'search'});
     },
-    showPlayList(channelInfo){ // routing 및 채널이 가진 playList 보여주기
+
+    // routing 및 채널이 가진 playList 보여주기
+    showPlayList(channelInfo){
       console.log('channelInfo: ');
       console.dir(channelInfo);
       // this.$store.dispatch(Constant.REMOVE_PLAY_LIST);
       this.$store.dispatch(Constant.SET_CHANNELID,{id:channelInfo.snippet.channelId,title:channelInfo.snippet.channelTitle});
       this.$router.push({name:'channel'});
     },
-    removeChannel(id){ //채널 삭제
+    //채널 삭제
+    removeChannel(id){
       this.$store.dispatch(Constant.DELETE_CHANNEL,id);
     },
+    
+    // 현재는 Youtube 또는 Lamp
     changeToolbar(obj){
       // this.toolbar_title = obj.title;
       this.$router.push({name: obj.routeName});

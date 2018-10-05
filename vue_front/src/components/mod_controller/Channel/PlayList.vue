@@ -58,6 +58,7 @@ export default {
         result == this.scrollHeight ? this.morePlayList(this.selectedChannel.id,this.selectedPlayLists[this.selectedPlayLists.length-1].nextToken) : console.log(result);
 
     },
+    // ListItme으로 라우팅
     routeListItem: function(id){
         this.$store.dispatch(Constant.SYNC_CHANNEL_NAVIGATION,"listitem");
         this.$router.push({name:'listitem', params:{listId:id}});

@@ -37,7 +37,8 @@ export default {
     console.log("myListBridge created")
   },
   watch: {
-    myListNavVal: function(){ // bottom navigation의 값을 조절
+    // bottom navigation의 값을 조절
+    myListNavVal: function(){
       return this.localNavVal = this.myListNavVal;
     }
   },

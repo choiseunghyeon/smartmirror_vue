@@ -47,7 +47,8 @@ export default {
   computed: mapState(['snackbar','videoDataSave']),
 
   methods:{
-    setSnackBar(){ //snackbar 끄기
+    //snackbar 끄기
+    setSnackBar(){
       this.$store.dispatch(Constant.SET_SNACKBAR,{flag:false,text:"",time:1000,progress:false});
     },
   }

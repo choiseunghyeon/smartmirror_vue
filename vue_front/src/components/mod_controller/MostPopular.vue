@@ -40,16 +40,18 @@ export default {
   },
   computed: mapState(['mostPopularVideoLists']),
   methods: {
-    getPopularList: function(){ // mostpopular 영상들 6개 가져오기
+    // mostpopular 영상들 6개 가져오기
+    getPopularList: function(){
       this.$store.dispatch(Constant.REMOVE_MOSTPOPULAR_LIST);
       this.$store.dispatch(Constant.GET_MOSTPOPULAR_VIDEOS,{});
     },
-    morePopularList: function(token){ //추가로 6개의 영상 가져오기
+    //추가로 6개의 영상 가져오기
+    morePopularList: function(token){
       console.log("morePopularList called");
       if(token == "NULL") return;
       this.$store.dispatch(Constant.GET_MOSTPOPULAR_VIDEOS,{nextPageToken:token});
     },
-
+    // 스크롤이 바닥에서 -100px을 찍으면 morePopularList 실행
     handleScroll: function(e){
         console.log(e);
         let result = e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight - 100; // 문서 전체의 높이와 같음

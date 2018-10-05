@@ -1,7 +1,8 @@
 import Constant from '@/Constant.js';
 export default {
   methods: {
-    saveVideo: function(data){ // 나의목록을 modal로 키고 목록 클릭시 저장
+    // 나의목록을 modal로 키고 목록 클릭시 저장
+    saveVideo: function(data){
       if(data.id.channelId){  // 채널인 경우 채널 정보만 저장
         this.$store.dispatch(Constant.ADD_CHANNEL,{snippet: data.snippet});
         return

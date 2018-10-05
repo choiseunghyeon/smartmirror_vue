@@ -3,17 +3,18 @@
   <v-container fluid>
     <v-layout row wrap>
       <v-flex md5 offset-md7 id="widget">
-
+        <!--  날씨 컴포넌트 -->
         <weather></weather>
-
+        <!-- 미세먼지 컴포넌트 -->
         <fine-dust></fine-dust>
-
+        <!-- 시계 컴포넌트 -->
         <clock></clock>
 
       </v-flex>
     </v-layout>
     <v-layout row wrap>
       <v-flex md8>
+        <!-- 유튜브 영상 컴포넌트 -->
         <youtube-controller></youtube-controller>
       </v-flex>
     </v-layout>

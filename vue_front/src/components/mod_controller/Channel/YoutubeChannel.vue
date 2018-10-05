@@ -35,7 +35,7 @@ export default {
     this.routePlayList();
   },
   watch: {
-    // selectedChannel을 관찰 속성으로 하는 이유: channel로 route해준 이후 목록을 가져와야 하지만
+    // selectedChannel을 관찰 속성으로 하는 이유: channel로 route된 이후 목록을 가져와야 하지만
     // channel은 created 이후에 새로 만들지 않음 updated은 다른 컴포넌트로 연결할 때도 쓰이기 때문에 안됨
     selectedChannel: function() {
       console.log('i\'m watching you');

@@ -25,7 +25,9 @@ export default {
     realTimeClock: function(){
       let t=new Date();
       let ap; // AM PM
+      //              년도              월            요일          시간            분
       let t_array=[t.getFullYear(),t.getMonth()+1,t.getDate(),t.getHours(),t.getMinutes()];
+
       if(t_array[3] == 12){
         ap="PM";
       } else if (t_array[3] > 12) {
@@ -39,9 +41,10 @@ export default {
         this.dayClock(t);
         this.dayFlag=true;
       }
-      if (t_array[4] < 10) {
+      if (t_array[4] < 10) {  // 10분 이하일 경우 01분 02분 등으로 표시
         t_array[4]= "0"+t_array[4];
       }
+      
       this.currentDate = t_array[0]+"년 "+t_array[1]+"월 "+t_array[2]+"일";
       this.currentHour = t_array[3]+":"+t_array[4]+""+ap;
     },

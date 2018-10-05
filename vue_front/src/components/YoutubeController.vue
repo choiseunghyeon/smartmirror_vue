@@ -29,61 +29,73 @@ export default {
   created: function(){
     console.log("YoutubeController Created!!");
     // VIDEO
+    // Controller로 부터 영상 정보 받기
     this.$options.sockets.changeVideo = (data) => {
       console.log('videoData 받았다!! : ',data);
       this.videoId=data;
       this.videoInfoFlag=0;
     },
+    // Controller로 부터 영상 목록 받기
     this.$options.sockets.changeVideoList = (data) => {
       console.log('changeVideoList 받았다!! : ',data);
       this.videoList=data;
     },
 
-    // Controller
+    // Controller로 부터 video 멈춤 및 실행 데이터 받기
     this.$options.sockets.pauseOrPlay = (data) => {
       console.log('pauseOrPlay 받았다!! : ',data);
       data == "pause" ? this.player.target.pauseVideo() : this.player.target.playVideo();
     },
-    this.$options.sockets.playAt = (seconds) => { // 영상 10초 뒤로
+    // 특정시간대 부터 영상 재생
+    this.$options.sockets.playAt = (seconds) => {
       console.log('playAt 받았다!! : ',seconds);
       this.player.target.seekTo(seconds);
     },
-    this.$options.sockets.forward = () => { // 영상 10초 앞으로
+    // 영상 10초 앞으로
+    this.$options.sockets.forward = () => {
       console.log('forward 받았다!! : ');
       this.player.target.seekTo(this.player.target.getMediaReferenceTime() + 10);
     },
-    this.$options.sockets.rewind = () => { // 영상 10초 뒤로
+    // 영상 10초 뒤로
+    this.$options.sockets.rewind = () => {
       console.log('rewind 받았다!! : ');
       this.player.target.seekTo(this.player.target.getMediaReferenceTime() - 10);
     },
+    // 영상 소리 조절
     this.$options.sockets.videoVolume = (volume) => {
       this.player.target.setVolume(volume);
     },
+    // 영상 숨기기 또는 보이기
     this.$options.sockets.toggleYoutube = () => {
       console.log('toggleYoutube 받았다!! ');
       this.isActive = !this.isActive;
     },
+    // 영상 정보 및 영상 목록 삭제
     this.$options.sockets.removeYoutube = () => {
       console.log('removeYoutube 받았다!! ');
       this.videoId = '';
       this.videoList =  {};
     },
+    // 영상정보 동기화
     this.$options.sockets.syncInfo = () => {
       console.log('syncInfo 받았다!! ');
       this.sendVideoInfoToController();
-    },
-    this.$options.sockets.changeQuality = (quality) => {
-      console.log('changeQuality 받았다!! ');
-      // this.isActive = !this.isActive;
-      this.player.target.setPlaybackQuality("small");
     }
+    // youtube api에서 지원하지 않는 관계로 우선 주석처리
+    // this.$options.sockets.changeQuality = (quality) => {
+    //   console.log('changeQuality 받았다!! ');
+    //   // this.isActive = !this.isActive;
+    //   this.player.target.setPlaybackQuality("small");
+    // }
   },
   methods: {
+
     ready: function(player){
       console.log('video ready');
       this.player=player;
     },
-    ended: function(){ // 끝나면 저장 되어 있는 다음 비디오 실행
+    // 끝나면 저장 되어 있는 다음 비디오 실행
+    ended: function(){
       console.log('끝');
       this.change()
     },
@@ -95,9 +107,8 @@ export default {
         // 현재 영상 시각을 소숫점 버리고 보냄
         this.$socket.emit('syncVideoTime',this.player.target.getMediaReferenceTime());
       }
-      // console.log("playing 중");
-      // this.player.target.playVideo();
     },
+    // 영상 목록에서 다음 영상 재생
     change: function(){
       this.videoInfoFlag=0;
       this.videoList.num+=1;

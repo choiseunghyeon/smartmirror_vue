@@ -40,8 +40,6 @@ export default {
   computed: mapState(['selectedListIndex','myListNames']),
   methods: {
 
-
-
     getMyListItems: function(){ // 선택된 mylist을 긁어옴
       this.myListItems = this.myListNames[this.selectedListIndex].content;
     },

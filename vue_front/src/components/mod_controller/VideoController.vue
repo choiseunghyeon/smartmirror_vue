@@ -144,7 +144,7 @@ export default {
       this.$socket.emit('videoVolume',this.videoVolume);
     },
     'mirrorVideoInfo.currentTime': function(){ // mirror에서 playing이 실행되면 시간 동기화(보통 youtube영상에 변화가 생기면 실행)
-      // object child를 watch로 설정하려면 쿼터('' || "") 안에 넣으면됌
+      /* object child를 watch로 설정하려면 쿼터('' || "") 안에 넣으면됌 */
       this.videoTime.currentSeconds = this.mirrorVideoInfo.currentTime
     },
   },
@@ -152,7 +152,8 @@ export default {
     // changeQuality: function(index){ // youtube에서 제공하는 api에서도 기능이 적용되지 않는중
     //   this.$socket.emit('changeQuality',this.mirrorVideoInfo.qualityLevels[index]);
     // },
-    initVideoController: function(videoInfo){ // 비디오 시작시 관련 정보 설정
+    // 비디오 시작시 관련 정보 설정
+    initVideoController: function(videoInfo){
       clearInterval(this.intervalTimer); // 이전 영상에서 설정된 타이머가 있다면 초기화
       this.mirrorVideoInfo = videoInfo; // 로컬 변수에 저장
       this.videoVolume = this.mirrorVideoInfo.volume; //볼륨 설정
@@ -176,7 +177,8 @@ export default {
       this.videoTimeCount(); // Interval 설정
     },
 
-    timeTransformation: function(seconds){ // 초를 넣어서 시/분/초로 포맷함
+    // 초를 넣어서 시/분/초로 포맷함
+    timeTransformation: function(seconds){
       let floorSeconds = Math.floor(seconds);
       console.log("timeTransformation 실행");
       if(floorSeconds < 60){ //포맷적용
@@ -188,6 +190,7 @@ export default {
       let duration = moment.duration(floorSeconds, 'seconds');
       return duration.format("hh:mm:ss");
     },
+    // 영상시간 카운팅
     videoTimeCount: function(flag){
       if(flag == "play_arrow"){ // 멈춤이면 보여지는 Icon은 play_arrow
         clearInterval(this.intervalTimer);
@@ -200,26 +203,32 @@ export default {
         }, 1000);
       }
     },
+    // 영상 멈춤 또는 실행
     pauseOrPlay: function(){
       console.log("pauseOrPlay 실행됨");
       this.$socket.emit('pauseOrPlay',this.pausePlayIcon);
       this.pausePlayIcon = this.pausePlayIcon == "pause" ? "play_arrow" : "pause";
       this.videoTimeCount(this.pausePlayIcon);
     },
+    // 영상 10초 앞으로 재생
     forward: function(){
       this.$socket.emit('forward');
     },
+    // 영상 10초 전으로 재생
     rewind: function(){
       this.$socket.emit('rewind');
     },
+    // 특정 시간대 부터 영상 재생
     playAt: function(){
       console.log("palyAt");
       this.$socket.emit('playAt',this.videoTime.currentSeconds);
     },
+    // 영상 숨기기 또는 보이기
     toggleYoutube: function(){
       console.log("toggleYoutube");
       this.$socket.emit('toggleYoutube');
     },
+    // 영상 삭제
     removeYoutube: function(){
       console.log("removeYoutube");
       this.$socket.emit("removeYoutube");
