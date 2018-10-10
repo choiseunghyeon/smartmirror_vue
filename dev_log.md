@@ -143,3 +143,12 @@
 
 18.10.05
   - 컴포넌트 전반적으로 함수 및 데이타 관련 주석 추가
+
+18.10.10
+  - 보안 문제에 의해서 atom, macaddress, randomatic, url-parse를 최신 버전으로 업데이트
+  - **Event Delegation(이벤트 위임)** 적용
+    하위 요소에 적용되어 있는 click event들(changeYoutube, saveVideo)를 클릭된 요소의 className으로 구별하여 각각에 맞는 함수실행
+    관리자 함수 containerClick추가하여 클릭된 요소 구별 및 데이터 초기화 후 기능에 맞게 분기화
+  - 불필요한 console.log 삭제
+  - youtube-card를 가진 class 찾는 기능을 mixin으로 따로 분리 FindYoutubeCardClass.js
+  - MostPopular에 위 3개 적용

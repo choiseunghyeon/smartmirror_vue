@@ -32,10 +32,11 @@ import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
 import ScrollHeight from '@/mixin/ScrollHeight.js';
 import SaveVideo from '@/mixin/SaveVideo';
+import FindYoutubeCardClass from '@/mixin/FindYoutubeCardClass';
 export default {
   name: "YoutubeSearch",
   computed: mapState(['searchedLists','searchKeyword']),
-  mixins: [ScrollHeight, SaveVideo],
+  mixins: [ScrollHeight, SaveVideo, FindYoutubeCardClass],
   created: function(){
     console.log("SearchedList created!!");
   },
@@ -56,6 +57,19 @@ export default {
       console.log("moreYoutubeVideo Token: ",token);
       let keyword = this.searchKeyword;
       this.$store.dispatch(Constant.YOUTUBE_SEARCH,{keyword:keyword,nextPageToken:token});
+
+    },
+    containerClick: function(e){
+      let className = e.target.className; // 클릭된 요소의 className 가져오기
+      let path = event.path;
+      let listIndex, itemsIndex, data;
+
+      [listIndex, itemsIndex] = this.findYoutubeCardClass(path); // return값 배열을 비구조화해 저장
+
+      data = this.searchedLists[listIndex].items[itemsIndex];
+
+      className === 'number_box' || className === 'show_number' || className.indexOf('v-icon') !== -1
+      ? this.saveVideo(data) : this.changeYoutube(data); // 분기
 
     },
 
