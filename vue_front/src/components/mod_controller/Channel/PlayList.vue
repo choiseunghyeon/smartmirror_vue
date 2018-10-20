@@ -54,8 +54,8 @@ export default {
 
     handleScroll: function(e){
         console.log(e);
-        let result = e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight - 100; // 문서 전체의 높이와 같음
-        result == this.scrollHeight ? this.morePlayList(this.selectedChannel.id,this.selectedPlayLists[this.selectedPlayLists.length-1].nextToken) : console.log(result);
+        let result = Math.ceil(e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight) // 문서 전체의 높이와 같음
+        result >= this.scrollHeight ? this.morePlayList(this.selectedChannel.id,this.selectedPlayLists[this.selectedPlayLists.length-1].nextToken) : console.log(result);
 
     },
     // ListItme으로 라우팅

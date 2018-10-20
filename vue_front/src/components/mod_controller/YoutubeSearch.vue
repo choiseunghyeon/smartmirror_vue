@@ -49,9 +49,10 @@ export default {
     },
     handleScroll: function(e){
       console.log(e);
-      let result = e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight - 100; // 문서 전체의 높이와 같음
-      result == this.scrollHeight ? this.moreYoutubeVideo(this.searchedLists[this.searchedLists.length-1].nextToken) : console.log(result);
+      let result = Math.ceil(e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight) // 문서 전체의 높이와 같음
+      result >= this.scrollHeight ? this.moreYoutubeVideo(this.searchedLists[this.searchedLists.length-1].nextToken) : console.log(result);
     },
+
     moreYoutubeVideo: function(token){
 
       console.log("moreYoutubeVideo Token: ",token);

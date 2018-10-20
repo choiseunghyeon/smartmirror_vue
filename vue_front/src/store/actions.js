@@ -1,4 +1,4 @@
-import Constant from '../constant';
+import Constant from '../Constant.js';
 import AxiosAPI from '../api/AxiosAPI.js';
 import ForAction from '../api/ForAction.js';
 

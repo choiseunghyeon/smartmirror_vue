@@ -54,8 +54,8 @@ export default {
 
     handleScroll: function(e){
       console.log(e);
-      let result = e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight - 100; // 문서 전체의 높이와 같음
-      result == this.scrollHeight ? this.moreListItems(this.selectedListId, this.playListItems[this.playListItems.length-1].nextToken) : console.log(result);
+      let result = Math.ceil(e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight) // 문서 전체의 높이와 같음
+      result >= this.scrollHeight ? this.moreListItems(this.selectedListId, this.playListItems[this.playListItems.length-1].nextToken) : console.log(result);
 
     },
 
@@ -67,7 +67,7 @@ export default {
       this.$store.dispatch(Constant.GET_PLAY_LIST_ITEMS,{playlistId:id});
     },
 
-    // 스크롤이 거의 바닥을 찍으면 PlayList의 영상 6개를 추가적으로 가져옴
+    // 스크롤이 바닥을 찍으면 PlayList의 영상 6개를 추가적으로 가져옴
     moreListItems: function(playlistId,token){
       console.log("moreListItems called");
       if(token == "NULL") return;

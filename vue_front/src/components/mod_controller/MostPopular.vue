@@ -50,11 +50,11 @@ export default {
       if(token == "NULL") return;
       this.$store.dispatch(Constant.GET_MOSTPOPULAR_VIDEOS,{nextPageToken:token});
     },
-    // 스크롤이 바닥에서 -100px을 찍으면 morePopularList 실행
+    // 스크롤이 바닥을 찍으면 morePopularList 실행
     handleScroll: function(e){
-        // console.log(e);
-        let result = e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight - 100; // 문서 전체의 높이와 같음
-        if(result == this.scrollHeight)
+        console.log(e);
+        let result = Math.ceil(e.target.scrollingElement.scrollTop + e.target.scrollingElement.clientHeight) // 문서 전체의 높이와 같음
+        if(result >= this.scrollHeight)
           this.morePopularList(this.mostPopularVideoLists[this.mostPopularVideoLists.length-1].nextToken);
         // console.log(result);
 
