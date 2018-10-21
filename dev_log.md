@@ -152,3 +152,9 @@
   - 불필요한 console.log 삭제
   - youtube-card를 가진 class 찾는 기능을 mixin으로 따로 분리 FindYoutubeCardClass.js
   - MostPopular에 위 3개 적용
+
+
+  18.10.21
+    - action.js에 주석 추가
+    - action.js 에서 async 설정을 하였음에도 Promise를 사용하던 문법 수정
+    - action.js에서 Promise를 사용하여 구문이 깔끔한 경우 그대로 유지

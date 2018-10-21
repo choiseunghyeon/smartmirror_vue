@@ -94,6 +94,7 @@ export default {
     })
   },
   mostPopularVideos: function(payload){
+    console.log("In mostPopularVideos: ",payload);
     let request = {
       part:'snippet',
       chart: "mostPopular",

@@ -73,14 +73,14 @@ export default {
     console.log("mutation "+payload);
     state.searchKeyword = payload.keyword;
   },
-  [Constant.PLAY_VIDEO_LIST] : (state) => {
-    if (state.videoList.num == state.videoList.length-1 ) {
-      state.videoList.num=0;
-    } else {
-      state.videoList.num+=1;
-      state.currentVideoId=state.videoList.idArray[state.videoList.num]
-    }
-  },
+  // [Constant.PLAY_VIDEO_LIST] : (state) => {
+  //   if (state.videoList.num == state.videoList.length-1 ) {
+  //     state.videoList.num=0;
+  //   } else {
+  //     state.videoList.num+=1;
+  //     state.currentVideoId=state.videoList.idArray[state.videoList.num]
+  //   }
+  // },
 
   [Constant.REMOVE_SEARCHED_LIST] : (state) => {
     state.searchedLists=[];
