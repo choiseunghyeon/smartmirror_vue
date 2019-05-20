@@ -2,7 +2,7 @@
 module.exports = {
   mirror : function (req,res) {
     console.log('mirror');
-    res.redirect('/dist/index.html');
+    res.redirect('/public/index.html');
 
   },
   channel: async function(req, res){

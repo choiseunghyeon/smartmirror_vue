@@ -47,7 +47,7 @@
   </v-snackbar> -->
   <v-footer class="pa-3">
     <v-spacer></v-spacer>
-    <div>라즈베리파이와 연결된 전등을 조작하는 메뉴입니다. 날씨에 따라서 전등의 색깔이 변화합니다.</div>
+    <div>라즈베리파이와 연결된 전등을 조작하는 메뉴입니다.</div>
     <br>
   </v-footer>
   </v-app>
