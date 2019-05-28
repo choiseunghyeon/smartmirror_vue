@@ -61,6 +61,7 @@ export default {
       toolbar_title_lists: [
         {title:"Youtube", routeName: 'popular'},
         {title:"Lamp", routeName: 'lamp'},
+        {title:"Calendar", routeName: 'calendar'},
       ],
       toolbar_title: "Lamp",
     }

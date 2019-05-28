@@ -9,6 +9,7 @@ import ListItem from '@/components/mod_controller/Channel/ListItem'
 import MostPopular from '@/components/mod_controller/MostPopular'
 import MyListBridge from '@/components/mod_controller/MyList/MyListBridge'
 import Lamp from '@/components/mod_controller/Lamp';
+import Calendar from '@/components/mod_controller/Calendar';
 Vue.use(Router)
 
 export default new Router({
@@ -32,5 +33,6 @@ export default new Router({
 
     ]},
     {path: '/lamp', name:'lamp', component: Lamp},
+    {path: '/calendar', name:'calendar', component: Calendar},
   ]
 })

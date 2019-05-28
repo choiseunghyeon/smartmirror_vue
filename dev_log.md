@@ -158,3 +158,11 @@
     - action.js에 주석 추가
     - action.js 에서 async 설정을 하였음에도 Promise를 사용하던 문법 수정
     - action.js에서 Promise를 사용하여 구문이 깔끔한 경우 그대로 유지
+
+19.05.28
+    - Calendar Design 추가(TimeLineCalendar.vue)
+    - Mobile Page에서 google Calendar data 가져오기 성공 오늘 및 3일후 까지(ISO format변경시 timezone이 US로 변하는 듯 함 따라서 실제 한국시간과 시간의 차이가 생김 그래서 timeMax를 여유롭게 3일후로 잡음)
+    추가예정사항
+    - Mobile Page에서 동기화 작업
+    - Mirror Page에서 데이터 받아서 표시해주기
+    - Lamp Page Design 및 기능 구현

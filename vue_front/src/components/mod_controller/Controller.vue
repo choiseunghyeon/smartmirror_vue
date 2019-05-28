@@ -105,6 +105,8 @@ export default {
       toolbar_title_lists: [ // youtube 또는 lamp
         {title:"Youtube", routeName: 'popular'},
         {title:"Lamp", routeName: 'lamp'},
+        {title:"Calendar", routeName: 'calendar'},
+
       ],
       toolbar_title: "Youtube",
     }
@@ -164,7 +166,7 @@ export default {
     removeChannel(id){
       this.$store.dispatch(Constant.DELETE_CHANNEL,id);
     },
-    
+
     // 현재는 Youtube 또는 Lamp
     changeToolbar(obj){
       // this.toolbar_title = obj.title;
