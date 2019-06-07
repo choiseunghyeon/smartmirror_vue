@@ -81,6 +81,8 @@ import MyList from './MyList/MyList';
 import SubComponent from './SubComponent';
 import VideoController from './VideoController';
 import Constant from '@/Constant.js';
+import Calendar from '@/Calendar.js';
+import ApiKey from '@/ApiKey.js';
 import {mapState} from 'vuex';
 
 
@@ -90,7 +92,7 @@ export default {
   computed: mapState(['channelLists','currentVideoId','videoList']),
   created: function(){
     console.log('Controller created!!!!!!!!!!!!!====');
-
+    this.syncCalendar();
     this.GetMyListAndChannelInfo();
     this.$router.push({name:'popular'});
   },
@@ -101,12 +103,11 @@ export default {
         { icon: 'trending_up', text: 'Most Popular' ,routeName: 'popular'},
         { icon: 'grade', text: '나의 목록' ,routeName:'mylistbridge'},
         { icon: 'gamepad', text: '유튜브 컨트롤러' ,routeName:'toggleVideoController'},
+        { icon: 'calendar_today', text: '캘린더 동기화' ,routeName:'syncCalendar'},
       ],
       toolbar_title_lists: [ // youtube 또는 lamp
         {title:"Youtube", routeName: 'popular'},
         {title:"Lamp", routeName: 'lamp'},
-        {title:"Calendar", routeName: 'calendar'},
-
       ],
       toolbar_title: "Youtube",
     }
@@ -132,6 +133,11 @@ export default {
     toggleVideoController: function(){
       console.log('toggleVideoController');
       this.$store.dispatch(Constant.TOGGLE_YOUTUBESHEET);
+    },
+    //syncCalendar 캘린더 싱크 맞춰주기
+    syncCalendar: function(){
+      Calendar.calendarInit(ApiKey.googleCalendar,this.$socket);
+
     },
     // Tollbar 클릭시 조건에 따라 라우팅 및 함수 실행
     routeFromTollBar: function(routeName,index){ // 3,4번째는 함수를 실행

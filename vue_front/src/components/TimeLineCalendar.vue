@@ -1,20 +1,20 @@
 <template lang="html">
-  <v-card>
+  <v-card v-if="flag == true">
     <v-list two-line subheader dark>
       <v-subheader inset>오늘 할 일</v-subheader>
 
       <v-list-tile
-        v-for="item in items"
+        v-for="item in items.today"
         :key="item.title"
         avatar
       >
         <v-list-tile-avatar>
-          {{ item.date }}
+            {{item.day}}일
         </v-list-tile-avatar>
 
         <v-list-tile-content>
           <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+          <v-list-tile-sub-title>{{ item.start}} ~ {{item.end}}</v-list-tile-sub-title>
         </v-list-tile-content>
 
       </v-list-tile>
@@ -24,17 +24,17 @@
       <v-subheader inset>내일 할 일</v-subheader>
 
       <v-list-tile
-        v-for="item in items2"
+        v-for="item in items.tomorrow"
         :key="item.title"
         avatar
       >
         <v-list-tile-avatar>
-          {{ item.date }}
+          {{item.day}}일
         </v-list-tile-avatar>
 
         <v-list-tile-content>
           <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+          <v-list-tile-sub-title>{{ item.start}} ~ {{item.end}}</v-list-tile-sub-title>
         </v-list-tile-content>
 
       </v-list-tile>
@@ -45,18 +45,22 @@
 <script>
 export default {
   name: "TimeLineCalendar",
+
   data () {
      return {
-       items: [
-         { date: '21일', iconClass: 'grey lighten-1 white--text', title: 'XML과제하기', subtitle: '오후 1:30~2:30' },
-         { date: '21일', iconClass: 'grey lighten-1 white--text', title: '잠자기', subtitle: '오후 3:00~4:30' },
-         { date: '21일', iconClass: 'grey lighten-1 white--text', title: '밥먹기', subtitle: '온종일' }
-       ],
-       items2: [
-         { date: '22일', iconClass: 'blue white--text', title: '일어나기', subtitle: '오전 10:30~11:30' },
-         { date: '22일', iconClass: 'amber white--text', title: '수업가기', subtitle: '오후 1:30~4:30' }
-       ]
+       items: [],
+       flag: false,
      }
-   }
+   },
+   created: function(){
+     this.$options.sockets.syncCalendar = (data) => {
+       console.log('syncCalendar 받았다!! : ',data);
+       this.items=data;
+       if ( this.items.today.length == 0  && this.items.tomorrow.length == 0 )
+         this.flag = false;
+       else
+         this.flag = true;
+     }
+   },
 }
 </script>
