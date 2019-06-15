@@ -27,6 +27,9 @@ export default {
   [Constant.TOGGLE_YOUTUBESHEET] : (store) => { // For Video Contorller Toggle
     store.commit(Constant.TOGGLE_YOUTUBESHEET);
   },
+  [Constant.TOGGLE_LIGHTSHEET] : (store) => {
+    store.commit(Constant.TOGGLE_LIGHTSHEET);  
+  },
   // YoutubeChannel.vue
   [Constant.GET_PLAY_LISTS] : async (store,payload) => { // Youtube로 부터 PlayList정보 가져오기
     store.dispatch(Constant.SET_SNACKBAR, {flag:true,text:"목록을 불러오는 중입니다.",time:0,progress:true})

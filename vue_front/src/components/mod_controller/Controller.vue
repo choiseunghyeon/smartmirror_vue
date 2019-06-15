@@ -73,6 +73,7 @@
 
 <sub-component></sub-component>
 <video-controller></video-controller>
+<mood-light-controller></mood-light-controller>
 </v-app>
 </template>
 
@@ -80,6 +81,7 @@
 import MyList from './MyList/MyList';
 import SubComponent from './SubComponent';
 import VideoController from './VideoController';
+import MoodLightController from './MoodLightController';
 import Constant from '@/Constant.js';
 import Calendar from '@/Calendar.js';
 import ApiKey from '@/ApiKey.js';
@@ -88,7 +90,7 @@ import {mapState} from 'vuex';
 
 export default {
   name: 'Controller',
-  components: {SubComponent, VideoController},
+  components: {SubComponent, VideoController, MoodLightController},
   computed: mapState(['channelLists','currentVideoId','videoList']),
   created: function(){
     console.log('Controller created!!!!!!!!!!!!!====');
@@ -104,10 +106,10 @@ export default {
         { icon: 'grade', text: '나의 목록' ,routeName:'mylistbridge'},
         { icon: 'gamepad', text: '유튜브 컨트롤러' ,routeName:'toggleVideoController'},
         { icon: 'calendar_today', text: '캘린더 동기화' ,routeName:'syncCalendar'},
+        { icon: 'far fa-lightbulb', text: '무드등 컨트롤러' ,routeName:'toggleMoodLightController'},
       ],
       toolbar_title_lists: [ // youtube 또는 lamp
         {title:"Youtube", routeName: 'popular'},
-        {title:"Lamp", routeName: 'lamp'},
       ],
       toolbar_title: "Youtube",
     }
@@ -133,6 +135,11 @@ export default {
     toggleVideoController: function(){
       console.log('toggleVideoController');
       this.$store.dispatch(Constant.TOGGLE_YOUTUBESHEET);
+    },
+    // MoodLightController 숨기기 및 보이기
+    toggleMoodLightController: function(){
+      console.log('toggleMoodLightController');
+      this.$store.dispatch(Constant.TOGGLE_LIGHTSHEET);
     },
     //syncCalendar 캘린더 싱크 맞춰주기
     syncCalendar: function(){

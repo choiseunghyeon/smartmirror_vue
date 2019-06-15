@@ -40,8 +40,6 @@ export default {
           hour -= 12;
           ap = "오후";
         }
-        else
-          startAmPm="오전"
         let result = {'hour': hour, "ampm": ap};
         return result
       }

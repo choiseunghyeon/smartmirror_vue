@@ -13,6 +13,7 @@ export default {
     // time은 몇초간 표시할 것인지의 여부(0이면 안사라짐) progress는 loading 표시를 해줌
   snackbar:{flag:false,text:"",time:1000,progress:false},
   youtubeSheet: false,
+  lightSheet: false,
   // YoutubeChannel.vue
   channelLists:[],
   selectedChannel:'', // 선택된 채널의 id

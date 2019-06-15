@@ -9,7 +9,7 @@ export default {
   PLAY_VIDEO_LIST: "playVideoList",
   SET_SNACKBAR : "setSnackBar",
   TOGGLE_YOUTUBESHEET: "toggleYoutubeSheet",
-
+  TOGGLE_LIGHTSHEET: "toggleLightSheet",
   ADD_SEARCHED_LIST: "addSearchedList",
   ADD_MOSTPOPULAR_LIST: "addMostPopularList",
 

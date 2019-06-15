@@ -8,7 +8,6 @@ import PlayList from '@/components/mod_controller/Channel/PlayList'
 import ListItem from '@/components/mod_controller/Channel/ListItem'
 import MostPopular from '@/components/mod_controller/MostPopular'
 import MyListBridge from '@/components/mod_controller/MyList/MyListBridge'
-import Lamp from '@/components/mod_controller/Lamp';
 Vue.use(Router)
 
 export default new Router({
@@ -31,6 +30,5 @@ export default new Router({
         ]},
 
     ]},
-    {path: '/lamp', name:'lamp', component: Lamp},
   ]
 })

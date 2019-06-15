@@ -17,6 +17,7 @@
     "express": "^4.16.3",
     "express-error-handler": "^1.1.0",
     "express-session": "^1.15.6",
+    "gyp": "^0.5.0",
     "http": "0.0.0",
     "moment": "^2.22.1",
     "mongoose": "^5.0.17",

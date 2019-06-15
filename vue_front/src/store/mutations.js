@@ -24,7 +24,9 @@ export default {
   [Constant.TOGGLE_YOUTUBESHEET] : (state) => {
     state.youtubeSheet = !state.youtubeSheet;
   },
-
+  [Constant.TOGGLE_LIGHTSHEET] : (state) => {
+    state.lightSheet = !state.lightSheet;
+  },
   // YoutubeChannel.vue
   [Constant.ADD_PLAY_LIST] : (state, payload) => {
     state.selectedPlayLists.push(payload)
