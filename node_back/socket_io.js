@@ -1,7 +1,5 @@
 let socketio = require('socket.io');
-// let onoff = require('onoff');
-// let Gpio = onoff.Gpio;
-// let lamp = new Gpio(21,'out');
+//let gpio = require('./lamp.js');
 
 module.exports = {
 
@@ -74,10 +72,13 @@ module.exports = {
         console.log('syncCalendar 이벤트를 받았습니다.');
         io.sockets.emit('syncCalendar',items);
       });
-      socket.on('toggleLamp', function(flag){
-        console.log('toggleLamp 이벤트를 받았습니다.');
+      socket.on('changeMoodLightState', function(flag){
+        console.log('changeMoodLightState 이벤트를 받았습니다.');
+        console.log(flag);
         // flag가 1이면 전등 off 0이면 전등 on
-        lamp.writeSync(flag);
+        //gpio.lamp(flag);
+
+
       });
     });
   } // the end of socketInit

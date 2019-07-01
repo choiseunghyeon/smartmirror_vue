@@ -10,38 +10,31 @@
     </v-btn>
   </template>
   <v-card tile>
-    <v-progress-linear
-      :value="50"
-      class="my-0"
-      height="3"
-    ></v-progress-linear>
+
 
     <v-list>
       <v-list-tile>
         <v-list-tile-content>
-          <v-list-tile-title>The Walker</v-list-tile-title>
-          <v-list-tile-sub-title>Fitz & The Trantrums</v-list-tile-sub-title>
+          <v-list-tile-title>무드등 컨트롤러</v-list-tile-title>
+          <v-list-tile-sub-title>고양이 무드등</v-list-tile-sub-title>
         </v-list-tile-content>
 
         <v-spacer></v-spacer>
 
         <v-list-tile-action>
-          <v-btn icon>
-            <v-icon>fast_rewind</v-icon>
+          <v-btn outline large color="white" @click="moodLightToggle(true)">
+            <v-icon>flash_on</v-icon>
+            ON
+          </v-btn>
+        </v-list-tile-action>
+<v-spacer></v-spacer>
+        <v-list-tile-action>
+          <v-btn outline large color="white" @click="moodLightToggle(false)">
+            <v-icon>flash_off</v-icon>
+            OFF
           </v-btn>
         </v-list-tile-action>
 
-        <v-list-tile-action :class="{ 'mx-5': $vuetify.breakpoint.mdAndUp }">
-          <v-btn icon>
-            <v-icon>pause</v-icon>
-          </v-btn>
-        </v-list-tile-action>
-
-        <v-list-tile-action :class="{ 'mr-3': $vuetify.breakpoint.mdAndUp }">
-          <v-btn icon>
-            <v-icon>fast_forward</v-icon>
-          </v-btn>
-        </v-list-tile-action>
       </v-list-tile>
     </v-list>
   </v-card>
@@ -57,6 +50,10 @@ export default {
   created: function(){
     console.log("Lamp component created!!!");
   },
-
+  methods: {
+    moodLightToggle: function(flag){
+      this.$socket.emit('changeMoodLightState',flag);
+    }
+  }
 }
 </script>

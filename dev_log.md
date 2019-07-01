@@ -175,7 +175,9 @@
 19.06.07
   - node.js gpio 컨트롤 테스트 완료
 
+
+19.07.01
+  - Lamp Controller(bottomsheet) 구현 및 이벤트 전송 확인
+
   추가예정사항
-  - node.js gpio 컨트롤 테스트
   - googleCalendar 계정 선택(로그인, 로그아웃 포함)
-  - Lamp Page Design 및 기능 구현
