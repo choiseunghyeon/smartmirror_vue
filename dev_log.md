@@ -181,3 +181,16 @@
 
   추가예정사항
   - googleCalendar 계정 선택(로그인, 로그아웃 포함)
+
+19.10.19
+  - google api 문제 발생 고치는 과정에서 api key 전부를 삭제 후 다시 생성함 google calendar에서 문제 발생 시 apikey확인
+  - 여전허 youtube api 해결되지 않음
+
+20.05.13
+  - findDust, youtube api 새로 연결시켜줌
+
+  추가예정사항
+  - googleCalendar 계정 선택(로그인, 로그아웃 포함)
+  - api만료 표시기간 서비스
+  - 유튜브 컨트롤러에서 영상끄기 하면 bottomsheet도 같이 내리기
+  - main.js와 configUrl.js에 있는 SERVER_URL 통합 하기

@@ -41,6 +41,7 @@ export default {
   methods: {
     // mostpopular 영상들 6개 가져오기
     getPopularList: function(){
+      console.log("getPopularList started");
       this.$store.dispatch(Constant.REMOVE_MOSTPOPULAR_LIST);
       this.$store.dispatch(Constant.GET_MOSTPOPULAR_VIDEOS,{});
     },

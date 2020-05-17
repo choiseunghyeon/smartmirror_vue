@@ -27,11 +27,16 @@ export default {
         console.log(response);
         let data = response.data.data;
         let fineDustObj={aqi:data.current.pollution.aqius,mainus:data.current.pollution.mainus};
-        if (fineDustObj.mainus == 'p2') {
-          this.info.name="미세먼지";
-        } else if (fineDustObj.mainus == 'o3') {
+        if (fineDustObj.mainus == 'o3') {
           this.info.name="오존";
+        } else {
+          this.info.name="미세먼지";
         }
+        // if (fineDustObj.mainus == 'p2') {
+        //   this.info.name="미세먼지";
+        // } else if (fineDustObj.mainus == 'o3') {
+        //   this.info.name="오존";
+        // }
         if(fineDustObj.aqi <= 50) this.info.state="좋음"
         else if (fineDustObj.aqi <= 100) this.info.state="보통"
         else if(fineDustObj.aqi <= 150) this.info.state="나쁨"
