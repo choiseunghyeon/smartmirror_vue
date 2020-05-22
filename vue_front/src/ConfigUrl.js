@@ -1,6 +1,6 @@
 let BASE_URL = "https://www.googleapis.com/youtube/v3";
 // let SERVER_URL = "http://172.20.10.5:3000" // IPhone
-let SERVER_URL = "http://localhost:3000"
+let SERVER_URL = "http://localhost:3000";
 export default {
   // 채널이 가진 재생목록
   PLAY_LISTS: BASE_URL + "/playlists",

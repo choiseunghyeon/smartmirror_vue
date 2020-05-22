@@ -102,6 +102,7 @@
 <script>
 import {mapState} from 'vuex';
 import moment from 'moment'; //moment library
+import Constant from '@/Constant.js';
 require('moment-duration-format'); // moment plugin
 
 export default {
@@ -240,6 +241,8 @@ export default {
         currentTime: "00:00", //포맷팅된 현재 시간
       };
       this.pausePlayIcon= "pause"; // pause / play
+      // 영상 삭제 버튼을 누르는 시점은 YOUTUBESHEET 켜져 있는 상태라서 TOGGLE_YOUTUBESHEET해서 꺼주기
+      this.$store.dispatch(Constant.TOGGLE_YOUTUBESHEET);
     }
   }
 }

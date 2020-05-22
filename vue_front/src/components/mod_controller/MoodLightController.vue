@@ -1,6 +1,6 @@
 <template>
 
-<v-bottom-sheet inset :value="lightSheet">
+<v-bottom-sheet inset :hide-overlay="true" :persistent="true" :value="lightSheet">
   <template v-slot:activator>
     <v-btn
       color="red"

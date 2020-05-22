@@ -12,8 +12,8 @@ import VueSocketio from 'vue-socket.io';
 
 Vue.prototype.$axios=axios;
 Vue.use(Vuetify)
-Vue.use(VueSocketio, 'http://localhost:3000');
-// Vue.use(VueSocketio, 'http://172.20.10.5:3000'); //IPhone 
+Vue.use(VueSocketio, "http://localhost:3000");
+// Vue.use(VueSocketio, 'http://172.20.10.5:3000'); //IPhone
 Vue.use(VueYouTubeEmbed)
 Vue.use(VueYouTubeEmbed, { global: true })
 Vue.config.productionTip = false

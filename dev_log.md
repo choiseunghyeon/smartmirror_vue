@@ -189,8 +189,10 @@
 20.05.13
   - findDust, youtube api 새로 연결시켜줌
 
-  추가예정사항
-  - googleCalendar 계정 선택(로그인, 로그아웃 포함)
-  - api만료 표시기간 서비스
-  - 유튜브 컨트롤러에서 영상끄기 하면 bottomsheet도 같이 내리기
-  - main.js와 configUrl.js에 있는 SERVER_URL 통합 하기
+20.05.21
+  - 유튜브 컨트롤러에서 영상끄기 하면 bottomsheet(YoutubeSheet)도 같이 내리기
+  - google calendar iframe 추가
+  - google calenar api 호출해서 쓰던 TimeLineCalendar.vue 관련 코드 정리
+
+20.05.22
+  -VideoController, MoodLightController 두 개 동시에 띄워지지 않도록 수정(VideoController켜져 있을 때 MoodLightController를 킬려고 하면 VideoController가 꺼짐)

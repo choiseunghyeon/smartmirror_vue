@@ -4,8 +4,7 @@
     <v-layout row wrap>
       <v-flex md4>
         <!--  캘린더 컴포넌트 -->
-        <time-line-calendar class="grey darken-4" ></time-line-calendar>
-
+        <iframe-calendar></iframe-calendar>
       </v-flex>
       <v-flex md5 offset-md3 id="widget">
         <!--  날씨 컴포넌트 -->
@@ -32,7 +31,7 @@
 import Clock from './Clock';
 import Weather from './Weather';
 import FineDust from './FineDust';
-import TimeLineCalendar from './TimeLineCalendar';
+import IframeCalendar from './IframeCalendar';
 import YoutubeController from './YoutubeController';
 import Constant from '@/Constant.js';
 import {mapState} from 'vuex';
@@ -40,7 +39,7 @@ import {mapState} from 'vuex';
 
 export default {
   name: 'Main',
-  components: {Clock,Weather,FineDust,YoutubeController, TimeLineCalendar},
+  components: {Clock,Weather,FineDust,YoutubeController,IframeCalendar},
 
   created: function(){
     console.log('Main created!!!!!!!!!!====');

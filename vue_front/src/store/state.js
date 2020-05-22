@@ -14,6 +14,7 @@ export default {
   snackbar:{flag:false,text:"",time:1000,progress:false},
   youtubeSheet: false,
   lightSheet: false,
+  
   // YoutubeChannel.vue
   channelLists:[],
   selectedChannel:'', // 선택된 채널의 id

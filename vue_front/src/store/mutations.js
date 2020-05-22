@@ -23,9 +23,13 @@ export default {
   },
   [Constant.TOGGLE_YOUTUBESHEET] : (state) => {
     state.youtubeSheet = !state.youtubeSheet;
+    if(state.lightSheet) // lightSheet가 True면 False로 수정
+      state.lightSheet = false;
   },
   [Constant.TOGGLE_LIGHTSHEET] : (state) => {
     state.lightSheet = !state.lightSheet;
+    if(state.youtubeSheet)
+      state.youtubeSheet = false;
   },
   // YoutubeChannel.vue
   [Constant.ADD_PLAY_LIST] : (state, payload) => {

@@ -68,10 +68,6 @@ module.exports = {
         console.log('changeQuality 이벤트를 받았습니다.');
         io.sockets.emit('changeQuality',quality);
       });
-      socket.on('syncCalendar', function(items){
-        console.log('syncCalendar 이벤트를 받았습니다.');
-        io.sockets.emit('syncCalendar',items);
-      });
       socket.on('changeMoodLightState', function(flag){
         console.log('changeMoodLightState 이벤트를 받았습니다.');
         console.log(flag);
