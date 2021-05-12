@@ -21,10 +21,13 @@ export default {
   },
   methods: {
     GetFineDust: function(){
-      let api_url = 'http://api.airvisual.com/v2/nearest_city?lat=37.538612&lon=126.9208805&rad=500&key='+ApiKey.finedust;
-      this.$axios.get(api_url)
+      const ICON_URL = "https://airvisual.com/images/";
+      const IMAGE_EXTENSION = ".png";
+      const API_URL = 'http://api.airvisual.com/v2/nearest_city?lat=37.538612&lon=126.9208805&rad=500&key='+ApiKey.finedust;
+      this.$axios.get(API_URL)
       .then((response) => {
         console.log(response);
+         
         let data = response.data.data;
         let fineDustObj={aqi:data.current.pollution.aqius,mainus:data.current.pollution.mainus};
         if (fineDustObj.mainus == 'o3') {
